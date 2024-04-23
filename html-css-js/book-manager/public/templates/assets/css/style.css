@@ -33,6 +33,9 @@ a {
 button {
     cursor: pointer;
 }
+li {
+    list-style: none;
+}
 /* ========================================================
 ----------------------------Dashboard--------------------------
 =========================================================== */
@@ -399,4 +402,28 @@ button {
     border-radius: 0 10px 10px 0; 
     border: 0.6px solid #D5D5D5;
     cursor: pointer;
+}
+
+/* search */
+.list-search-category {
+    display: none;
+    position: absolute;
+    background: #fff;
+    width: 252px;
+    border: 1px solid #D5D5D5;
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    top: 52px;
+    padding: 20px;
+}
+.list-search-category li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #D5D5D5;
+    cursor: pointer;
+}
+.list-search-category li:last-child {
+    border-bottom: none;
+}
+.list-search-category li:hover {
+    background-color: var(--primary-color);
 }

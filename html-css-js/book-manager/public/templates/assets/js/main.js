@@ -33,9 +33,6 @@ menuClick.addEventListener('click', function() {
 
 // category
 document.addEventListener("DOMContentLoaded", function() {
-    showCategory();
-});
-document.addEventListener("DOMContentLoaded", function() {
     var selectElement = document.getElementById('category');
     data.forEach(function(item) {
         var option = document.createElement('option');
@@ -202,9 +199,6 @@ function editCategory(id){
 
 
 // book
-document.addEventListener("DOMContentLoaded", function() {
-    showBook();
-});
 var data_book = [
     {
         "id": 1,
@@ -357,9 +351,7 @@ function editBook(id){
 
 // Tính tổng số sách
 var totalBooks = data_book.length;
-
 var totalCategories = data.length;
-
 
 // Tính tổng giá của tất cả các cuốn sách
 var totalPrice = 0;
@@ -367,7 +359,6 @@ data_book.forEach(function(book) {
     totalPrice += book.price;
 });
 
-// Đổ dữ liệu vào các trường HTML
 document.querySelector('.title').textContent = 'Total Books';
 document.querySelector('.total strong').textContent = totalBooks;
 
@@ -375,4 +366,31 @@ document.querySelectorAll('.title')[1].textContent = 'Total Category';
 document.querySelectorAll('.total strong')[1].textContent = totalCategories;
 
 document.querySelectorAll('.title')[2].textContent = 'Total Price';
-document.querySelectorAll('.total strong')[2].textContent = totalPrice.toFixed(2); // Làm tròn đến 2 chữ số thập phân
+document.querySelectorAll('.total strong')[2].textContent = totalPrice.toFixed(2);
+
+// search
+function searchCategory() {
+    let searchValue = document.getElementById('search').value.trim().toLowerCase();
+    let searchResult = document.getElementById('search-result');
+
+    if (searchValue) {
+        let list_category = "";
+        for (let i = 0; i < data.length; i++) {
+            const title = data[i].title.toLowerCase(); 
+
+            if (title.indexOf(searchValue) !== -1) {
+                list_category += `
+                <li>ID: ${data[i].id}<br/> Title Category: ${data[i].title} </li>`;
+            }
+        }
+
+        searchResult.innerHTML = list_category ? list_category : "<p>No matching categories found.</p>";
+        searchResult.style.display = "block";
+    } else {
+        searchResult.style.display = "none";
+    }
+}
+
+
+  
+

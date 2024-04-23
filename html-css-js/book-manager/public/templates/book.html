@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/add-style.css">
 </head>
-<body>
+<body onload="showBook()">
     <nav class="navigation">
         <div class="sidebar-menu">
             <div class="logo">
@@ -84,7 +84,9 @@
                         <img src="./assets/icons/search.svg" alt="">
                     </div>
                     <div class="search-input">
-                        <input type="text" placeholder="Search">
+                        <input id="search" type="text" placeholder="Search category title" onkeyup="searchCategory()">
+                        <ul id="search-result" class="list-search-category">
+                        </ul>
                     </div>
                 </div>
             </div>
