@@ -48,10 +48,11 @@ li {
     justify-content: start;
     align-items: center;
     width: 240px;
-    height: 1270px;
+    height: 100%;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: width 0.6s;
+    min-height: 100vh;
 }
 .logo {
     font-size: 25px;
@@ -426,4 +427,62 @@ li {
 }
 .list-search-category li:hover {
     background-color: var(--primary-color);
+}
+
+/* popup thong bao */
+.confirm-popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.confirm-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    height: 30vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+    position: relative;
+    border-radius: 20px;
+}
+.confirm-content p {
+    font-size: 20px;
+}
+.confirm-buttons {
+    display: flex;
+    gap: 50px;
+}
+.confirm-buttons button{
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 80px;
+    height: 50px;
+}
+.confirm-buttons button:hover{
+
+}
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
 }

@@ -164,12 +164,22 @@ function showCategory(){
                     <div class="edit" onclick="editCategory(${data[i].id})">
                         <img src="./assets/icons/pencil-write.svg" alt="">
                     </div>
-                    <div class="delete" onclick="deleteCategory(${data[i].id})">
+                    <div class="delete" onclick="openConfirmPopup()">
                         <img src="./assets/icons/bin.svg" alt="">
                     </div>
                 </div>
             </td>
         </tr>
+        <div id="confirmPopup" class="confirm-popup">
+            <div class="confirm-content">
+                <span class="close" onclick="closeConfirmPopup()">&times;</span>
+                <p>Are you sure you want to delete this book?</p>
+                <div class="confirm-buttons">
+                    <button onclick="confirmDelete(${data[i].id})">Yes</button>
+                    <button onclick="closeConfirmPopup()">No</button>
+                </div>
+            </div>
+        </div>
         `
     }
     document.getElementById('table').innerHTML = table;
@@ -187,6 +197,7 @@ function deleteCategory(id){
             showCategory()
         }
     }
+
 }
 function editCategory(id){
     for(let i=0; i<data.length; i++){
@@ -196,7 +207,18 @@ function editCategory(id){
         }
     }
 }
+function openConfirmPopup() {
+    document.getElementById('confirmPopup').style.display = 'block';
+}
 
+function closeConfirmPopup() {
+    document.getElementById('confirmPopup').style.display = 'none';
+}
+
+function confirmDelete(id) {
+    deleteCategory(id)
+    closeConfirmPopup();
+}
 
 // book
 var data_book = [
@@ -231,7 +253,7 @@ var data_book = [
         "id": 4,
         "title": "To Kill a Mockingbird",
         "image": "https://example.com/to_kill_a_mockingbird.jpg",
-        "author": "Harper Lee",
+        "author": "Harper Leeasdas",
         "publisher": "J. B. Lippincott & Co.",
         "price": 10.50,
         "category": 2 // Classic
@@ -240,7 +262,7 @@ var data_book = [
         "id": 5,
         "title": "1984",
         "image": "https://example.com/1984.jpg",
-        "author": "George Orwell",
+        "author": "saffas safsf",
         "publisher": "Secker & Warburg",
         "price": 9.99,
         "category": 3 // Science Fiction
@@ -277,7 +299,18 @@ function submitBook(){
     showBook()
     clearBook()
 }
+function openConfirmPopupBook() {
+    document.getElementById('confirmPopup').style.display = 'block';
+}
 
+function closeConfirmPopupBook() {
+    document.getElementById('confirmPopup').style.display = 'none';
+}
+
+function confirmDeleteBook(id) {
+    deleteBook(id)
+    closeConfirmPopup();
+}
 function showBook(){
     table_book = `
     <tr class="table-title">
@@ -306,12 +339,22 @@ function showBook(){
                     <div class="edit" onclick="editBook(${data_book[i].id})">
                         <img src="./assets/icons/pencil-write.svg" alt="">
                     </div>
-                    <div class="delete" onclick="deleteBook(${data_book[i].id})">
+                    <div class="delete" onclick="openConfirmPopupBook()">
                         <img src="./assets/icons/bin.svg" alt="">
                     </div>
                 </div>
             </td>
         </tr>
+        <div id="confirmPopup" class="confirm-popup">
+            <div class="confirm-content">
+                <span class="close" onclick="closeConfirmPopupBook()">&times;</span>
+                <p>Are you sure you want to delete this book?</p>
+                <div class="confirm-buttons">
+                    <button onclick="confirmDeleteBook(${data_book[i].id})">Yes</button>
+                    <button onclick="closeConfirmPopupBook()">No</button>
+                </div>
+            </div>
+        </div>
         `
     }
     document.getElementById('table-book').innerHTML = table_book;
@@ -334,6 +377,7 @@ function deleteBook(id){
             showBook()
         }
     }
+
 }
 function editBook(id){
     for(let i=0; i<data_book.length; i++){
@@ -369,7 +413,7 @@ document.querySelectorAll('.title')[2].textContent = 'Total Price';
 document.querySelectorAll('.total strong')[2].textContent = totalPrice.toFixed(2);
 
 // search
-function searchCategory() {
+function search() {
     let searchValue = document.getElementById('search').value.trim().toLowerCase();
     let searchResult = document.getElementById('search-result');
 
@@ -380,10 +424,17 @@ function searchCategory() {
 
             if (title.indexOf(searchValue) !== -1) {
                 list_category += `
-                <li>ID: ${data[i].id}<br/> Title Category: ${data[i].title} </li>`;
+                <li>ID category: ${data[i].id}<br/> Title Category: ${data[i].title} </li>`;
             }
         }
+        for (let i = 0; i < data_book.length; i++) {
+            const title = data_book[i].title.toLowerCase(); 
 
+            if (title.indexOf(searchValue) !== -1) {
+                list_category += `
+                <li>ID book: ${data_book[i].id}<br/> Title Book: ${data_book[i].title} </li>`;
+            }
+        }
         searchResult.innerHTML = list_category ? list_category : "<p>No matching categories found.</p>";
         searchResult.style.display = "block";
     } else {
