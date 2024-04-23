@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book-manager</title>
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/add-style.css">
 </head>
 <body>
     <nav class="navigation">
@@ -13,7 +14,7 @@
                 <span class="bright-web dash">Dash</span><span class="bright-web">Stack</span>
             </div>
             <ul class="sidebar-top">
-                <li class="sidebar-item active-btn">
+                <li class="sidebar-item">
                     <a href="index.html" class="product">
                         <div class="product-icon">
                             <img src="./assets/icons/time.svg" alt="">
@@ -108,7 +109,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item active-btn">
                     <a href="add.html" class="product">
                         <div class="product-icon">
                             <img src="./assets/icons/contact.svg" alt="">
@@ -232,39 +233,58 @@
         </header>
         <section class="dashboard-content">
             <div class="heading">
-                <h1>Dashboard</h1>
+                <h1>Add New Contact</h1>
             </div>
-            <div class="content">
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Books</div>
-                        <div class="total"><strong>123.32</strong></div>
+            <div class="add-content">
+                <div class="form-box">
+                    <div class="form-upload">
+                        <div class="upload">
+                            <input type="file" accept="image/*" id="upload-photo">
+                            <label for="upload-photo" class="upload-icon">
+                                <img src="./assets/icons/camera.svg" alt="">
+                            </label>
+                        </div>
+                        <label for="upload-photo">Upload Photo</label>
                     </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/book-icon.png" alt="">
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="fist-name">Firt Name</label>
+                            <input type="text" id="fist-name" placeholder="Enter your first name">
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" placeholder="Enter your last name">
+                        </div>
                     </div>
-                </div>
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Category</div>
-                        <div class="total"><strong>123.32</strong></div>
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="your-email">Your Email</label>
+                            <input type="text" id="your-email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone-number">Phone Number</label>
+                            <input type="text" id="phone-number" placeholder="Enter your phone number">
+                        </div>
                     </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/category-icon.png" alt="">
-                    </div>
-                </div>
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Price</div>
-                        <div class="total"><strong>123.32</strong></div>
-                    </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/price-icon.png" alt="">
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="date-of-birth">Date of Birth</label>
+                            <input type="text" id="date-of-birth" placeholder="Enter your birthdate">
+                        </div>
+                        <div class="form-group">
+                            <label for="genre">Genre</label>
+                            <select id="genre">
+                                <option value="" disabled selected hidden>Male</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>                            
+                        </div>
                     </div>
                 </div>
             </div>
+
         </section>
-    </main>
 </body>
 <script src="./assets/js/main.js"></script>
 </html>
