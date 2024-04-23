@@ -279,7 +279,7 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
 }
 .form-group label {
     display: block;
@@ -323,7 +323,7 @@ button {
 .line {
     border-bottom: 2px solid #E7E8EB;
 }
-.table {
+#table {
     border-radius: 10px;
     border: 0.6px solid #D5D5D5;
     width: 100%;
@@ -331,22 +331,41 @@ button {
 .table-title {
     border-radius: 10px 10px 0 0;
 }
-.table th {
+#table th {
     text-align: left;
     padding-left: 32px;
     height: 49px;
     border-bottom: 0.6px solid #D5D5D5;
 
 }
-.table tr {
+#table tr {
     font-weight: 100;
 }
-.table td {
+#table td {
     text-align: left;
     height: 52px;
     padding-left: 32px;
 }
+#table-book {
+    border-radius: 10px;
+    border: 0.6px solid #D5D5D5;
+    width: 100%;
+}
+#table-book th {
+    text-align: left;
+    padding-left: 32px;
+    height: 49px;
+    border-bottom: 0.6px solid #D5D5D5;
 
+}
+#table-book tr {
+    font-weight: 100;
+}
+#table-book td {
+    text-align: left;
+    height: 52px;
+    padding-left: 32px;
+}
 .action {
     display: flex;
     align-items: center;

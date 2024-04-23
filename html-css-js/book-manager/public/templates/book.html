@@ -121,10 +121,10 @@
         </header>
         <section class="dashboard-content">
             <div class="heading">
-                <h1>Add New Book</h1>
+                <h1>Book</h1>
             </div>
             <div class="add-content">
-                <form action="" enctype="multipart/form-data" class="form-box">
+                <div class="form-box">
                     <div class="form-upload">
                         <div class="upload">
                             <input type="file" name="image" accept="image/*" id="upload-photo">
@@ -137,21 +137,21 @@
                     <div class="form-input">
                         <div class="form-group">
                             <label for="fist-name">Title</label>
-                            <input type="text" name="title" id="fist-name" placeholder="Enter your first name">
+                            <input type="text" name="title" id="fist-name" placeholder="Enter book title">
                         </div>
                         <div class="form-group">
                             <label for="last-name">Author</label>
-                            <input type="text" name="author" id="last-name" placeholder="Enter your last name">
+                            <input type="text" name="author" id="last-name" placeholder="Enter book author">
                         </div>
                     </div>
                     <div class="form-input">
                         <div class="form-group">
                             <label for="your-email">Publisher</label>
-                            <input type="text" name="publisher" id="your-email" placeholder="Enter your email">
+                            <input type="text" name="publisher" id="your-email" placeholder="Enter publisher">
                         </div>
                         <div class="form-group">
                             <label for="phone-number">Price</label>
-                            <input type="text" name="price" id="phone-number" placeholder="Enter your phone number">
+                            <input type="text" name="price" id="phone-number" placeholder="Enter book price">
                         </div>
                     </div>
                     <div class="form-input">
@@ -159,22 +159,20 @@
                             <label for="genre">Category</label>
                             <select id="genre">
                                 <option value="" disabled selected hidden>-- Select category --</option>
-                                <option value="category 1">Category 1</option>
-                                <option value="category 2">Category 2</option>
-                                <option value="category 2">Category 2</option>
+                
                             </select>                            
                         </div>
                     </div>
                     <div class="form-button">
-                        <button type="submit">
+                        <button>
                             Add Now
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="line"></div>
             <div class="list">
-                <table class="table">
+                <table id="table-book">
                     <tr class="table-title">
                         <th>Image</th>
                         <th>ID</th>

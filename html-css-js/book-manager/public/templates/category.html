@@ -120,26 +120,30 @@
         </header>
         <section class="dashboard-content">
             <div class="heading">
-                <h1>Table</h1>
+                <h1>Category</h1>
             </div>
             <div class="add-content">
-                <form action="" enctype="multipart/form-data" class="form-box-category">
+                <div class="form-box-category">
                     <div class="form-input">
                         <div class="form-group form-category">
-                            <label for="fist-name">Category Name</label>
-                            <input type="text" name="title" id="fist-name" placeholder="Enter your first name">
+                            <label for="category-title">Category ID</label>
+                            <input type="text" name="id" id="category-id" placeholder="Enter category id">
+                        </div>
+                        <div class="form-group form-category">
+                            <label for="category-title">Category Name</label>
+                            <input type="text" name="title" id="category-title" placeholder="Enter category name">
                         </div>
                     </div>
                     <div class="form-button">
-                        <button type="submit">
-                            Add Now
+                        <button id="submid-category" onclick="submitCategory()">
+                            Submit
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="line"></div>
             <div class="list">
-                <table class="table">
+                <table id="table">
                     <tr class="table-title">
                         <th>ID</th>
                         <th>Category</th>
@@ -166,8 +170,7 @@
                         </td> -->
                     </tr>
                 </table>
-            </div>
-            
+            </div>       
         </section>
     </main>
 </body>
