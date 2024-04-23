@@ -219,7 +219,7 @@ button {
     height: 744px;
     border-radius: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    padding: 60px 180px;
+    padding: 100px 180px 60px 180px;
 
 }
 .form-box-category {
@@ -319,6 +319,7 @@ button {
 .list {
     background-color: #fff;
     border-radius: 10px;
+    width: 1140px;
 }
 .line {
     border-bottom: 2px solid #E7E8EB;
@@ -326,7 +327,8 @@ button {
 #table {
     border-radius: 10px;
     border: 0.6px solid #D5D5D5;
-    width: 100%;
+    width: 1140px;
+
 }
 .table-title {
     border-radius: 10px 10px 0 0;
@@ -349,7 +351,8 @@ button {
 #table-book {
     border-radius: 10px;
     border: 0.6px solid #D5D5D5;
-    width: 100%;
+    width: 1140px;
+
 }
 #table-book th {
     text-align: left;
