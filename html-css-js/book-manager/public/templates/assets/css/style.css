@@ -20,7 +20,8 @@ body {
 :root {
     --primary-color: #F5F6FA;
     --text-color: #404040;
-    --subtext-color: #565656 
+    --subtext-color: #565656;
+    --active-color: #4880FF;
 }
 h1 {
     font-size: 32px;
@@ -28,6 +29,9 @@ h1 {
 a {
     text-decoration: none;
     color: var(--text-color);
+}
+button {
+    cursor: pointer;
 }
 /* ========================================================
 ----------------------------Dashboard--------------------------
@@ -41,7 +45,7 @@ a {
     justify-content: start;
     align-items: center;
     width: 240px;
-    height: 1070px;
+    height: 1270px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: width 0.6s;
@@ -60,7 +64,7 @@ a {
     text-align: left;    
 }
 .dash {
-    color: #4880FF;
+    color: var(--active-color);
 }
 .sidebar-top,
 .sidebar-mid,
@@ -102,7 +106,7 @@ a {
 .active-btn {
     color: #fff;
     border-radius: 10px;
-    background-color: #4880FF;
+    background-color: var(--active-color);
 }
 .top-bar {
     display: flex;
@@ -175,7 +179,7 @@ a {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    padding: 40px 30px;
+    padding: 40px 50px 40px 30px;
 }
 .content {
     display: flex;
@@ -208,19 +212,24 @@ a {
 ----------------------------Dashboard--------------------------
 =========================================================== */
 .add-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 1140px;
 }
 .form-box {
     background-color: #fff;
-    width: 1140px;
     height: 744px;
     border-radius: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 60px 180px;
 
+}
+.form-box-category {
+    background-color: #fff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 60px 180px;
 }
 #upload-photo {
     display: none;
@@ -253,7 +262,7 @@ a {
     gap: 16px;
 }
 .form-box .form-upload label {
-    color: #4880FF;
+    color: var(--active-color);
     cursor: pointer;
 }
 
@@ -266,7 +275,12 @@ a {
     flex: 1; 
     margin-right: 10px; 
 }
-
+.form-category {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .form-group label {
     display: block;
     margin-bottom: 5px;
@@ -286,4 +300,81 @@ a {
     width: 360px;
     height: 52px;
     padding: 16px;
+}
+.form-button {
+    display: flex;
+    justify-content: center;
+}
+.form-button button {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 18px;
+    width: 274px;
+    height: 56px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--active-color);
+}
+
+.list {
+    background-color: #fff;
+    border-radius: 10px;
+}
+.line {
+    border-bottom: 2px solid #E7E8EB;
+}
+.table {
+    border-radius: 10px;
+    border: 0.6px solid #D5D5D5;
+    width: 100%;
+}
+.table-title {
+    border-radius: 10px 10px 0 0;
+}
+.table th {
+    text-align: left;
+    padding-left: 32px;
+    height: 49px;
+    border-bottom: 0.6px solid #D5D5D5;
+
+}
+.table tr {
+    font-weight: 100;
+}
+.table td {
+    text-align: left;
+    height: 52px;
+    padding-left: 32px;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    width: 100px;
+    height: 32px;
+    border-radius: 10px;
+}
+.edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 32px;
+    background-color: #FAFBFD;
+    border-radius: 10px 0 0 10px;
+    border: 0.6px solid #D5D5D5;
+    border-right: none;
+    cursor: pointer;
+}
+.delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 32px;
+    background-color: #FAFBFD;
+    border-radius: 0 10px 10px 0; 
+    border: 0.6px solid #D5D5D5;
+    cursor: pointer;
 }

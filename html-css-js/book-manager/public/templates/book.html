@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book-manager</title>
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/add-style.css">
 </head>
 <body>
     <nav class="navigation">
@@ -13,7 +14,7 @@
                 <img src="./assets/images/Logo.png" alt="">
             </div>
             <ul class="sidebar-top">
-                <li class="sidebar-item active-btn">
+                <li class="sidebar-item">
                     <a href="index.html" class="product">
                         <div class="product-icon">
                             <img src="./assets/icons/time.svg" alt="">
@@ -33,7 +34,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item active-btn">
                     <a href="book.html" class="product">
                         <div class="product-icon">
                             <img src="./assets/icons/favorites.svg" alt="">
@@ -120,39 +121,94 @@
         </header>
         <section class="dashboard-content">
             <div class="heading">
-                <h1>Dashboard</h1>
+                <h1>Add New Book</h1>
             </div>
-            <div class="content">
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Books</div>
-                        <div class="total"><strong>123.32</strong></div>
+            <div class="add-content">
+                <form action="" enctype="multipart/form-data" class="form-box">
+                    <div class="form-upload">
+                        <div class="upload">
+                            <input type="file" name="image" accept="image/*" id="upload-photo">
+                            <label for="upload-photo" class="upload-icon">
+                                <img src="./assets/icons/camera.svg" alt="">
+                            </label>
+                        </div>
+                        <label for="upload-photo">Upload Photo</label>
                     </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/book-icon.png" alt="">
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="fist-name">Title</label>
+                            <input type="text" name="title" id="fist-name" placeholder="Enter your first name">
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Author</label>
+                            <input type="text" name="author" id="last-name" placeholder="Enter your last name">
+                        </div>
                     </div>
-                </div>
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Category</div>
-                        <div class="total"><strong>123.32</strong></div>
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="your-email">Publisher</label>
+                            <input type="text" name="publisher" id="your-email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone-number">Price</label>
+                            <input type="text" name="price" id="phone-number" placeholder="Enter your phone number">
+                        </div>
                     </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/category-icon.png" alt="">
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="genre">Category</label>
+                            <select id="genre">
+                                <option value="" disabled selected hidden>-- Select category --</option>
+                                <option value="category 1">Category 1</option>
+                                <option value="category 2">Category 2</option>
+                                <option value="category 2">Category 2</option>
+                            </select>                            
+                        </div>
                     </div>
-                </div>
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Price</div>
-                        <div class="total"><strong>123.32</strong></div>
+                    <div class="form-button">
+                        <button type="submit">
+                            Add Now
+                        </button>
                     </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/price-icon.png" alt="">
-                    </div>
-                </div>
+                </form>
+            </div>
+            <div class="line"></div>
+            <div class="list">
+                <table class="table">
+                    <tr class="table-title">
+                        <th>Image</th>
+                        <th>ID</th>
+                        <th>Category</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="./assets/images/Flag.png" alt="">
+                        </td>
+                        <td>00001</td>
+                        <td>Category</td>
+                        <td>Title</td>
+                        <td>Author</td>
+                        <td>Publisher</td>
+                        <td>Price</td>
+                        <td>
+                            <div class="action">
+                                <div class="edit">
+                                    <img src="./assets/icons/pencil-write.svg" alt="">
+                                </div>
+                                <div class="delete">
+                                    <img src="./assets/icons/bin.svg" alt="">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </section>
-    </main>
 </body>
 <script src="./assets/js/main.js"></script>
 </html>

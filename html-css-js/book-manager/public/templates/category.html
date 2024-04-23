@@ -13,7 +13,7 @@
                 <img src="./assets/images/Logo.png" alt="">
             </div>
             <ul class="sidebar-top">
-                <li class="sidebar-item active-btn">
+                <li class="sidebar-item">
                     <a href="index.html" class="product">
                         <div class="product-icon">
                             <img src="./assets/icons/time.svg" alt="">
@@ -23,7 +23,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item active-btn">
                     <a href="category.html" class="product">
                         <div class="product-icon">
                             <img src="./assets/icons/product-stock.svg" alt="">
@@ -120,37 +120,54 @@
         </header>
         <section class="dashboard-content">
             <div class="heading">
-                <h1>Dashboard</h1>
+                <h1>Table</h1>
             </div>
-            <div class="content">
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Books</div>
-                        <div class="total"><strong>123.32</strong></div>
+            <div class="add-content">
+                <form action="" enctype="multipart/form-data" class="form-box-category">
+                    <div class="form-input">
+                        <div class="form-group form-category">
+                            <label for="fist-name">Category Name</label>
+                            <input type="text" name="title" id="fist-name" placeholder="Enter your first name">
+                        </div>
                     </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/book-icon.png" alt="">
+                    <div class="form-button">
+                        <button type="submit">
+                            Add Now
+                        </button>
                     </div>
-                </div>
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Category</div>
-                        <div class="total"><strong>123.32</strong></div>
-                    </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/category-icon.png" alt="">
-                    </div>
-                </div>
-                <div class="card-element">
-                    <div class="card-description">
-                        <div class="title">Total Price</div>
-                        <div class="total"><strong>123.32</strong></div>
-                    </div>
-                    <div class="card-icon">
-                        <img src="./assets/images/price-icon.png" alt="">
-                    </div>
-                </div>
+                </form>
             </div>
+            <div class="line"></div>
+            <div class="list">
+                <table class="table">
+                    <tr class="table-title">
+                        <th>ID</th>
+                        <th>Category</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>00001</td>
+                        <td>Category</td>
+                        <td>
+                            <div class="action">
+                                <div class="edit">
+                                    <img src="./assets/icons/pencil-write.svg" alt="">
+                                </div>
+                                <div class="delete">
+                                    <img src="./assets/icons/bin.svg" alt="">
+                                </div>
+                            </div>
+                        </td>
+                        <!-- <td>089 Kutch Green Apt. 448</td>
+                        <td>14 Feb 2019</td>
+                        <td>Electric</td>
+                        <td class="status-user">
+                            <img src="./assets/images/Completed.png" alt="">
+                        </td> -->
+                    </tr>
+                </table>
+            </div>
+            
         </section>
     </main>
 </body>

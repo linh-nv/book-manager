@@ -35,3 +35,43 @@ menuClick.addEventListener('click', function() {
 });
 
 
+
+
+
+let formDataArray = [];
+
+document.getElementById('upload-photo').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    console.log(imageUrl);
+    formDataArray.push(imageUrl);
+});
+
+
+document.querySelector('.form-box').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const firstName = document.getElementById('fist-name').value;
+    const lastName = document.getElementById('last-name').value;
+    const email = document.getElementById('your-email').value;
+    const phoneNumber = document.getElementById('phone-number').value;
+    const dateOfBirth = document.getElementById('date-of-birth').value;
+    const genre = document.getElementById('genre').value;
+
+    const formData = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phoneNumber: phoneNumber,
+        dateOfBirth: dateOfBirth,
+        genre: genre
+    };
+
+    // Thêm đối tượng formData vào formDataArray
+    formDataArray = [...formDataArray, formData];
+
+    // Log kết quả
+    // console.log(formDataArray);
+});
+
+
