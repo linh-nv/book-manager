@@ -10,12 +10,12 @@ html {
 body {
     font-size: 1.45rem;
     line-height: 2.5rem /* 40px */;
-    background-color: #18191A;
+    background-color: var(--background-color);
     color: var(--text-color);
 }
 :root {
     --header-color: #242526;
-    /* --hover-color: #3A3B3C; */
+    --background-color: #18191A;
     --button-color: #3A3B3C;
     --icon-color: #B8BBBF;
     --text-color: #E7E9EC;
@@ -33,6 +33,7 @@ body {
     background-size: 30px 2550px;
     background-repeat: no-repeat;
 }
+
 .image-notify-icon {
     background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yI/r/6zu0RJC0hwi.png?_nc_eui2=AeFamy86IWKC3435hrM5WF47okLf4Tk3oFSiQt_hOTegVAOwIQ7DZoois9lhDJVuesgep2RLm-4ot9AglmvTjuh7");
     background-position: 0px -1770px; /* Thay đổi vị trí tùy ý */
@@ -56,6 +57,16 @@ body {
 .more-notify-icon {
     background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yI/r/i4kvG9y9_5_.png?_nc_eui2=AeGyIjwWDDDqeZyfAUBA_gfFlXiXh6H-A9WVeJeHof4D1UbOzP08mKIaqNNclCcd2VffmfdMb-KBSUeaWEqTGtjH");
     background-position: 0px -576px; /* Thay đổi vị trí tùy ý */
+}
+
+.image-notify-icon {
+    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yI/r/6zu0RJC0hwi.png?_nc_eui2=AeFamy86IWKC3435hrM5WF47okLf4Tk3oFSiQt_hOTegVAOwIQ7DZoois9lhDJVuesgep2RLm-4ot9AglmvTjuh7");
+    background-position: 0px -1770px; /* Thay đổi vị trí tùy ý */
+}
+
+.pencil-write-icon {
+    background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/qNevc-ObBr6.png?_nc_eui2=AeGbvZwtbQKRIJCGIRE9nHfAWxXNJ7j79VdbFc0nuPv1V2lIGlpsAn4oSV8dZjQJKB24gFAHG1AmLKUeidx2JmlQ");
+    background-position: 0px -147px;
 }
 h1 {
     font-size: 1.65rem;
@@ -560,3 +571,156 @@ nav .row {
     background-color: #31A24C;
     border: 2px solid var(--header-color);
 }
+
+/* menu */
+#card-menu {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    top: 95%;
+    right: 0;
+    width: 650px;
+    max-height: 92vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #323436;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+.menu::-webkit-scrollbar {
+    width: 10px;
+}
+.menu:hover::-webkit-scrollbar {
+    opacity: 0.8;
+    transition-delay: 0s;
+}
+
+.menu::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 6px;
+    /* transition: background-color 1s; */
+}
+.menu:hover::-webkit-scrollbar-thumb {
+    background-color: #707173;
+}
+.menu-heading h1 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.menu {
+    display: flex;
+    gap: 10px;
+
+    overflow-y: auto;
+}
+.menu-left, 
+.menu-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--header-color);
+    padding: 15px;
+    border-radius: 10px;
+}
+.menu .menu-left{
+    width: 65%;
+    height: fit-content;
+}
+.menu-left-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu .menu-right{
+    width: 35%;
+    height: fit-content;
+}
+.menu-search-box {
+    position: relative;
+}
+.menu-search-box input {
+    width: 100%;
+    background-color: #323436;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 40px;
+    opacity: 0.8;
+}
+.menu-search-box input::placeholder {
+    color: var(--icon-color);
+    font-size: 15px;
+}
+.menu-search-box img {
+    position: absolute;
+    top: calc(50% - 9px);
+    left: 15px;
+}
+.list-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+.list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0 25px 0;
+    border-bottom: 1px solid #323436;
+}
+.list-item:last-child {
+    border-bottom: none;
+}
+.list-item .menu-left-item {
+    display: flex;
+    gap: 10px;
+}
+.menu-left-item .menu-left-item-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+.menu-left-item .menu-left-item-message {
+    font-size: 12px;
+    color: var(--icon-color);
+    line-height: 1.2;
+}
+.menu-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.menu-right-heading h2{
+    font-size: 18px
+}
+.menu-right-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.menu-right-list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 15px;
+}
+.menu-right-list-item:first-child {
+    border-bottom: 1px solid #323436;
+
+}
+.menu-right-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+}
+.menu-right-item-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: var(--button-color);
+}
+
+
+
