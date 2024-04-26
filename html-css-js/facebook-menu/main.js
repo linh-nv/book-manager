@@ -1,20 +1,20 @@
 
-var cardAccountManage = document.getElementById('card-account-manage');
-var cardNotify = document.getElementById('card-notify');
-var cardChat = document.getElementById('card-chat');
-var cardMenu = document.getElementById('card-menu');
+const cardAccountManage = document.getElementById('card-account-manage');
+const cardNotify = document.getElementById('card-notify');
+const cardChat = document.getElementById('card-chat');
+const cardMenu = document.getElementById('card-menu');
 
-var avatarBox = document.querySelector('.avatar-box');
-var notifyBtn = document.querySelector('.notify-btn');
-var chatBtn = document.querySelector('.chat-btn');
-var menuBtn = document.querySelector('.menu-btn');
+const avatarBox = document.querySelector('.avatar-box');
+const notifyBtn = document.querySelector('.notify-btn');
+const chatBtn = document.querySelector('.chat-btn');
+const menuBtn = document.querySelector('.menu-btn');
 
-var notifyIcon = document.querySelector('.notify-btn img');
-var chatIcon = document.querySelector('.chat-btn img');
-var menuIcon = document.querySelector('.menu-btn img');
+const notifyIcon = document.querySelector('.notify-btn img');
+const chatIcon = document.querySelector('.chat-btn img');
+const menuIcon = document.querySelector('.menu-btn img');
 
 
-var currentVisibleForm = null;
+let currentVisibleForm = null;
 
 avatarBox.addEventListener('click', function() {
     if (currentVisibleForm !== cardAccountManage) {
@@ -113,7 +113,7 @@ menuBtn.addEventListener('click', function() {
 
 
 // ============= Notification ==================
-var data_notify = [
+let dataNotifies = [
     {
         "username": "Nguyễn Văn Linh",
         "status_notify": "image-notify-icon", 
@@ -180,60 +180,60 @@ var data_notify = [
         "username": "Nguyễn Văn Linh",
         "status_notify": "comment-notify-icon", 
         "content_notification": "Ai dám nói trước sau này (trước sau này), Chẳng ai biết trước tương lai sau này (sau này), Tình yêu đâu biết mai này có vẹn nguyên, Còn nguyên như lời ta đã hứa trước đây? (Ta đã hứa trước đây)",
-        "time": "19 phút trước"
-    
+        "time": "19 phút trước" 
     }
 ]
 
 function showNotify(){
-    var notify_new_content = ``
-    for(let i=0; i<2; i++){
-        notify_new_content += `
+    let notifyNewContent = ``
+
+    for (let i = 0; i < 2; i++) {
+        notifyNewContent += `
             <a href="#notify" class="notify-element button">
                 <div class="notify-image">
                     <img src="./images/avatar.png" alt="">
-                    <i class="notify-icon ${data_notify[i].status_notify}"></i>
+                    <i class="notify-icon ${dataNotifies[i].status_notify}"></i>
                 </div>
                 <div class="notify-description">
                     <div class="notify-message-content">
-                        <span class="notify-message-user-name">${data_notify[i].username}&nbsp;</span>${data_notify[i].content_notification}
+                        <span class="notify-message-user-name">${dataNotifies[i].username}&nbsp;</span>${dataNotifies[i].content_notification}
                     </div>
                     <div class="notify-message-time">
-                        <span>${data_notify[i].time}</span>
+                        <span>${dataNotifies[i].time}</span>
                     </div>
                 </div>
                 <div class="dot"></div>
             </a>
         `
     }
-    document.getElementById('content_new').innerHTML = notify_new_content;
+    document.getElementById('content_new').innerHTML = notifyNewContent;
 
-    var notify_bottom_content = ``
-    for(let i=2; i<data_notify.length; i++){
-        notify_bottom_content += `
+    let notifyBottomContent = ``
+
+    for (let i = 2; i < dataNotifies.length; i++) {
+        notifyBottomContent += `
             <a href="#notify" class="notify-element button">
                 <div class="notify-image">
                     <img src="./images/avatar.png" alt="">
-                    <i class="notify-icon ${data_notify[i].status_notify}"></i>
+                    <i class="notify-icon ${dataNotifies[i].status_notify}"></i>
                 </div>
                 <div class="notify-description">
                     <div class="notify-message-content">
-                        <span class="notify-message-user-name">${data_notify[i].username}&nbsp;</span>${data_notify[i].content_notification}
+                        <span class="notify-message-user-name">${dataNotifies[i].username}&nbsp;</span>${dataNotifies[i].content_notification}
                     </div>
                     <div class="notify-message-time">
-                        <span>${data_notify[i].time}</span>
+                        <span>${dataNotifies[i].time}</span>
                     </div>
                 </div>
                 <div class="dot"></div>
             </a>
         `
-    document.getElementById('previous_content').innerHTML = notify_bottom_content;
+    document.getElementById('previous_content').innerHTML = notifyBottomContent;
     }
 }
 
 // ====================== Message ===============================
-
-var data_message = [
+let dataMessages = [
     {
         "username": "Nguyễn Văn Linh",
         "message": "Liệu mai sau phai vội mau không bước bên cạnh nhau (bên cạnh nhau), Thì ta có đau? (Thì ta có đau? Có đau?), Đôi mi nhòe phai ai sẽ lau?, Ai sẽ đến lau nỗi đau này?",
@@ -242,50 +242,33 @@ var data_message = [
     {
         "username": "Nguyễn Thanh Tùng",
         "message": "Vô tâm quay lưng ta thờ ơ, lạnh lùng băng giá như vậy sao? (Vậy sao? Vậy sao?), Vờ không biết nhau (không biết nhau, không biết nhau), Lặng im băng qua chẳng nói một lời (chẳng nói một lời), Ooh-whoa-ooh-whoa-oh-oh-oh (yeah, eh)",
-        
         "time": "32 phút trước"
     },
     {
         "username": "Sơn Tùng MTP",
         "message": "Rồi niềm đau có chóng quên? (Hah-ah-ooh-ah), Hay càng quên càng nhớ thêm, vấn vương vết thương lòng xót xa?, Đừng như con nít (con nít), từng mặn nồng say đắm say (oh-oh-ah), Cớ sao khi chia tay (chia tay), ta xa lạ đến kì lạ? (Ta xa lạ đến kì lạ)",
-        
         "time": "34 phút trước"
     },
     {
         "username": "Leo Messi",
         "message": "Ai dám nói trước sau này (trước sau này), Chẳng ai biết trước tương lai sau này (sau này), Tình yêu đâu biết mai này có vẹn nguyên, Còn nguyên như lời ta đã hứa trước đây? (Ta đã hứa trước đây)",
-        
         "time": "35 phút trước"
     },
     {
         "username": "CR7",
         "message": "Dẫu cho giông tố xô xa rời (xa rời), Còn mãi những điều đẹp đẽ say đắm một thời (một thời), Nụ cười và giọt nước mắt rơi từng trao cùng ta, Nhìn lại về phía mặt trời (phía mặt trời), Ta về phía mặt trời (phía mặt trời)",
-        
         "time": "36 phút trước"
     },
     {
         "username": "Trịnh Trần Phương Tuấn",
         "message": "Yah, yah, Tương lai ngày mai ai nào hay (whoa), Yêu thương rồi buông đôi bàn tay (whoa), Mong manh đường duyên như vận may, Chia ly, hợp tan nhanh còn hơn mây trời bay (yah)",
-        
         "time": "37 phút trước"
-    },
-    {
-        "username": "Jack",
-        "message": "Quên nhau, vờ như chưa từng quen (sao quên?), Quên luôn mặt, quên luôn cả tên (sao quên?), Quên đi, làm sao mà đòi quên?, Khi câu thề xưa vẫn vẹn nguyên nên đừng cố quên (ah)",
-        
-        "time": "45 phút trước"
-    },
-    {
-        "username": "Meo Meo",
-        "message": "Vấn vương cũng chẳng sao mà (whoa), nhớ nhung cũng chẳng sao mà (whoa), Đớn đau cũng chẳng sao mà (whoa), Dù có đắng cay ta cũng chẳng sao đâu, Chân thành khi còn bên nhau và trân trọng hơn mỗi phút giây (hơn mỗi phút giây), Thành thật bên nhau mỗi phút giây (yeah, yeah)",
-        
-        "time": "46 phút trước"
     }
 ]
 
-function showMessage(){
-    var message = ``
-    for(let i=2; i<data_message.length; i++){
+function showMessage() {
+    let message = ``
+    for (let i = 0; i < dataMessages.length; i++) {
         message += `
             <a href="#message" class="notify-element button">
                 <div class="notify-image">
@@ -294,12 +277,12 @@ function showMessage(){
                 </div>
                 <div class="notify-description">
                     <div class="notify-message-content">
-                        <span class="notify-message-user-name">${data_message[i].username}</span>
+                        <span class="notify-message-user-name">${dataMessages[i].username}</span>
                         <br/>
-                        <p>${data_message[i].message}</p>
+                        <p>${dataMessages[i].message}</p>
                     </div>
                     <div class="notify-message-time">
-                        <span>${data_message[i].time}</span>
+                        <span>${dataMessages[i].time}</span>
                     </div>
                 </div>
                 <div class="dot"></div>
@@ -309,4 +292,3 @@ function showMessage(){
     }
 }
 
-// menu
