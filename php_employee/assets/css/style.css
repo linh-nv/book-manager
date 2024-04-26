@@ -1,0 +1,240 @@
+html {
+    font-size: 62.5%;
+}
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wdth,wght@0,6..12,102.7,500;1,6..12,102.7,500&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nunito Sans", sans-serif;
+}
+body {
+    font-size: 1.45rem;
+    line-height: 21.82px;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    font-weight: 600;
+    gap: 20px;
+}
+:root {
+    --primary-color: #F5F6FA;
+    --text-color: #404040;
+    --subtext-color: #565656;
+    --active-color: #4880FF;
+}
+h1 {
+    font-size: 32px;
+}
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+button {
+    cursor: pointer;
+}
+li {
+    list-style: none;
+}
+.heading {
+    margin-top: 50px;
+}
+.add-content {
+    width: 1140px;
+    margin-bottom: 50px;
+}
+.form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    height: 744px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 100px 180px 60px 180px;
+
+}
+.form-box-category {
+    background-color: #fff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 60px 180px;
+}
+#upload-photo {
+    display: none;
+}
+.upload label {
+    cursor: pointer; /* Đổi con trỏ chuột khi di chuyển qua */
+}
+.upload-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background-color: #ECECEE;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.upload-icon img {
+    opacity: 0.7;
+}
+.form-box {
+    display: grid;
+}
+.form-box .form-upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+.form-box .form-upload label {
+    color: var(--active-color);
+    cursor: pointer;
+}
+
+.form-input {
+    display: flex; 
+    gap: 60px;
+}
+
+.form-group {
+    flex: 1; 
+    margin-right: 10px; 
+}
+.form-category {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input {
+    border-radius: 5px;
+    border: 0.6px solid #D5D5D5;
+    background-color: var(--primary-color);
+    width: 360px;
+    height: 52px;
+    padding: 16px;
+}
+.form-group select {
+    border-radius: 5px;
+    border: 0.6px solid #D5D5D5;
+    background-color: var(--primary-color);
+    width: 360px;
+    height: 52px;
+    padding: 16px;
+}
+.form-button {
+    display: flex;
+    justify-content: center;
+}
+.form-button button {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 18px;
+    width: 274px;
+    height: 56px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--active-color);
+}
+.dashboard-content {
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 50px 10px 30px;
+    margin-bottom: 50px;
+}
+
+.add-employee {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--active-color);
+    color: var(--primary-color);
+}
+.list {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 1140px;
+}
+.line {
+    border-bottom: 2px solid #E7E8EB;
+}
+#table {
+    border-radius: 10px;
+    border: 0.6px solid #D5D5D5;
+    width: 1140px;
+
+}
+.table-title {
+    border-radius: 10px 10px 0 0;
+}
+#table-book a {
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--primary-color);
+}
+.show {
+    background-color: rgb(22 163 74);
+}
+.update {
+    background-color: rgb(30 64 175);
+}
+.delete {
+    background-color: rgb(159 18 57);
+}
+#table th {
+    text-align: left;
+    padding-left: 32px;
+    height: 49px;
+    border-bottom: 0.6px solid #D5D5D5;
+
+}
+
+#table tr {
+    font-weight: 100;
+}
+#table td {
+    text-align: left;
+    height: 52px;
+    padding-left: 32px;
+}
+#table-book {
+    border-radius: 10px;
+    border: 0.6px solid #D5D5D5;
+    width: 1140px;
+
+}
+#table-book th {
+    text-align: left;
+    padding-left: 32px;
+    height: 49px;
+    border-bottom: 0.6px solid #D5D5D5;
+
+}
+#table-book tr {
+    font-weight: 100;
+}
+#table-book td {
+    text-align: left;
+    height: 52px;
+    padding-left: 32px;
+}
