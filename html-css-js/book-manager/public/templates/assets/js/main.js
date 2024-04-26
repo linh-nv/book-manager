@@ -164,7 +164,7 @@ function showCategory(){
                     <div class="edit" onclick="editCategory(${data[i].id})">
                         <img src="./assets/icons/pencil-write.svg" alt="">
                     </div>
-                    <div class="delete" onclick="openConfirmPopup()">
+                    <div class="delete" onclick="openConfirmPopup(${data[i].id})">
                         <img src="./assets/icons/bin.svg" alt="">
                     </div>
                 </div>
@@ -175,7 +175,7 @@ function showCategory(){
                 <span class="close" onclick="closeConfirmPopup()">&times;</span>
                 <p>Are you sure you want to delete this book?</p>
                 <div class="confirm-buttons">
-                    <button onclick="confirmDelete(${data[i].id})">Yes</button>
+                    <button onclick="confirmDelete()">Yes</button>
                     <button onclick="closeConfirmPopup()">No</button>
                 </div>
             </div>
@@ -207,16 +207,18 @@ function editCategory(id){
         }
     }
 }
-function openConfirmPopup() {
+function openConfirmPopup(id) {
     document.getElementById('confirmPopup').style.display = 'block';
+    document.getElementById('id_delete_category').value = id;
 }
 
 function closeConfirmPopup() {
     document.getElementById('confirmPopup').style.display = 'none';
 }
 
-function confirmDelete(id) {
-    deleteCategory(id)
+function confirmDelete() {
+    var id_delete_category = document.getElementById('id_delete_category').value;
+    deleteCategory(id_delete_category)
     closeConfirmPopup();
 }
 
@@ -299,7 +301,8 @@ function submitBook(){
     showBook()
     clearBook()
 }
-function openConfirmPopupBook() {
+function openConfirmPopupBook(id) {
+    document.getElementById('id_delete_book').value = id;
     document.getElementById('confirmPopup').style.display = 'block';
 }
 
@@ -307,8 +310,9 @@ function closeConfirmPopupBook() {
     document.getElementById('confirmPopup').style.display = 'none';
 }
 
-function confirmDeleteBook(id) {
-    deleteBook(id)
+function confirmDeleteBook() {
+    var id_delete_book = document.getElementById('id_delete_book').value;
+    deleteBook(id_delete_book)
     closeConfirmPopup();
 }
 function showBook(){
@@ -339,7 +343,7 @@ function showBook(){
                     <div class="edit" onclick="editBook(${data_book[i].id})">
                         <img src="./assets/icons/pencil-write.svg" alt="">
                     </div>
-                    <div class="delete" onclick="openConfirmPopupBook()">
+                    <div class="delete" onclick="openConfirmPopupBook(${data_book[i].id})">
                         <img src="./assets/icons/bin.svg" alt="">
                     </div>
                 </div>
@@ -350,7 +354,7 @@ function showBook(){
                 <span class="close" onclick="closeConfirmPopupBook()">&times;</span>
                 <p>Are you sure you want to delete this book?</p>
                 <div class="confirm-buttons">
-                    <button onclick="confirmDeleteBook(${data_book[i].id})">Yes</button>
+                    <button onclick="confirmDeleteBook()">Yes</button>
                     <button onclick="closeConfirmPopupBook()">No</button>
                 </div>
             </div>
@@ -435,7 +439,7 @@ function search() {
                 <li>ID book: ${data_book[i].id}<br/> Title Book: ${data_book[i].title} </li>`;
             }
         }
-        searchResult.innerHTML = list_category ? list_category : "<p>No matching categories found.</p>";
+        searchResult.innerHTML = list_category ? list_category : "<p>No matching categories, books found.</p>";
         searchResult.style.display = "block";
     } else {
         searchResult.style.display = "none";
