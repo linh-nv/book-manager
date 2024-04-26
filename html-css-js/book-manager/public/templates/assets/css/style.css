@@ -183,7 +183,7 @@ li {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    padding: 40px 50px 40px 30px;
+    padding: 40px 50px 10px 30px;
 }
 .content {
     display: flex;
@@ -344,6 +344,7 @@ li {
     border-bottom: 0.6px solid #D5D5D5;
 
 }
+
 #table tr {
     font-weight: 100;
 }
@@ -485,4 +486,71 @@ li {
 
 .close:hover {
     color: #000;
+}
+
+/* paginate */
+#paginate {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 1140px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 50px 90px 30px;
+    padding: 10px;
+}
+#prev-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+}
+#prev-page:hover {
+    background-color: #eceef8;
+}
+#next-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+}
+#next-page:hover {
+    background-color: #eceef8;
+}
+
+.page-link {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+}
+.page-link:hover {
+    background-color: #eceef8;
+}
+/*  xoa nhieu  */
+.multi-delete {
+    border: none;
+    background-color: var(--primary-color);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    color: red;
 }

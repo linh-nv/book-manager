@@ -33,15 +33,15 @@ menuClick.addEventListener('click', function() {
 
 // category
 document.addEventListener("DOMContentLoaded", function() {
-    var selectElement = document.getElementById('category');
+    let selectElement = document.getElementById('category');
     data.forEach(function(item) {
-        var option = document.createElement('option');
+        let option = document.createElement('option');
         option.value = item.id; 
         option.textContent = item.title; 
         selectElement.appendChild(option); 
     });
 });
-var data = [
+let data = [
     {
         "id": 1,
         "title": "Fiction"
@@ -126,10 +126,10 @@ var data = [
 
 
 function submitCategory(){
-    var category_title = document.getElementById('category-title').value
-    var category_id = document.getElementById('category-id').value
+    let category_title = document.getElementById('category-title').value
+    let category_id = document.getElementById('category-id').value
 
-    var item = {
+    let item = {
         id: category_id,
         title: category_title
     }
@@ -146,44 +146,124 @@ function submitCategory(){
     clearCategory()
 }
 
-function showCategory(){
-    table = `
-    <tr class="table-title">
-        <th>ID</th>
-        <th>Category</th>
-        <th>Action</th>
-    </tr>
-    `
-    for(let i=0; i<data.length; i++){
-        table += `
-        <tr>
-            <td>${data[i].id}</td>
-            <td>${data[i].title}</td>
-            <td>
-                <div class="action">
-                    <div class="edit" onclick="editCategory(${data[i].id})">
-                        <img src="./assets/icons/pencil-write.svg" alt="">
-                    </div>
-                    <div class="delete" onclick="openConfirmPopup(${data[i].id})">
-                        <img src="./assets/icons/bin.svg" alt="">
-                    </div>
-                </div>
-            </td>
+// ======================= paginate ============================
+const itemsPerPageCategory = 3; // Số phần tử mỗi trang
+let currentPage = 1; // Mặc định trang hiện tại
+
+function paginate(data, page) {
+    const startIndex = (page - 1) * itemsPerPageCategory;
+    const endIndex = startIndex + itemsPerPageCategory;
+    return data.slice(startIndex, endIndex);
+}
+
+function showCategory() {
+    const paginatedData = paginate(data, currentPage);
+
+    let table = `
+        <tr class="table-title">
+            <th>ID</th>
+            <th>Category</th>
+            <th>Action</th>
+            <th>
+                <button class="multi-delete" onclick="deleteSelectedItemsCategory()">Xoá</button>
+            </th>
         </tr>
-        <div id="confirmPopup" class="confirm-popup">
-            <div class="confirm-content">
-                <span class="close" onclick="closeConfirmPopup()">&times;</span>
-                <p>Are you sure you want to delete this book?</p>
-                <div class="confirm-buttons">
-                    <button onclick="confirmDelete()">Yes</button>
-                    <button onclick="closeConfirmPopup()">No</button>
+    `;
+
+    paginatedData.forEach(item => {
+        table += `
+            <tr>
+                <td>${item.id}</td>
+                <td>${item.title}</td>
+                <td>
+                    <div class="action">
+                        <div class="edit" onclick="editCategory(${item.id})">
+                            <img src="./assets/icons/pencil-write.svg" alt="">
+                        </div>
+                        <div class="delete" onclick="openConfirmPopup(${item.id})">
+                            <img src="./assets/icons/bin.svg" alt="">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <input type="checkbox" value="${item.id}">
+                </td>
+            </tr>
+            <div id="confirmPopup" class="confirm-popup">
+                <div class="confirm-content">
+                    <span class="close" onclick="closeConfirmPopup()">&times;</span>
+                    <p>Are you sure you want to delete this book?</p>
+                    <div class="confirm-buttons">
+                        <button onclick="confirmDelete()">Yes</button>
+                        <button onclick="closeConfirmPopup()">No</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        `
-    }
+        `;
+    });
+
     document.getElementById('table').innerHTML = table;
+    renderPagination()
 }
+function getSelectedItemsCategory() {
+    let checkboxesCategory = document.querySelectorAll('#table input[type="checkbox"]:checked');
+    let selectedIdsCategory = [];
+    checkboxesCategory.forEach(checkbox => {
+        selectedIdsCategory.push(parseInt(checkbox.value));
+    });
+    return selectedIdsCategory;
+}
+
+function deleteSelectedItemsCategory() {
+    let selectedIdsCategory = getSelectedItemsCategory();
+    data = data.filter(item => !selectedIdsCategory.includes(item.id));
+    showCategory();
+}
+
+
+function prevPageCategory() {
+    if (currentPage > 1) {
+        currentPage--;
+        showCategory();
+    }
+}
+
+function nextPageCategory() {
+    const totalPages = Math.ceil(data.length / itemsPerPageCategory);
+    if (currentPage < totalPages) {
+        currentPage++;
+        showCategory();
+    }
+}
+
+function goToPage(page) {
+    currentPage = page;
+    showCategory();
+}
+
+function renderPagination() {
+    let totalPages = Math.ceil(data.length / itemsPerPageCategory);
+    let paginationHTML = `
+            <div id="prev-page" onclick="prevPageCategory()">
+                    <img src="./assets/icons/prev.svg" alt="">
+                </div>
+                `;
+
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `
+            <div class="page-link" onclick="goToPage(${i})">
+                <span>${i}</span>
+            </div>
+        `;
+    }
+
+    paginationHTML += `
+            <div id="next-page" onclick="nextPageCategory()">
+                <img src="./assets/icons/next.svg" alt="">
+            </div>`
+    document.getElementById('paginate').innerHTML = paginationHTML;
+}
+
 
 function clearCategory(){
     document.getElementById('category-title').value = ""
@@ -217,13 +297,13 @@ function closeConfirmPopup() {
 }
 
 function confirmDelete() {
-    var id_delete_category = document.getElementById('id_delete_category').value;
+    let id_delete_category = document.getElementById('id_delete_category').value;
     deleteCategory(id_delete_category)
     closeConfirmPopup();
 }
 
 // book
-var data_book = [
+let dataBook = [
     {
         "id": 1,
         "title": "The Great Gatsby",
@@ -269,33 +349,61 @@ var data_book = [
         "price": 9.99,
         "category": 3 // Science Fiction
     }
+    ,
+    {
+        "id": 6,
+        "title": "1984",
+        "image": "https://example.com/1984.jpg",
+        "author": "George Orwell",
+        "publisher": "Secker & Warburg",
+        "price": 9.99,
+        "category": 3 // Science Fiction
+    },
+    {
+        "id": 7,
+        "title": "To Kill a Mockingbird",
+        "image": "https://example.com/to_kill_a_mockingbird.jpg",
+        "author": "Harper Leeasdas",
+        "publisher": "J. B. Lippincott & Co.",
+        "price": 10.50,
+        "category": 2 // Classic
+    },
+    {
+        "id": 8,
+        "title": "1984",
+        "image": "https://example.com/1984.jpg",
+        "author": "saffas safsf",
+        "publisher": "Secker & Warburg",
+        "price": 9.99,
+        "category": 3 // Science Fiction
+    }
 ]
 
 function submitBook(){
-    var book_title = document.getElementById('book-title').value
-    var book_id = document.getElementById('book-id').value
-    var book_image = document.getElementById('book-image').value
-    var book_author = document.getElementById('book-author').value
-    var book_publisher = document.getElementById('book-publisher').value
-    var book_price = document.getElementById('book-price').value
-    var book_category = document.getElementById('category').value;
+    let bookTitle = document.getElementById('book-title').value
+    let bookId = document.getElementById('book-id').value
+    let bookImage = document.getElementById('book-image').value
+    let bookAuthor = document.getElementById('book-author').value
+    let bookPublisher = document.getElementById('book-publisher').value
+    let bookPrice = document.getElementById('book-price').value
+    let bookCategory = document.getElementById('category').value;
 
-    var item_book = {
-        id: book_id,
-        title: book_title,
-        image: book_image,
-        author: book_author,
-        publisher: book_publisher,
-        price: book_price,
-        category: book_category
+    let item_book = {
+        id: bookId,
+        title: bookTitle,
+        image: bookImage,
+        author: bookAuthor,
+        publisher: bookPublisher,
+        price: bookPrice,
+        category: bookCategory
     }
 
-    let index_book = data_book.findIndex((c)=>c.id == item_book.id)
+    let index_book = dataBook.findIndex((c)=>c.id == item_book.id)
     console.log(index_book);
     if(index_book >= 0){
-        data_book.splice(index_book, 1, item_book)
+        dataBook.splice(index_book, 1, item_book)
     }else{   
-        data_book.push(item_book)
+        dataBook.push(item_book)
     }
 
     showBook()
@@ -311,12 +419,24 @@ function closeConfirmPopupBook() {
 }
 
 function confirmDeleteBook() {
-    var id_delete_book = document.getElementById('id_delete_book').value;
-    deleteBook(id_delete_book)
+    let idDeleteBook = document.getElementById('id_delete_book').value;
+    deleteBook(idDeleteBook)
     closeConfirmPopup();
 }
+
+// ======================= paginate book ============================
+const itemsPerPageBook = 3; // Số phần tử mỗi trang
+let currentPageBook = 1; // Mặc định trang hiện tại
+
+function paginateBook(data, page) {
+    const startIndexBook = (page - 1) * itemsPerPageBook;
+    const endIndexBook = startIndexBook + itemsPerPageBook;
+    return data.slice(startIndexBook, endIndexBook);
+}
 function showBook(){
-    table_book = `
+    const paginatedDataBook = paginateBook(dataBook, currentPageBook);
+
+    let table_book = `
     <tr class="table-title">
         <th>Image</th>
         <th>ID</th>
@@ -326,27 +446,33 @@ function showBook(){
         <th>Publisher</th>
         <th>Price</th>
         <th>Action</th>
+        <th>
+            <button class="multi-delete" onclick="deleteSelectedItems()">Xoá</button>
+        </th>
     </tr>
     `
-    for(let i=0; i<data_book.length; i++){
+    paginatedDataBook.forEach(item => {
         table_book += `
         <tr>
-            <td>${data_book[i].image}</td>
-            <td>${data_book[i].id}</td>
-            <td>${data_book[i].category}</td>
-            <td>${data_book[i].title}</td>
-            <td>${data_book[i].author}</td>
-            <td>${data_book[i].publisher}</td>
-            <td>${data_book[i].price}</td>
+            <td>${item.image}</td>
+            <td>${item.id}</td>
+            <td>${item.category}</td>
+            <td>${item.title}</td>
+            <td>${item.author}</td>
+            <td>${item.publisher}</td>
+            <td>${item.price}</td>
             <td>
                 <div class="action">
-                    <div class="edit" onclick="editBook(${data_book[i].id})">
+                    <div class="edit" onclick="editBook(${item.id})">
                         <img src="./assets/icons/pencil-write.svg" alt="">
                     </div>
-                    <div class="delete" onclick="openConfirmPopupBook(${data_book[i].id})">
+                    <div class="delete" onclick="openConfirmPopupBook(${item.id})">
                         <img src="./assets/icons/bin.svg" alt="">
                     </div>
                 </div>
+            </td>
+            <td>
+                <input type="checkbox" value="${item.id}">
             </td>
         </tr>
         <div id="confirmPopup" class="confirm-popup">
@@ -358,11 +484,71 @@ function showBook(){
                     <button onclick="closeConfirmPopupBook()">No</button>
                 </div>
             </div>
-        </div>
-        `
-    }
+        </div>`
+    });
+
     document.getElementById('table-book').innerHTML = table_book;
+    renderPaginationBook()
 }
+
+function getSelectedItems() {
+    let checkboxes = document.querySelectorAll('#table-book input[type="checkbox"]:checked');
+    let selectedIds = [];
+    checkboxes.forEach(checkbox => {
+        selectedIds.push(parseInt(checkbox.value));
+    });
+    return selectedIds;
+}
+
+// Hàm xóa các item đã chọn khỏi mảng dữ liệu
+function deleteSelectedItems() {
+    let selectedIds = getSelectedItems();
+    dataBook = dataBook.filter(item => !selectedIds.includes(item.id));
+    showBook();
+}
+
+function prevPageBook() {
+    if (currentPageBook > 1) {
+        currentPageBook--;
+        showBook();
+    }
+}
+
+function nextPageBook() {
+    let totalPagesBook = Math.ceil(dataBook.length / itemsPerPageBook);
+    if (currentPageBook < totalPagesBook) {
+        currentPageBook++;
+        showBook();
+    }
+}
+
+function goToPageBook(page) {
+    currentPageBook = page;
+    showBook();
+}
+function renderPaginationBook() {
+    let totalPagesBook = Math.ceil(dataBook.length / itemsPerPageCategory);
+    let paginationHTML = `
+            <div id="prev-page" onclick="prevPageBook()">
+                    <img src="./assets/icons/prev.svg" alt="">
+                </div>
+                `;
+
+    for (let i = 1; i <= totalPagesBook; i++) {
+        paginationHTML += `
+            <div class="page-link" onclick="goToPageBook(${i})">
+                <span>${i}</span>
+            </div>
+        `;
+    }
+
+    paginationHTML += `
+            <div id="next-page" onclick="nextPageBook()">
+                <img src="./assets/icons/next.svg" alt="">
+            </div>`
+    document.getElementById('paginate').innerHTML = paginationHTML;
+}
+
 
 function clearBook(){
     document.getElementById('book-title').value = ''
@@ -374,9 +560,9 @@ function clearBook(){
     document.getElementById("category").value = '';
 }
 function deleteBook(id){
-    for(let i=0; i<data_book.length; i++){
-        if(data_book[i].id == id){
-            data_book.splice(i,1)
+    for(let i=0; i<dataBook.length; i++){
+        if(dataBook[i].id == id){
+            dataBook.splice(i,1)
 
             showBook()
         }
@@ -384,26 +570,26 @@ function deleteBook(id){
 
 }
 function editBook(id){
-    for(let i=0; i<data_book.length; i++){
-        if(data_book[i].id == id){
-            document.getElementById('book-title').value = data_book[i].title
-            document.getElementById('book-id').value = data_book[i].id
-            document.getElementById('book-image').value = data_book[i].image
-            document.getElementById('book-author').value = data_book[i].author
-            document.getElementById('book-publisher').value = data_book[i].publisher
-            document.getElementById('book-price').value = data_book[i].price
-            document.getElementById("category").value = data_book[i].category;
+    for(let i=0; i<dataBook.length; i++){
+        if(dataBook[i].id == id){
+            document.getElementById('book-title').value = dataBook[i].title
+            document.getElementById('book-id').value = dataBook[i].id
+            document.getElementById('book-image').value = dataBook[i].image
+            document.getElementById('book-author').value = dataBook[i].author
+            document.getElementById('book-publisher').value = dataBook[i].publisher
+            document.getElementById('book-price').value = dataBook[i].price
+            document.getElementById("category").value = dataBook[i].category;
         }
     }
 }
 
 // Tính tổng số sách
-var totalBooks = data_book.length;
-var totalCategories = data.length;
+let totalBooks = dataBook.length;
+let totalCategories = data.length;
 
 // Tính tổng giá của tất cả các cuốn sách
-var totalPrice = 0;
-data_book.forEach(function(book) {
+let totalPrice = 0;
+dataBook.forEach(function(book) {
     totalPrice += book.price;
 });
 
@@ -431,12 +617,12 @@ function search() {
                 <li>ID category: ${data[i].id}<br/> Title Category: ${data[i].title} </li>`;
             }
         }
-        for (let i = 0; i < data_book.length; i++) {
-            const title = data_book[i].title.toLowerCase(); 
+        for (let i = 0; i < dataBook.length; i++) {
+            const title = dataBook[i].title.toLowerCase(); 
 
             if (title.indexOf(searchValue) !== -1) {
                 list_category += `
-                <li>ID book: ${data_book[i].id}<br/> Title Book: ${data_book[i].title} </li>`;
+                <li>ID book: ${dataBook[i].id}<br/> Title Book: ${dataBook[i].title} </li>`;
             }
         }
         searchResult.innerHTML = list_category ? list_category : "<p>No matching categories, books found.</p>";
