@@ -4,43 +4,44 @@ require_once 'config/connect.php';
 require_once 'model/Employee.php';
 require_once 'controller/EmployeeController.php';
 
-$employeeModel = new EmployeeModel($pdo);
-$employeeController = new EmployeeController($employeeModel);
+// Connect database
+$host = 'localhost';
+$dbName = 'employee';
+$username = 'root';
+$password = '';
+
+$databaseConnection = new DatabaseConnection($host, $dbName, $username, $password);
+$databaseConnection->connect();
+$pdo = $databaseConnection->getPdo();
+
+
+$employee = new Employee($pdo);
+$employeeController = new EmployeeController($employee);
+
+// action (route)
+// Ánh xạ các hành động với các phương thức tương ứng
+$actionMappings = [
+    'index' => 'index',
+    'show' => 'show',
+    'create' => 'create',
+    'store' => 'store',
+    'edit' => 'edit',
+    'update' => 'update',
+    'delete' => 'delete',
+];
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
-switch ($action) {
-    case 'index':
-        $employeeController->index();
-        break;
-    case 'show':
-        $id = $_GET['id'];
-        $employeeController->show($id);
-        break;
-    case 'create':
-        $employeeController->create();
-        break;
-    case 'store':
-        $name = $_POST['name'];
-        $age = $_POST['age'];
-        $email = $_POST['email'];
-        $employeeController->store($name, $age, $email);
-        break;
-    case 'edit':
-        $id = $_GET['id'];
-        $employeeController->edit($id);
-        break;
-    case 'update':
-        $id = $_POST['id'];
-        $name = $_POST['name'];
-        $age = $_POST['age'];
-        $email = $_POST['email'];
-        $employeeController->update($id, $name, $age, $email);
-        break;
-    case 'delete':
-        $id = $_GET['id'];
-        $employeeController->delete($id);
-        break;
-    default:
-        echo 'Yêu cầu không hợp lệ';
+if (isset($actionMappings[$action])) {
+
+    $methodName = $actionMappings[$action];
+    
+    // Kiểm tra phương thức có tồn tại trong EmployeeController hay không
+    if (method_exists($employeeController, $methodName)) {
+        $employeeController->$methodName($_GET['id']??'');
+    } else {
+        echo 'Phương thức không hợp lệ';
+    }
+} else {
+    echo 'Yêu cầu không hợp lệ';
 }

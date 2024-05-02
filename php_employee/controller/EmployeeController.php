@@ -2,22 +2,26 @@
 
 class EmployeeController
 {
-    private $employeeModel;
+    private $employee;
 
-    public function __construct(EmployeeModel $employeeModel)
+    public function __construct(Employee $employee)
     {
-        $this->employeeModel = $employeeModel;
+        $this->employee = $employee;
     }
 
     public function index()
     {
-        $employees = $this->employeeModel->getAllEmployees();
+        $employees = $this->employee->getAllEmployees();
         require_once 'view/employee_list.php';
     }
 
     public function show($id)
     {
-        $employee = $this->employeeModel->getEmployeeById($id);
+        $employee = $this->employee->getEmployeeById($id);
+        if (!$employee) {
+            $this->index();
+            echo "<script>alert('Employee does not exist!!')</script>";
+        }
         require_once 'view/employee_show.php';
     }
 
@@ -26,27 +30,50 @@ class EmployeeController
         require_once 'view/employee_create.php';
     }
 
-    public function store($name, $age, $email)
+    public function store()
     {
-        $this->employeeModel->createEmployee($name, $age, $email);
+        $name = $_POST['name'];
+        $age = $_POST['age'];
+        $email = $_POST['email'];
+        $this->employee->createEmployee($name, $age, $email);
         header('Location: index.php');
     }
 
     public function edit($id)
     {
-        $employee = $this->employeeModel->getEmployeeById($id);
+        $employee = $this->employee->getEmployeeById($id);
+        if (!$employee) {
+            $this->index();
+            echo "<script>alert('Employee does not exist!!')</script>";
+        }
         require_once 'view/employee_update.php';
     }
 
-    public function update($id, $name, $age, $email)
+    public function update($id)
     {
-        $this->employeeModel->updateEmployee($id, $name, $age, $email);
-        header('Location: index.php');
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $age = $_POST['age'];
+        $email = $_POST['email'];
+        $employee = $this->employee->getEmployeeById($id);
+        if (!$employee) {
+            $this->edit($id);
+            echo "<script>alert('Employee does not exist!!')</script>";
+        } else {
+            $this->employee->updateEmployee($id, $name, $age, $email);
+            header('Location: index.php');
+        }
     }
 
     public function delete($id)
     {
-        $this->employeeModel->deleteEmployee($id);
-        header('Location: index.php');
+        $employee = $this->employee->getEmployeeById($id);
+        if (!$employee) {
+            $this->index();
+            echo "<script>alert('Employee does not exist!!')</script>";
+        } else {
+            $this->employee->deleteEmployee($id);
+            header('Location: index.php');
+        }
     }
 }

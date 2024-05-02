@@ -23,19 +23,25 @@
                         <th>Email</th>
                         <th>Actions</th>
                     </tr>
-                    <?php foreach ($employees as $employee): ?>
-                        <tr>
-                            <td><?php echo $employee['id']; ?></td>
-                            <td><?php echo $employee['name']; ?></td>
-                            <td><?php echo $employee['age']; ?></td>
-                            <td><?php echo $employee['email']; ?></td>
-                            <td>
-                                <a class="show" href="index.php?action=show&id=<?php echo$employee['id']; ?>"><i class="fa-solid fa-circle-info"></i></a>
-                                <a class="update" href="index.php?action=edit&id=<?php echo $employee['id']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a class="delete" href="index.php?action=delete&id=<?php echo $employee['id']; ?>"><i class="fa-solid fa-delete-left"></i></a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                    <?php 
+                        if(!$employees) {
+                            echo "<p style=\"color: red\">Không tồn tại bản ghi nào!!</p>";
+                        }else {
+                            foreach ($employees as $employee): ?>
+                            <tr>
+                                <td><?php echo $employee['id']; ?></td>
+                                <td><?php echo $employee['name']; ?></td>
+                                <td><?php echo $employee['age']; ?></td>
+                                <td><?php echo $employee['email']; ?></td>
+                                <td>
+                                    <a class="show" href="index.php?action=show&id=<?php echo$employee['id']; ?>"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a class="update" href="index.php?action=edit&id=<?php echo $employee['id']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a class="delete" href="index.php?action=delete&id=<?php echo $employee['id']; ?>"><i class="fa-solid fa-delete-left"></i></a>
+                                </td>
+                            </tr>
+                    <?php 
+                            endforeach; 
+                        }?>
                 </table>
                 </table>
             </div>
