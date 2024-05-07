@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book-manager</title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/add-style.css">
 </head>
-<body onload="showBook()">
+<body onload="
+            showData(book, 'book');
+            loadSelectCategory();">
     <nav class="navigation">
         <div class="sidebar-menu">
             <div class="logo">
-                <img src="./assets/images/Logo.png" alt="">
+                <img src="./assets/images/Logo.png" alt="logo-image">
             </div>
             <ul class="sidebar-top">
                 <li class="sidebar-item">
                     <a href="index.html" class="product">
                         <div class="product-icon">
-                            <img src="./assets/icons/time.svg" alt="">
+                            <img src="./assets/icons/time.svg" alt="dashboard-icon">
                         </div>
                         <div class="product-text">
                             <span>Dashboard</span>
@@ -27,7 +28,7 @@
                 <li class="sidebar-item">
                     <a href="category.html" class="product">
                         <div class="product-icon">
-                            <img src="./assets/icons/product-stock.svg" alt="">
+                            <img src="./assets/icons/product-stock.svg" alt="category-icon">
                         </div>
                         <div class="product-text">
                             <span>Category</span>
@@ -37,7 +38,7 @@
                 <li class="sidebar-item active-btn">
                     <a href="book.html" class="product">
                         <div class="product-icon">
-                            <img src="./assets/icons/favorites.svg" alt="">
+                            <img src="./assets/icons/favorites.svg" alt="book-icon">
                         </div>
                         <div class="product-text">
                             <span>Book</span>
@@ -45,27 +46,14 @@
                     </a>
                 </li>
             </ul>
-            <!-- <ul class="sidebar-mid">
-
-            </ul> -->
             <ul class="sidebar-bottom">
-                <li class="sidebar-item">
-                    <a href="#setting" class="product">
-                        <div class="product-icon">
-                            <img src="./assets/icons/setting.svg" alt="">
-                        </div>
-                        <div class="product-text">
-                            <span>setting</span>
-                        </div>
-                    </a>
-                </li>
                 <li class="sidebar-item">
                     <a href="login.html" class="product">
                         <div class="product-icon">
-                            <img src="./assets/icons/logout.svg" alt="">
+                            <img src="./assets/icons/logout.svg" alt="logout-icon">
                         </div>
                         <div href="login.html" class="product-text">
-                            <span>logout</span>
+                            <span>Logout</span>
                         </div>
                     </a>
                 </li>
@@ -126,7 +114,7 @@
                 <h1>Book</h1>
             </div>
             <div class="add-content">
-                <div class="form-box">
+                <div class="book-form form-box">
                     <!-- <div class="form-upload">
                         <div class="upload">
                             <input type="file" name="image" accept="image/*" id="upload-photo" onchange="previewImage(event)">
@@ -139,44 +127,45 @@
                     <div class="form-input">
                         <div class="form-group">
                             <label for="book-id">ID</label>
-                            <input type="text" name="book-id" id="book-id" placeholder="Enter book id">
+                            <input type="text" name="id" id="book-id" placeholder="Enter book id">
                         </div>
-                        <div class="form-group">
-                            <label for="your-email">Image Path</label>
-                            <input type="text" name="book-image" id="book-image" placeholder="Enter image path">
-                        </div>
-                    </div>
-                    <div class="form-input">
                         <div class="form-group">
                             <label for="fist-name">Title</label>
                             <input type="text" name="title" id="book-title" placeholder="Enter book title">
                         </div>
+                        
+                    </div>
+                    <div class="form-input">
+                        <div class="form-group">
+                            <label for="your-email">Image Path</label>
+                            <input type="text" name="image" id="book-image" placeholder="Enter image path">
+                        </div>
                         <div class="form-group">
                             <label for="last-name">Author</label>
-                            <input type="text" name="book-author" id="book-author" placeholder="Enter book author">
+                            <input type="text" name="author" id="book-author" placeholder="Enter book author">
                         </div>
                     </div>
                     <div class="form-input">
                         <div class="form-group">
                             <label for="your-email">Publisher</label>
-                            <input type="text" name="book-publisher" id="book-publisher" placeholder="Enter publisher">
+                            <input type="text" name="publisher" id="book-publisher" placeholder="Enter publisher">
                         </div>
                         <div class="form-group">
                             <label for="phone-number">Price</label>
-                            <input type="text" name="book-price" id="book-price" placeholder="Enter book price">
+                            <input type="text" name="price" id="book-price" placeholder="Enter book price">
                         </div>
                     </div>
                     <div class="form-input">
                         <div class="form-group">
                             <label for="category">Category</label>
-                            <select id="category">
+                            <select name="category" id="category">
                                 <option value="" disabled selected hidden>-- Select category --</option>
             
                             </select>                            
                         </div>
                     </div>
                     <div class="form-button">
-                        <button onclick="submitBook()">
+                        <button onclick="submitData('book')">
                             Submit
                         </button>
                     </div>
@@ -184,53 +173,16 @@
             </div>
             <div class="line"></div>
             <div class="list">
-                <input type="hidden" id="id_delete_book" value="">
-                <table id="table-book">
-                    <!-- <tr class="table-title">
-                        <th>Image</th>
-                        <th>ID</th>
-                        <th>Category</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                        <th>Price</th>
-                        <th>Action</th>
-                    </tr> -->
-                    <!-- <tr>
-                        <td>
-                            <img src="./assets/images/Flag.png" alt="">
-                        </td>
-                        <td>00001</td>
-                        <td>Category</td>
-                        <td>Title</td>
-                        <td>Author</td>
-                        <td>Publisher</td>
-                        <td>Price</td>
-                        <td>
-                            <div class="action">
-                                <div class="edit">
-                                    <img src="./assets/icons/pencil-write.svg" alt="">
-                                </div>
-                                <div class="delete">
-                                    <img src="./assets/icons/bin.svg" alt="">
-                                </div>
-                            </div>
-                        </td>
-                    </tr> -->
+                <table id="table">
+
                 </table>
             </div>
+            <section id="paginate">
+
+            </section>
         </section>
-        <section id="paginate">
-            <!-- <div id="prev-page" onclick="prevPage()">
-                <img src="./assets/icons/prev.svg" alt="">
-            </div>
-            <div id="page-link">
-                <span>1</span>
-            </div>
-            <div id="next-page" onclick="nextPage()">
-                <img src="./assets/icons/next.svg" alt="">
-            </div> -->
-        </section>
+        
+    </main>
 </body>
 <script src="./assets/js/main.js"></script>
 </html>

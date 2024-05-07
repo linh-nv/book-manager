@@ -37,7 +37,7 @@ li {
     list-style: none;
 }
 /* ========================================================
-----------------------------Dashboard--------------------------
+----------------------------Navbar--------------------------
 =========================================================== */
 .navigation {
     display: flex;
@@ -107,7 +107,7 @@ li {
     pointer-events: auto;
     transition: 0.2s ease;
 }
-.active-btn {
+.active-btn a{
     color: #fff;
     border-radius: 10px;
     background-color: var(--active-color);
@@ -181,6 +181,8 @@ li {
 /* =====content===== */
 .dashboard-content {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     gap: 40px;
     padding: 40px 50px 10px 30px;
@@ -216,16 +218,21 @@ li {
 ----------------------------Dashboard--------------------------
 =========================================================== */
 .add-content {
-    width: 1140px;
+    width: 75%;
 }
 .form-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
     background-color: #fff;
-    height: 744px;
     border-radius: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 100px 180px 60px 180px;
-
+    width: 100%;
 }
+
 .form-box-category {
     background-color: #fff;
     border-radius: 20px;
@@ -255,9 +262,6 @@ li {
 .upload-icon img {
     opacity: 0.7;
 }
-.form-box {
-    display: grid;
-}
 .form-box .form-upload {
     display: flex;
     flex-direction: column;
@@ -273,11 +277,10 @@ li {
 .form-input {
     display: flex; 
     gap: 60px;
+    width: 100%;
 }
-
 .form-group {
     flex: 1; 
-    margin-right: 10px; 
 }
 .form-category {
     display: flex;
@@ -293,7 +296,7 @@ li {
     border-radius: 5px;
     border: 0.6px solid #D5D5D5;
     background-color: var(--primary-color);
-    width: 360px;
+    width: 100%;
     height: 52px;
     padding: 16px;
 }
@@ -301,13 +304,14 @@ li {
     border-radius: 5px;
     border: 0.6px solid #D5D5D5;
     background-color: var(--primary-color);
-    width: 360px;
+    width: 46%;
     height: 52px;
     padding: 16px;
 }
 .form-button {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
 }
 .form-button button {
     color: var(--primary-color);
@@ -321,28 +325,28 @@ li {
 }
 
 .list {
-    background-color: #fff;
-    border-radius: 10px;
-    width: 1140px;
+    width: 75%;
 }
 .line {
     border-bottom: 2px solid #E7E8EB;
 }
 #table {
+    background-color: #fff;
     border-radius: 10px;
     border: 0.6px solid #D5D5D5;
-    width: 1140px;
-
+    width: 100%;
 }
 .table-title {
     border-radius: 10px 10px 0 0;
+}
+.table-title th:last-child {
+    padding: 10px;
 }
 #table th {
     text-align: left;
     padding-left: 32px;
     height: 49px;
     border-bottom: 0.6px solid #D5D5D5;
-
 }
 
 #table tr {
@@ -353,27 +357,7 @@ li {
     height: 52px;
     padding-left: 32px;
 }
-#table-book {
-    border-radius: 10px;
-    border: 0.6px solid #D5D5D5;
-    width: 1140px;
 
-}
-#table-book th {
-    text-align: left;
-    padding-left: 32px;
-    height: 49px;
-    border-bottom: 0.6px solid #D5D5D5;
-
-}
-#table-book tr {
-    font-weight: 100;
-}
-#table-book td {
-    text-align: left;
-    height: 52px;
-    padding-left: 32px;
-}
 .action {
     display: flex;
     align-items: center;
@@ -490,9 +474,7 @@ li {
 
 /* paginate */
 #paginate {
-    background-color: #fff;
     border-radius: 10px;
-    width: 1140px;
     display: flex;
     gap: 15px;
     justify-content: center;
@@ -504,7 +486,7 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--primary-color);
+    background-color: #fff;
     padding: 10px;
     cursor: pointer;
     border-radius: 10px;
@@ -518,7 +500,7 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--primary-color);
+    background-color: #fff;
     padding: 10px;
     cursor: pointer;
     border-radius: 10px;
@@ -535,7 +517,7 @@ li {
     width: 40px;
     justify-content: center;
     align-items: center;
-    background-color: var(--primary-color);
+    background-color: #fff;
     padding: 10px;
     cursor: pointer;
     border-radius: 10px;
@@ -544,6 +526,13 @@ li {
 }
 .page-link:hover {
     background-color: #eceef8;
+}
+.current-page {
+    background-color: var(--active-color);
+    color: white;
+}
+.current-page:hover {
+    background-color: #3f78fc;
 }
 /*  xoa nhieu  */
 .multi-delete {
