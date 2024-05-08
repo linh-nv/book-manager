@@ -185,7 +185,11 @@ li {
     align-items: center;
     flex-direction: column;
     gap: 40px;
-    padding: 40px 50px 10px 30px;
+    padding: 40px 50px;
+}
+.dashboard-content > * {
+    flex: 1;
+    width: 100%;
 }
 .content {
     display: flex;
@@ -217,9 +221,6 @@ li {
 /* ========================================================
 ----------------------------Dashboard--------------------------
 =========================================================== */
-.add-content {
-    width: 75%;
-}
 .form-box {
     display: flex;
     flex-direction: column;
@@ -324,9 +325,6 @@ li {
     background-color: var(--active-color);
 }
 
-.list {
-    width: 75%;
-}
 .line {
     border-bottom: 2px solid #E7E8EB;
 }
