@@ -1,4 +1,4 @@
-html {
+/* html {
     font-size: 62.5%;
 }
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wdth,wght@0,6..12,102.7,500;1,6..12,102.7,500&display=swap');
@@ -165,13 +165,13 @@ a {
     align-items: center;
     gap: 15px;
 }
-.user-box .user-role {
+.user-box .user-code {
     opacity: 0.8;
     font-size: 14px;
 }
 
 /* =====content===== */
-.dashboard-content {
+/* .dashboard-content {
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -203,6 +203,6 @@ a {
 }
 .card-element .card-description .total{
     font-size: 30px;
-}
+} */ 
 
 

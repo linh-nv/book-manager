@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('user_code')->unique();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->string('password');
             $table->string('tel', 20);
-            $table->date('birthday');
-            $table->tinyInteger('gender');
+            $table->date('birthday')->nullable();
+            $table->tinyInteger('gender')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->timestamps();
             $table->softDeletes();

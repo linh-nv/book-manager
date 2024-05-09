@@ -54,7 +54,7 @@ a {
 .form-mid {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
 }
 .form-mid .form-group input {
     border: 1px solid var(--border-color);

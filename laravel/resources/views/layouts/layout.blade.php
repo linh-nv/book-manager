@@ -19,32 +19,12 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="{{route('role.index')}}" class="product">
-                    <div class="product-icon">
-                        <i class="fa-solid fa-hammer"></i>
-                    </div>
-                    <div class="product-text">
-                        <span>Role</span>
-                    </div>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="" class="product">
-                    <div class="product-icon">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <div class="product-text">
-                        <span>Khách Hàng</span>
-                    </div>
-                </a>
-            </li>
-            <li class="sidebar-item">
                 <a href="" class="product">
                     <div class="product-icon">
                         <i class="fa-solid fa-mug-saucer"></i>
                     </div>
                     <div class="product-text">
-                        <span>Sản Phẩm</span>
+                        <span>Sách</span>
                     </div>
                 </a>
             </li>
@@ -84,11 +64,11 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="" class="product">
+                <a href="{{route('logout')}}" class="product">
                     <div class="product-icon">
                         <i class="fa-solid fa-power-off"></i>
                     </div>
-                    <div href="" class="product-text">
+                    <div class="product-text">
                         <span>Logout</span>
                     </div>
                 </a>
@@ -116,15 +96,12 @@
         </div>
         <div class="top-bar-right">
             <div class="user-box">
-                <div class="avatar">
-                    <img src="{{asset('images/man-438081_960_720.png')}}" alt="avatar">
-                </div>
                 <div class="user-info">
                     <div class="user-name">
-                        <span>Moni Roy</span>
+                        <span>{{$user->name}}</span>
                     </div>
-                    <div class="user-role">
-                        <span>Admin</span>
+                    <div class="user-code">
+                        <span>{{$user->user_code}}</span>
                     </div>
                 </div>
             </div>

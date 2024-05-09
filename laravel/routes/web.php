@@ -27,10 +27,14 @@ use App\Enum\TicketDetailStatus;
 
 Route::resource('/', UserController::class);
 Route::resource('/role', RoleController::class);
-Route::get('/home', [UserController::class, 'home'])->name('home');
+Route::middleware(['checkLogin'])->group(function () {
+    Route::get('/home', [UserController::class, 'home'])->name('home');
+});
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
 Route::post('/handle_login', [UserController::class, 'handle_login'])->name('handle_login');
 
-Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
+// Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
 Route::get('/test', function(){
 
 });

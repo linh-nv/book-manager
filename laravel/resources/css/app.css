@@ -165,7 +165,7 @@ a {
     align-items: center;
     gap: 15px;
 }
-.user-box .user-role {
+.user-box .user-code {
     opacity: 0.8;
     font-size: 14px;
 }
@@ -209,14 +209,6 @@ a {
 .add-content {
     width: 1140px;
 }
-.form-box {
-    background-color: #fff;
-    height: 744px;
-    border-radius: 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    padding: 100px 180px 60px 180px;
-
-}
 .form-box-category {
     background-color: #fff;
     border-radius: 20px;
@@ -247,7 +239,9 @@ a {
     opacity: 0.7;
 }
 .form-box {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 .form-box .form-upload {
     display: flex;

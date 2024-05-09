@@ -11,29 +11,44 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         return view('auth.login');
     }
 
-    public function home(){
-        return view('pages.home');
+    public function home(): View
+    {
+        $user = Auth::user();
+        return view('pages.home', compact('user'));
     }
-    public function handle_login(Request $request)
+
+    public function handle_login(Request $request): RedirectResponse
     {
         $user = User::where('email', $request->email)->first();
-
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
         if ($user && Hash::check($request->password, $user->password)) {
+            Auth::attempt($credentials);
             return redirect()->route('home');
-            // return response()->json($request->password);
         }
-        return redirect()->back()->with('error', 'Sai ten dang nhap hoac mat khau');
+        return redirect()->back()->with('error', 'Sai tên đăng nhập hoặc mật khẩu!!');
+    }
+
+    public function logout(): RedirectResponse
+    {
+        Auth::logout();
+        return redirect()->route('index');
     }
     /**
      * Show the form for creating a new resource.
@@ -48,45 +63,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if(!empty($request->name) && !empty($request->email) && !empty($request->password)){
-            User::create([
+        if ($request->filled(['name', 'email', 'password', 'tel'])) {
+            $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'address' => $request->address,
                 'password' => Hash::make($request->password),
-                'created_at' => $request->created_at,
-                'updated_at' => $request->updated_at,
+                'tel' => $request->tel,
+                'birthday' => $request->birthday,
+                'gender' => $request->gender,
+                'role_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]);
-
-            TokensVerify::create([
-                'email' => $request->email,
-                'token' => $request->_token,
-                'expires_at' => Carbon::now()->addMinutes(30)
-            ]);
-
-            SendEmailVerify::dispatch($request->email, $request->_token);
+    
+            return $user;
         }
     }
-
-    // khi người dùng ấn xác nhận ở trong email
-    public function confirm_email_verification($token){
-        $confirmationCode = TokensVerify::where('token', $token)->first();
-
-        if ($confirmationCode && $confirmationCode->expires_at > Carbon::now()) {
-            // khi xác minh email thành công -> cập nhật email_verified_at ở user và xóa hàng token đấy đi
-            $elementToken = TokensVerify::where('token', $token)->first();
-
-            User::where('email', $elementToken->email)->update([
-                'email_verified_at' => Carbon::now(),
-            ]);
-
-            $elementToken->delete();
-            return view('auth.login');
-        } else {
-            $elementToken = TokensVerify::where('token', $token)->delete();
-            return view('auth.register');
-            // echo 'het han';
-        }
-    }
+    
     /**
      * Display the specified resource.
      */
