@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Enum\LendTicket;
+use App\Enum\TicketDetail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,20 +25,12 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::resource('/', UserController::class);
-Route::resource('/role', RoleController::class);
-Route::get('/home', [UserController::class, 'home'])->name('home');
-Route::post('/handle_login', [UserController::class, 'handle_login'])->name('handle_login');
+// Route::resource('/', UserController::class);
+// Route::resource('/role', RoleController::class);
+// Route::get('/home', [UserController::class, 'home'])->name('home');
+// Route::post('/handle_login', [UserController::class, 'handle_login'])->name('handle_login');
 
-Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
+// Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
 Route::get('/test', function(){
-
-
-    $users = User::cursor()->filter(function (User $user) {
-        return $user->id > 500;
-    });
-
-    foreach ($users as $user) {
-        echo $user->id;
-    }
+    print_r(TicketDetail::values());
 });
