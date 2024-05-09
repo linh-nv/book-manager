@@ -1,7 +1,7 @@
 <?php
 namespace App\Enum;
 
-enum TicketDetail: string
+enum TicketDetailStatus: int
 {
     case BORROWED = 0;
     case RETURNED = 1;
@@ -11,10 +11,10 @@ enum TicketDetail: string
     public function label(): string
     {
         return match ($this) {
-        TicketDetail::BORROWED => 'borrowed',
-        TicketDetail::RETURNED => 'returned',
-        TicketDetail::LOST => 'lost',
-        TicketDetail::REJECTED => 'overdue',
+        TicketDetailStatus::BORROWED => 'borrowed',
+        TicketDetailStatus::RETURNED => 'returned',
+        TicketDetailStatus::LOST => 'lost',
+        TicketDetailStatus::REJECTED => 'overdue',
 
         };
     }

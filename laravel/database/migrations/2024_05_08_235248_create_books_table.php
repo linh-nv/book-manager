@@ -12,19 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('name', 255);
-            $table->string('slug', 255);
+            $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
             $table->integer('quantity');
-            $table->string('description', 255)->nullable();
-            $table->string('front_image', 255);
-            $table->string('thumbnail', 255);
-            $table->string('rear_image', 255);
-            $table->bigInteger('category_id');
-            $table->bigInteger('author_id');
-            $table->bigInteger('publisher_id');
+            $table->text('description')->nullable();
+            $table->string('front_image');
+            $table->string('thumbnail');
+            $table->string('rear_image');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('publisher_id');
             $table->integer('price');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

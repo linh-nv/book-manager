@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enum\TicketDetail;
+use App\Enum\TicketDetailStatus;
 
 return new class extends Migration
 {
@@ -13,11 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ticket_details', function (Blueprint $table) {
-            $table->id('id');
+            $table->id();
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('lend_ticket_id');
             $table->date('return_date');
-            $table->enum('status', TicketDetail::values());
+            $table->tinyInteger('status');
             $table->integer('quantity');
             $table->timestamps();
         });

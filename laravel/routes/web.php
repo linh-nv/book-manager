@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Enum\LendTicket;
-use App\Enum\TicketDetail;
+use App\Enum\TicketDetailStatus;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +25,12 @@ use App\Enum\TicketDetail;
 |
 */
 
-// Route::resource('/', UserController::class);
-// Route::resource('/role', RoleController::class);
-// Route::get('/home', [UserController::class, 'home'])->name('home');
-// Route::post('/handle_login', [UserController::class, 'handle_login'])->name('handle_login');
+Route::resource('/', UserController::class);
+Route::resource('/role', RoleController::class);
+Route::get('/home', [UserController::class, 'home'])->name('home');
+Route::post('/handle_login', [UserController::class, 'handle_login'])->name('handle_login');
 
-// Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
+Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
 Route::get('/test', function(){
-    print_r(TicketDetail::values());
+
 });

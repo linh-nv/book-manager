@@ -1,18 +1,17 @@
 <?php
 namespace App\Enum;
 
-enum LendTicket: string
+enum LendTicketStatus: int
 {
-    case PENDING = 0;
-    case APPROVED = 1;
-    case REJECTED = 2;
+    case MALE = 0;
+    case FEMALE = 1;
+
 
     public function label(): string
     {
         return match ($this) {
-        LendTicket::PENDING => 'Pending',
-        LendTicket::APPROVED => 'Approved',
-        LendTicket::REJECTED => 'Rejected',
+        LendTicketStatus::MALE => 'Male',
+        LendTicketStatus::FEMALE => 'Female',
 
         };
     }

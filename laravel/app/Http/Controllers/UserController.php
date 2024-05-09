@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use App\Enum\LendTicket;
 
 class UserController extends Controller
 {
@@ -20,8 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return LendTicket::values();
-
+        return view('auth.login');
     }
 
     public function home(){
