@@ -185,7 +185,7 @@ a {
     flex-direction: column;
     align-items: center;
     gap: 40px;
-    padding: 40px 50px 10px 30px;
+    padding: 40px 50px;
 }
 .content {
     display: flex;
@@ -215,7 +215,12 @@ a {
     font-size: 30px;
 }
 .add-content {
-    width: 1140px;
+    width: 100%;
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
 }
 .form-box-category {
     background-color: #fff;
@@ -286,86 +291,76 @@ a {
     border-radius: 5px;
     border: 0.6px solid #D5D5D5;
     background-color: var(--primary-color);
-    width: 360px;
+    width: 100%;
     height: 52px;
+    padding: 16px;
+}
+.form-group textarea {
+    border-radius: 5px;
+    border: 0.6px solid #D5D5D5;
+    background-color: var(--primary-color);
+    width: 100%;
+    height: 100px;
     padding: 16px;
 }
 .form-group select {
     border-radius: 5px;
     border: 0.6px solid #D5D5D5;
     background-color: var(--primary-color);
-    width: 360px;
+    width: 100%;
     height: 52px;
     padding: 16px;
-}
-.form-button {
-    display: flex;
-    justify-content: center;
-}
-.form-button button {
-    color: var(--primary-color);
-    font-weight: 600;
-    font-size: 18px;
-    width: 274px;
-    height: 56px;
-    border: none;
-    border-radius: 10px;
-    background-color: var(--active-color);
 }
 
 .list {
     background-color: #fff;
     border-radius: 10px;
-    width: 1140px;
-}
-.line {
-    border-bottom: 2px solid #E7E8EB;
+    width: 100%;
+    margin: auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
 }
 #table {
-    border-radius: 10px;
-    border: 0.6px solid #D5D5D5;
-    width: 1140px;
-
-}
-.table-title {
-    border-radius: 10px 10px 0 0;
-}
-#table th {
-    text-align: left;
-    padding-left: 32px;
-    height: 49px;
-    border-bottom: 0.6px solid #D5D5D5;
-
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
 }
 
-#table tr {
-    font-weight: 100;
+.table-title th {
+    border: 0.6px solid #ddd;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }
-#table td {
-    text-align: left;
-    height: 52px;
-    padding-left: 32px;
-}
-#table-book {
-    border-radius: 10px;
-    border: 0.6px solid #D5D5D5;
-    width: 1140px;
 
+.table-content-slug {
+    width: 20%;
+    padding: 8px 20px;
 }
-#table-book th {
-    text-align: left;
-    padding-left: 32px;
-    height: 49px;
-    border-bottom: 0.6px solid #D5D5D5;
 
+.table-content-name {
+    width: 20%;
+    padding: 8px;
 }
-#table-book tr {
-    font-weight: 100;
+
+.table-content-description {
+    width: 50%;
+    padding: 8px;
 }
-#table-book td {
-    text-align: left;
-    height: 52px;
-    padding-left: 32px;
+
+.action {
+    display: flex;
+    justify-content: space-around;
+}
+
+.edit,
+.delete {
+    width: 50%;
+    padding: 8px;
+    text-align: center;
+}
+td {
+    border-right: 0.6px solid #ddd;
+    border-left: 0.6px solid #ddd;
 }
 .action {
     display: flex;

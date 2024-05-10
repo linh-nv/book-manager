@@ -68,8 +68,13 @@
                         </div>
                         <div class="form-group">
                             <label for="gender">Gender</label>
-                            <input id="gender" name="gender" type="text" placeholder="0: Male, 1: Female" required>
+                            <select id="gender" name="gender" required>
+                                @foreach (\App\Enum\UserGender::values() as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
                         </div>
+                        
                         <div class="form-group flex justify-center items-center">
                             <button onclick="handleCheckBasicInfor()" id="check-basic-infor-btn" class="login-btn flex justify-between items-center gap-4 bg-blue-500 text-white h-24 px-14 py-6 w-1/3 rounded-lg hover:bg-blue-400 transition-colors duration-300">
                                 Tiếp tục

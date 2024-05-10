@@ -12,7 +12,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Enum\LendTicket;
+use App\Enum\RoleStatus;
 use App\Enum\TicketDetailStatus;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoginController;
+use App\Http\Middleware\Authenticate;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +31,15 @@ use App\Enum\TicketDetailStatus;
 
 Route::resource('/', UserController::class);
 Route::resource('/role', RoleController::class);
-Route::middleware(['checkLogin'])->group(function () {
-    Route::get('/home', [UserController::class, 'home'])->name('home');
-});
-Route::post('/check-email', [UserController::class, 'check_email'])->name('check_email');
-Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::post('/handle_login', [UserController::class, 'handle_login'])->name('handle_login');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [UserController::class, 'home'])->name('home');
+    Route::resource('/category', CategoryController::class);
+
+});
+Route::post('/check-email', [LoginController::class, 'check_email'])->name('check_email');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/handle_login', [LoginController::class, 'handleLogin'])->name('handle_login');
 
 // Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
 Route::get('/test', function(){

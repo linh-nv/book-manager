@@ -42,7 +42,6 @@ function handleCheckEmail(route) {
             email: email,
         },
         success: function(response) {
-            console.log(response);
             if (response == 1) {
                 $('#layout-name-email').hide();
                 $('#status-notification-message').hide();
@@ -85,7 +84,7 @@ function handleRegister(route, routeSuccess) {
     const gender = document.getElementById('gender').value;
     const password = document.getElementById('password_register').value;
 
-    // loadingEffect('flex');
+    $('.icon-btn').html('<div class="loader"></div>');
     $.ajax({
         url: route,
         method: 'POST',
@@ -100,10 +99,8 @@ function handleRegister(route, routeSuccess) {
             password: password,
         },
         success: function(response) {
-            console.log(response);
             if (response == 1) {
-                // loadingEffect('none');
-                displayVerification(routeSuccess);
+                displayFormRegisterSuccess(routeSuccess);
             }else {
                 $('#status-notification-message').text('Lỗi!!');
             }
@@ -113,10 +110,7 @@ function handleRegister(route, routeSuccess) {
         }
     });
 }
-
-
-
-function loadingEffect(display) {
+function loadingEffect() {
     const bodyContent = document.querySelector('body');
     let loading = `
     <section id="loadingEffect"
@@ -124,7 +118,7 @@ function loadingEffect(display) {
                 height: 100%; 
                 background-color: #fff; 
                 position: fixed; 
-                display: ${display};
+                display: flex;
                 justify-content: center;
                 align-items: center;
                 opacity: 0.8;">
@@ -133,8 +127,7 @@ function loadingEffect(display) {
     `;
     bodyContent.insertAdjacentHTML('afterbegin', loading);
 }
-
-function displayVerification(routeSuccess) {
+function displayFormRegisterSuccess(routeSuccess) {
     const verification = `
     <section class="form-register-success">
         <div class="">
@@ -154,24 +147,42 @@ function displayVerification(routeSuccess) {
     $('main').html(verification);
 }
 
+// convert to slug
+function changeToSlug() {
+    let name = document.getElementById('name').value;
+    let slug = convertToSlug(name);
+    document.getElementById('slug').value = slug;
+}
+function convertToSlug(text) {
+    text = text.toLowerCase();
+    let map = {
+        'a': 'á|à|ã|ả|ạ|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ',
+        'd': 'đ',
+        'e': 'é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ',
+        'i': 'í|ì|ỉ|ĩ|ị',
+        'o': 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ',
+        'u': 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự',
+        'y': 'ý|ỳ|ỷ|ỹ|ỵ'
+    };
+    for (let pattern in map) {
+        text = text.replace(new RegExp(map[pattern], 'g'), pattern);
+    }
+    return text.replace(/[^\w-]+/g, '-').replace(/--+/g, '-').replace(/^-+|-+$/g, '');
+}
 
-function handleCheckValue(name, email, password, route) {
-    $.ajax({
-        url: route,
-        method: 'POST',
-        data: {
-            _token: $('#csrf_token').val(),
-            email: email,
-            name: name,
-            password: password,
-        },
-        success: function(response) {
-            console.log(response);
-            $('#loadingEffect').hide();
-            displayVerification();
-        },
-        error: function(xhr, status, error) {
-            console.log(error);
-        }
-    });
+function showConfirmModal(id) {
+    document.getElementById('confirmModal').style.display = 'block';
+    // Lưu ID của category muốn xóa vào một hidden input trong modal
+    document.getElementById('categoryId').value = id;
+}
+
+function hideConfirmModal() {
+    document.getElementById('confirmModal').style.display = 'none';
+}
+
+function deleteCategory() {
+    // Lấy ID của category từ hidden input
+    var categoryId = document.getElementById('categoryId').value;
+    // Submit form xóa với ID của category đã lưu
+    document.getElementById('deleteForm' + categoryId).submit();
 }

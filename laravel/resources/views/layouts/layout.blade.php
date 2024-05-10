@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="" class="product">
+                <a href="{{route('category.index')}}" class="product">
                     <div class="product-icon">
                         <i class="fa-solid fa-list"></i>
                     </div>
@@ -98,10 +98,10 @@
             <div class="user-box">
                 <div class="user-info">
                     <div class="user-name">
-                        <span>{{$user->name}}</span>
+                        <span>{{Auth::user()->name}}</span>
                     </div>
                     <div class="user-code">
-                        <span>{{$user->user_code}}</span>
+                        <span>{{Auth::user()->user_code}}</span>
                     </div>
                 </div>
             </div>
