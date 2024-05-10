@@ -26,7 +26,15 @@ h1 {
 a {
     text-decoration: none;
 }
-
+.loader {
+    width: 30px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 5px solid;
+    border-color: #fff #0000;
+    animation: l1 1s infinite;
+}
+@keyframes l1 {to{transform: rotate(.5turn)}}
 .navigation {
     display: flex;
     min-height: 100vh;
@@ -468,6 +476,45 @@ a {
 
 .close:hover {
     color: #000;
+}
+
+.form-register-success {
+    width: 100%;
+    height: 100%;
+    padding: 2.5rem;
+    border-radius: 0.75rem;
+    text-align: center;
+}
+
+.form-register-success .heading {
+    width: 100%;
+    padding-top: 2.5rem;
+}
+
+.form-register-success h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.form-register-success p {
+    font-size: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.form-register-success .btn-wrapper {
+    width: 100%;
+    margin-top: 1.25rem;
+}
+.form-register-success .btn-login {
+    display: inline-block;
+    background-color: #ff0000;
+    padding: 0.5rem 2rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 0.75rem;
 }
 
 

@@ -61,6 +61,16 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    public function check_email(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if($user){
+            return false; 
+        }
+        return true;
+    }
+
     public function store(Request $request)
     {
         if ($request->filled(['name', 'email', 'password', 'tel'])) {
@@ -72,13 +82,13 @@ class UserController extends Controller
                 'tel' => $request->tel,
                 'birthday' => $request->birthday,
                 'gender' => $request->gender,
-                'role_id' => 2,
+                'role_id' => 2, // khi tạo mặc định sẽ là role manager
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
-    
-            return $user;
+            return true;
         }
+        return false; 
     }
     
     /**

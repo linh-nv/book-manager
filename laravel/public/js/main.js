@@ -28,51 +28,127 @@ menuClick.addEventListener('click', function() {
     }
 });
 
-function loadingEffect() {
-    const name = document.getElementById('name').value;
+
+function handleCheckEmail(route) {
     const email = document.getElementById('email').value;
-    const password = document.getElementById('password_register').value;
-    const confirm_pass = document.getElementById('confirm_pass').value;
-    const storeRoute = 'route("store")';
+    const _token = document.getElementById('csrf_token').value;
+    
+    $('.icon-btn').html('<div class="loader"></div>');
+    $.ajax({
+        url: route,
+        method: 'POST',
+        data: {
+            _token: _token,
+            email: email,
+        },
+        success: function(response) {
+            console.log(response);
+            if (response == 1) {
+                $('#layout-name-email').hide();
+                $('#status-notification-message').hide();
+                $('#layout-basic-information').show();
+            }else {
+                $('#status-notification-message').text('Email đã tồn tại!!');
+            }
+            $('.icon-btn').html('<i class="fa-solid fa-right-long"></i>');
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
 
-    if (name !== '' && email !== '' && password !== '' && confirm_pass === password) {
-        const bodyContent = document.querySelector('body');
-        let loading = `
-        <section id="loadingEffect"
-            style="width: 100%; 
-                    height: 100%; 
-                    background-color: #fff; 
-                    position: fixed; 
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    opacity: 0.8;">
-                    <img src="./images/Hourglass.gif" alt="Loading.......">
-        </section>
-        `;
-        bodyContent.insertAdjacentHTML('afterbegin', loading);
+function handleCheckBasicInfor() {
+    const address = document.getElementById('address').value;
+    const birthday = document.getElementById('birthday').value;
+    const tel = document.getElementById('tel').value;
+    const gender = document.getElementById('gender').value;
+    const messageNotify = document.getElementById('status-notification-message');
 
-        handleCheckValue(name, email, password, storeRoute);
+    if (address && birthday && tel && gender) {
+        messageNotify.style.display = 'none';
+        document.getElementById('layout-basic-information').style.display = 'none';
+        document.getElementById('layout-password').style.display = 'block';
     }else{
-        alert('Nhập thông tin bị thiếu hoặc sai!!')
+        messageNotify.style.display = 'flex';
+        messageNotify.innerHTML = 'Phải nhập đủ tất cả thông tin!!';
     }
 }
 
-function displayVerification() {
+function handleRegister(route, routeSuccess) {
+    const _token = document.getElementById('csrf_token').value;
+    const email = document.getElementById('email').value;
+    const name = document.getElementById('name').value;
+    const address = document.getElementById('address').value;
+    const birthday = document.getElementById('birthday').value;
+    const tel = document.getElementById('tel').value;
+    const gender = document.getElementById('gender').value;
+    const password = document.getElementById('password_register').value;
+
+    // loadingEffect('flex');
+    $.ajax({
+        url: route,
+        method: 'POST',
+        data: {
+            _token: _token,
+            email: email,
+            name: name,
+            address: address,
+            tel: tel,
+            birthday: birthday,
+            gender: gender,
+            password: password,
+        },
+        success: function(response) {
+            console.log(response);
+            if (response == 1) {
+                // loadingEffect('none');
+                displayVerification(routeSuccess);
+            }else {
+                $('#status-notification-message').text('Lỗi!!');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+
+
+function loadingEffect(display) {
+    const bodyContent = document.querySelector('body');
+    let loading = `
+    <section id="loadingEffect"
+        style="width: 100%; 
+                height: 100%; 
+                background-color: #fff; 
+                position: fixed; 
+                display: ${display};
+                justify-content: center;
+                align-items: center;
+                opacity: 0.8;">
+                <img src="./images/Hourglass.gif" alt="Loading.......">
+    </section>
+    `;
+    bodyContent.insertAdjacentHTML('afterbegin', loading);
+}
+
+function displayVerification(routeSuccess) {
     const verification = `
-        <section class="verification w-full h-full p-10 top-0 left-0 rounded-xl text-center items-center justify-center">
+    <section class="form-register-success">
         <div class="">
-            <div class="heading w-full flex justify-center pt-10">
-            <h1 class="text-4xl font-semibold uppercase">Đăng ký thành công!!</h1>
+            <div class="heading">
+                <h1 class="">Đăng ký thành công!!</h1>
             </div>
-            <p class="text-2xl mt-20">Tài khoản của bạn đã được đăng ký thành công, hãy thử đăng nhập tài khoản của bạn</p>
-            <div class="flex w-full justify-center mt-20">
-            <a href="https://mail.google.com/mail/" class="flex bg-red-700 py-2 px-8 text-2xl font-bold gap-4 rounded-xl items-center text-white">
-                <span>Đi đến trang đăng nhập</span>
-            </a>
+            <p class="">Tài khoản của bạn đã được đăng ký thành công, hãy thử đăng nhập tài khoản của bạn</p>
+            <div class="btn-wrapper">
+                <a href="${routeSuccess}" class="btn-login">
+                    <span>Đi đến trang đăng nhập</span>
+                </a>
             </div>
         </div>
-        </section>
+    </section>
     `;
 
     $('main').html(verification);

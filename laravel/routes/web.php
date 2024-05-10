@@ -30,6 +30,7 @@ Route::resource('/role', RoleController::class);
 Route::middleware(['checkLogin'])->group(function () {
     Route::get('/home', [UserController::class, 'home'])->name('home');
 });
+Route::post('/check-email', [UserController::class, 'check_email'])->name('check_email');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::post('/handle_login', [UserController::class, 'handle_login'])->name('handle_login');
