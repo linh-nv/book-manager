@@ -6,17 +6,18 @@
     <title>Book-manager</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-<body onload="showData(category, 'category')">
+<body onload="showData(category, 'category');
+            loadSelectCategory();">
     <nav class="navigation">
         <div class="sidebar-menu">
             <div class="logo">
-                <img src="./assets/images/Logo.png" alt="">
+                <img src="./assets/images/Logo.png" alt="logo-image">
             </div>
             <ul class="sidebar-top">
                 <li class="sidebar-item">
                     <a href="index.html" class="product">
                         <div class="product-icon">
-                            <img src="./assets/icons/time.svg" alt="">
+                            <img src="./assets/icons/time.svg" alt="dashboard-icon">
                         </div>
                         <div class="product-text">
                             <span>Dashboard</span>
@@ -26,7 +27,7 @@
                 <li class="sidebar-item active-btn">
                     <a href="category.html" class="product">
                         <div class="product-icon">
-                            <img src="./assets/icons/product-stock.svg" alt="">
+                            <img src="./assets/icons/product-stock.svg" alt="category-icon">
                         </div>
                         <div class="product-text">
                             <span>Category</span>
@@ -36,7 +37,7 @@
                 <li class="sidebar-item">
                     <a href="book.html" class="product">
                         <div class="product-icon">
-                            <img src="./assets/icons/favorites.svg" alt="">
+                            <img src="./assets/icons/favorites.svg" alt="book-icon">
                         </div>
                         <div class="product-text">
                             <span>Book</span>
@@ -44,27 +45,14 @@
                     </a>
                 </li>
             </ul>
-            <!-- <ul class="sidebar-mid">
-
-            </ul> -->
             <ul class="sidebar-bottom">
-                <li class="sidebar-item">
-                    <a href="#setting" class="product">
-                        <div class="product-icon">
-                            <img src="./assets/icons/setting.svg" alt="">
-                        </div>
-                        <div class="product-text">
-                            <span>setting</span>
-                        </div>
-                    </a>
-                </li>
                 <li class="sidebar-item">
                     <a href="login.html" class="product">
                         <div class="product-icon">
-                            <img src="./assets/icons/logout.svg" alt="">
+                            <img src="./assets/icons/logout.svg" alt="logout-icon">
                         </div>
                         <div href="login.html" class="product-text">
-                            <span>logout</span>
+                            <span>Logout</span>
                         </div>
                     </a>
                 </li>
