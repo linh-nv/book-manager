@@ -1,17 +1,16 @@
-const menuClick = document.getElementById('menu-click');
-const sidebarMenu = document.querySelector('.sidebar-menu');
-const logo = document.querySelector('.logo');
-const topBar = document.querySelector('.top-bar');
-const sidebarItems = document.querySelectorAll('.sidebar-menu .product-text span');
+function menu() {
+    const menuClick = document.getElementById('menu-click');
+    const sidebarMenu = document.querySelector('.sidebar-menu');
+    const logo = document.querySelector('.logo');
+    const topBar = document.querySelector('.top-bar');
+    const sidebarItems = document.querySelectorAll('.sidebar-menu .iteam-text span');
 
-menuClick.addEventListener('click', function() {
     const currentWidth = sidebarMenu.offsetWidth;
-
     if (currentWidth === 240) {
         sidebarMenu.style.width = '100px';
         logo.style.opacity = 0;
         topBar.style.width = 'calc(100vw - 100px)';
-        
+
         sidebarItems.forEach(function(span) {
             span.style.opacity = '0';
             span.style.pointerEvents = 'none';
@@ -20,12 +19,40 @@ menuClick.addEventListener('click', function() {
         sidebarMenu.style.width = '240px';
         logo.style.opacity = 1;
         topBar.style.width = 'calc(100vw - 240px)';
-        
+
         sidebarItems.forEach(function(span) {
             span.style.opacity = '';
             span.style.pointerEvents = '';
         });
     }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    // Lấy tất cả các phần tử sidebar-item
+    var sidebarItems = document.querySelectorAll('.sidebar-item');
+
+    // Xác định phần tử được chọn trước đó từ localStorage
+    var selectedSidebarItem = localStorage.getItem('selectedSidebarItem');
+
+    // Nếu đã có phần tử được chọn trước đó, thêm class active-btn cho nó
+    if (selectedSidebarItem) {
+        document.getElementById(selectedSidebarItem).classList.add('active-btn');
+    }
+
+    // Lặp qua từng phần tử và thêm sự kiện click
+    sidebarItems.forEach(function(item) {
+        item.addEventListener('click', function(event) {
+            // Loại bỏ class active-btn từ tất cả các phần tử
+            sidebarItems.forEach(function(item) {
+                item.classList.remove('active-btn');
+            });
+
+            // Thêm class active-btn cho phần tử được click
+            item.classList.add('active-btn');
+
+            // Lưu id của phần tử được chọn vào localStorage
+            localStorage.setItem('selectedSidebarItem', item.id);
+        });
+    });
 });
 
 let book = [

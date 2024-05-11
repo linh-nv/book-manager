@@ -7,106 +7,9 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <nav class="navigation">
-        <div class="sidebar-menu">
-            <div class="logo">
-                <img src="./assets/images/Logo.png" alt="logo-image">
-            </div>
-            <ul class="sidebar-top">
-                <li class="sidebar-item active-btn">
-                    <a href="index.html" class="product">
-                        <div class="product-icon">
-                            <img src="./assets/icons/time.svg" alt="dashboard-icon">
-                        </div>
-                        <div class="product-text">
-                            <span>Dashboard</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="category.html" class="product">
-                        <div class="product-icon">
-                            <img src="./assets/icons/product-stock.svg" alt="category-icon">
-                        </div>
-                        <div class="product-text">
-                            <span>Category</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="book.html" class="product">
-                        <div class="product-icon">
-                            <img src="./assets/icons/favorites.svg" alt="book-icon">
-                        </div>
-                        <div class="product-text">
-                            <span>Book</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-            <ul class="sidebar-bottom">
-                <li class="sidebar-item">
-                    <a href="login.html" class="product">
-                        <div class="product-icon">
-                            <img src="./assets/icons/logout.svg" alt="logout-icon">
-                        </div>
-                        <div href="login.html" class="product-text">
-                            <span>Logout</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <nav include-html="./layouts/navigation.html" class="navigation"></nav>
     <main>
-        <header class="top-bar">
-            <div class="top-bar-left">
-                <input type="checkbox" id="menu-click">
-                <label for="menu-click" class="menu-icon">
-                    <img src="./assets/icons/menu.svg" alt="">
-                </label>
-                <div class="search-box">
-                    <div class="search-icon">
-                        <img src="./assets/icons/search.svg" alt="">
-                    </div>
-                    <div class="search-input">
-                        <input id="search" type="text" placeholder="Search category, book title" onkeyup="search()">
-                        <ul id="search-result" class="list-search-category">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="top-bar-right">
-                <div class="notify">
-                    <img src="./assets/images/notify.png" alt="">
-                </div>
-                <div class="country">
-                    <div class="flag">
-                        <img src="./assets/images/Flag.png" alt="">
-                    </div>
-                    <div class="country-name">
-                        <span>English</span>
-                        <img src="./assets/icons/Drop Down.svg" alt="">
-                    </div>
-                </div>
-                <div class="user-box">
-                    <div class="avatar">
-                        <img src="./assets/images/man-438081_960_720.png" alt="">
-                    </div>
-                    <div class="user-info">
-                        <div class="user-name">
-                            <span>Moni Roy</span>
-                        </div>
-                        <div class="user-role">
-                            <span>Admin</span>
-                        </div>
-                    </div>
-                    <div class="more">
-                        <img src="./assets/icons/More.svg" alt="">
-                    </div>
-                </div>
-            </div>
-        </header>
+        <header include-html="./layouts/header.html" class="top-bar"></header>
         <section class="dashboard-content">
             <div class="heading">
                 <h1>Dashboard</h1>
@@ -143,5 +46,6 @@
         </section>
     </main>
 </body>
+<script src="./assets/js/header.js"></script>
 <script src="./assets/js/main.js"></script>
 </html>

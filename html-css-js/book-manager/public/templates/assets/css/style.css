@@ -14,7 +14,7 @@ body {
     color: var(--text-color);
     background-color: var(--primary-color);
     display: flex;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     font-weight: 600;
 }
 :root {
@@ -101,7 +101,7 @@ li {
     width: 30px;
     align-items: center;
 }
-.product-text span {
+.iteam-text span {
     white-space: nowrap;
     opacity: 0.9;
     pointer-events: auto;
