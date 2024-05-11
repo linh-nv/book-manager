@@ -26,34 +26,17 @@ function menu() {
         });
     }
 }
-document.addEventListener("DOMContentLoaded", function() {
-    // Lấy tất cả các phần tử sidebar-item
-    var sidebarItems = document.querySelectorAll('.sidebar-item');
+function typePage(type) {
+    const sidebarItems = document.querySelectorAll('.sidebar-item');
 
-    // Xác định phần tử được chọn trước đó từ localStorage
-    var selectedSidebarItem = localStorage.getItem('selectedSidebarItem');
-
-    // Nếu đã có phần tử được chọn trước đó, thêm class active-btn cho nó
-    if (selectedSidebarItem) {
-        document.getElementById(selectedSidebarItem).classList.add('active-btn');
-    }
-
-    // Lặp qua từng phần tử và thêm sự kiện click
     sidebarItems.forEach(function(item) {
-        item.addEventListener('click', function(event) {
-            // Loại bỏ class active-btn từ tất cả các phần tử
-            sidebarItems.forEach(function(item) {
-                item.classList.remove('active-btn');
-            });
+        const sidebarItemText = item.querySelector('.iteam-text span').textContent;
 
-            // Thêm class active-btn cho phần tử được click
+        if (type === sidebarItemText) {
             item.classList.add('active-btn');
-
-            // Lưu id của phần tử được chọn vào localStorage
-            localStorage.setItem('selectedSidebarItem', item.id);
-        });
+        }
     });
-});
+}
 
 let book = [
     {
@@ -509,5 +492,28 @@ function deleteSelectedItems(name) {
 }
 
 
+/*
+*
+* ============= Dashboard ===============
+*
+*/
+function total() {
+    let totalBooks = book.length;
+    let totalCategories = category.length;
+    
+    let totalPrice = 0;
+    book.forEach(function(bk) {
+        totalPrice += bk.price;
+    });
+    
+    document.querySelector('.title').textContent = 'Total Books';
+    document.querySelector('.total strong').textContent = totalBooks;
+    
+    document.querySelectorAll('.title')[1].textContent = 'Total Category';
+    document.querySelectorAll('.total strong')[1].textContent = totalCategories;
+    
+    document.querySelectorAll('.title')[2].textContent = 'Total Price';
+    document.querySelectorAll('.total strong')[2].textContent = totalPrice.toFixed(2);
+}
 
 
