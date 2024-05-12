@@ -32,7 +32,7 @@
             </div>
             <div class="form-button flex justify-center items-center">
                 <button type="submit" class="bg-blue-500 rounded-lg mt-10 px-12 py-6 text-white font-semibold">
-                    {{ isset($category->slug) ? 'Update' : 'Create' }}
+                    {{ isset($category) ? 'Update' : 'Create' }}
                 </button>
             </div>
         </form>

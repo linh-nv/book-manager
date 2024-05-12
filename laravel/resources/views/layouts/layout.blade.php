@@ -8,23 +8,33 @@
             <img src="{{asset('images/Logo.png')}}" alt="">
         </div>
         <ul class="sidebar-top">
-            <li class="sidebar-item active-btn">
-                <a href="{{route('home')}}" class="product bg-blue-400">
+            <li class="sidebar-item">
+                <a href="{{route('home')}}" class="product">
                     <div class="product-icon">
                         <i class="fa-solid fa-house"></i>
                     </div>
-                    <div class="product-text">
+                    <div class="iteam-text">
                         <span>Dashboard</span>
                     </div>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="" class="product">
+                <a href="{{route('author.index')}}" class="product">
                     <div class="product-icon">
-                        <i class="fa-solid fa-mug-saucer"></i>
+                        <i class="fa-solid fa-user-graduate"></i>                    
                     </div>
-                    <div class="product-text">
-                        <span>Sách</span>
+                    <div class="iteam-text">
+                        <span>Author</span>
+                    </div>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{route('publisher.index')}}" class="product">
+                    <div class="product-icon">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </div>
+                    <div class="iteam-text">
+                        <span>Publisher</span>
                     </div>
                 </a>
             </li>
@@ -33,8 +43,18 @@
                     <div class="product-icon">
                         <i class="fa-solid fa-list"></i>
                     </div>
-                    <div class="product-text">
-                        <span>Danh Mục</span>
+                    <div class="iteam-text">
+                        <span>Category</span>
+                    </div>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{route('book.index')}}" class="product">
+                    <div class="product-icon">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div class="iteam-text">
+                        <span>Book</span>
                     </div>
                 </a>
             </li>
@@ -43,7 +63,7 @@
                     <div class="product-icon">
                         <i class="fa-solid fa-file-invoice"></i>
                     </div>
-                    <div class="product-text">
+                    <div class="iteam-text">
                         <span>Hóa Đơn</span>
                     </div>
                 </a>
@@ -58,7 +78,7 @@
                     <div class="product-icon">
                         <i class="fa-solid fa-gear"></i>
                     </div>
-                    <div class="product-text">
+                    <div class="iteam-text">
                         <span>Setting</span>
                     </div>
                 </a>
@@ -68,7 +88,7 @@
                     <div class="product-icon">
                         <i class="fa-solid fa-power-off"></i>
                     </div>
-                    <div class="product-text">
+                    <div class="iteam-text">
                         <span>Logout</span>
                     </div>
                 </a>
@@ -79,7 +99,7 @@
 <main>
     <header class="top-bar">
         <div class="top-bar-left">
-            <label for="menu-click" class="menu-icon">
+            <label for="menu-click" class="menu-icon" onclick="menu();">
                 <img src="{{asset('icons/menu.svg')}}" alt="">
             </label>
             <input type="checkbox" id="menu-click">

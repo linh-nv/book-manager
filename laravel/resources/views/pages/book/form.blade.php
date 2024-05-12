@@ -5,53 +5,140 @@
     <div class="heading">
         <h1>Book</h1>
     </div>
+    <a href="{{route('book.index')}}" class="px-12 py-6 bg-blue-500 rounded-lg text-white">
+        List book
+    </a>
     <div class="add-content">
-        <div class="form-box">
-            <div class="form-input">
-                <div class="form-group">
-                    <label for="book-id">ID</label>
-                    <input type="text" name="book-id" id="book-id" placeholder="Enter book id">
+        <form action="{{ isset($book) ? route('book.update', $book) : route('book.store') }}" method="POST" enctype="multipart/form-data" class="form-box">
+            @csrf 
+            @if(isset($book))
+                @method('PUT')
+            @endif
+            <div class="form-upload-box flex justify-center gap-96 mb-20">
+                <div class="form-upload">
+
+                    <div class="upload">
+                        <input id="upload-front_image" type="file" class="upload-photo" name="front_image" accept="image/*">
+                        @if (isset($book))
+                            <lable for="upload-front_image">
+                                <img class="w-40 h-40" src="{{asset($book->front_image)}}" alt="">
+                            </lable>
+                        @else
+                            <label for="upload-front_image" class="upload-icon bg-blue-100">
+                                <i class="fa-solid fa-image fa-xl text-blue-500"></i>                    
+                            </label>
+                        @endif
+                    </div>
+                    <label for="upload-front_image">Font image</label>
                 </div>
-                <div class="form-group">
-                    <label for="your-email">Image Path</label>
-                    <input type="text" name="book-image" id="book-image" placeholder="Enter image path">
+                <div class="form-upload">
+                    <div class="upload">
+                        <input id="upload-thumbnail" type="file" class="upload-photo" name="thumbnail" accept="image/*">
+                        @if (isset($book))
+                            <lable for="upload-thumbnail">
+                                <img class="w-40 h-40" src="{{asset($book->thumbnail)}}" alt="">
+                            </lable>
+                        @else
+                            <label for="upload-thumbnail" class="upload-icon bg-blue-100">
+                                <i class="fa-solid fa-panorama fa-xl text-blue-500"></i>
+                            </label>
+                        @endif
+                    </div>
+                    <label for="upload-thumbnail">Thumbnail</label>
+                </div>
+                <div class="form-upload">
+                    <div class="upload">
+                        <input id="upload-rear_image" type="file" class="upload-photo" name="rear_image" accept="image/*">
+                        @if (isset($book))
+                            <lable for="upload-rear_image">
+                                <img class="w-40 h-40" src="{{asset($book->rear_image)}}" alt="">
+                            </lable>
+                        @else
+                            <label for="upload-rear_image" class="upload-icon bg-blue-100">
+                                <i class="fa-solid fa-images fa-xl text-blue-500"></i>                    
+                            </label>
+                        @endif
+                    </div>
+                    <label for="upload-rear_image">Rear image</label>
                 </div>
             </div>
             <div class="form-input">
                 <div class="form-group">
-                    <label for="fist-name">Title</label>
-                    <input type="text" name="title" id="book-title" placeholder="Enter book title">
+                    <label for="name">Name</label>
+                    <input oninput="changeToSlug()" value="{{ $book->name ?? '' }}" type="text" name="name" id="name" placeholder="Enter book name">
                 </div>
                 <div class="form-group">
-                    <label for="last-name">Author</label>
-                    <input type="text" name="book-author" id="book-author" placeholder="Enter book author">
+                    <label for="slug">Slug</label>
+                    <input value="{{ $book->slug ?? '' }}" type="text" name="slug" id="slug" placeholder="Enter book slug">
                 </div>
             </div>
             <div class="form-input">
                 <div class="form-group">
-                    <label for="your-email">Publisher</label>
-                    <input type="text" name="book-publisher" id="book-publisher" placeholder="Enter publisher">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" placeholder="Enter book description">{{ $book->description ?? '' }}</textarea>
+                </div>
+            </div>
+            <div class="form-input">
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input value="{{ $book->quantity ?? '' }}" type="number" min=1 name="quantity" id="quantity" placeholder="Enter book quantity">
                 </div>
                 <div class="form-group">
-                    <label for="phone-number">Price</label>
-                    <input type="text" name="book-price" id="book-price" placeholder="Enter book price">
+                    <label for="price">Price</label>
+                    <input value="{{ $book->price ?? '' }}" type="number" min=1000 name="price" id="price" placeholder="Enter book price">
                 </div>
             </div>
             <div class="form-input">
                 <div class="form-group">
                     <label for="category">Category</label>
-                    <select id="category">
-                        <option value="" disabled selected hidden>-- Select category --</option>
-    
+                    <select name="category_id" id="category">
+                        @if (isset($book))
+                            <option value="{{$book->category->id}}">{{$book->category->name}}</option>                            
+                        @else
+                            <option value="" disabled selected hidden>-- Select publisher --</option>
+                        @endif
+
+                        @foreach ($select['categories'] as $categoryId => $categoryName)
+                            <option value="{{ $categoryId }}">{{ $categoryName }}</option>
+                        @endforeach
+                    </select>                            
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <select name="author_id" id="author">
+                        @if (isset($book))
+                            <option value="{{$book->author->id}}">{{$book->author->name}}</option>                            
+                        @else
+                            <option value="" disabled selected hidden>-- Select publisher --</option>
+                        @endif
+                        
+                        @foreach ($select['authors'] as $authorId => $authorName)
+                            <option value="{{ $authorId }}">{{ $authorName }}</option>
+                        @endforeach
+                    </select>                            
+                </div>
+                <div class="form-group">
+                    <label for="publisher">Publisher</label>
+                    <select name="publisher_id" id="publisher">
+                        @if (isset($book))
+                            <option value="{{$book->publisher->id}}">{{$book->publisher->name}}</option>                            
+                        @else
+                            <option value="" disabled selected hidden>-- Select publisher --</option>
+                        @endif
+                
+                        @foreach ($select['publishers'] as $publisherId => $publisherName)
+                            <option value="{{ $publisherId }}">{{ $publisherName }}</option>
+                        @endforeach
                     </select>                            
                 </div>
             </div>
-            <div class="form-button">
-                <button onclick="submitBook()">
-                    Submit
+            <div class="form-button flex justify-center items-center">
+                <button type="submit" class="bg-blue-500 rounded-lg mt-20 px-12 py-6 text-white font-semibold">
+                    {{ isset($book) ? 'Update' : 'Create' }}
                 </button>
             </div>
-        </div>
+        </form>
+        
     </div>
 </section>
 @endsection

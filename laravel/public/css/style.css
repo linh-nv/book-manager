@@ -93,7 +93,7 @@ a {
     width: 30px;
     align-items: center;
 }
-.product-text span {
+.iteam-text span {
     white-space: nowrap;
     opacity: 0.9;
     pointer-events: auto;
