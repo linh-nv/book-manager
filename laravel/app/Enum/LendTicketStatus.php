@@ -3,9 +3,9 @@ namespace App\Enum;
 
 enum LendTicketStatus: int
 {
-    case PENDING = 0;
-    case APPROVED = 1;
-    case REJECTED = 2;
+    case PENDING = 1;
+    case APPROVED = 2;
+    case REJECTED = 3;
 
     public function label(): string
     {

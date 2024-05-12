@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Http\Controllers\ImageController;
 use App\Repositories\RepositoryInterface;
-use App\Util\Constants;
+use App\Utils\Constants;
 
 abstract class BaseRepository implements RepositoryInterface
 {
@@ -107,6 +107,6 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function getPaginate()
     {
-        return $this->_model->paginate(Constants::PER_PAGE);
+        return $this->_model->paginate(/*Constants::PER_PAGE*/5);
     }
 }

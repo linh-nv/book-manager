@@ -35,4 +35,9 @@
         
     </div>
 </section>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        typePage('Publisher');
+    });
+</script>
 @endsection

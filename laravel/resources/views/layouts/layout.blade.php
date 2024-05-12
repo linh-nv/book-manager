@@ -59,12 +59,12 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="" class="product">
+                <a href="{{route('lend_ticket.index')}}" class="product">
                     <div class="product-icon">
-                        <i class="fa-solid fa-file-invoice"></i>
+                        <i class="fa-solid fa-cash-register"></i>
                     </div>
                     <div class="iteam-text">
-                        <span>Hóa Đơn</span>
+                        <span>Lend Ticket</span>
                     </div>
                 </a>
             </li>

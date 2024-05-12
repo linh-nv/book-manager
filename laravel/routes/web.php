@@ -17,7 +17,9 @@ use App\Enum\RoleStatus;
 use App\Enum\TicketDetailStatus;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowBookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LendTicketController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Middleware\Authenticate;
@@ -42,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/author', AuthorController::class);
     Route::resource('/publisher', PublisherController::class);
     Route::resource('/book', BookController::class);
+    Route::resource('/lend_ticket', LendTicketController::class);
 
 });
 Route::post('/check-email', [LoginController::class, 'check_email'])->name('check_email');
