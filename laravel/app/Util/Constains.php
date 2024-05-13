@@ -5,8 +5,8 @@ namespace App\Util;
  * Class Constants
  * @package App\Util
  */
-class Constants
+class Constains
 {
     /** @var int PER_PAGE */
-    public const PER_PAGE = 10;
+    public const PER_PAGE = 5;
 }

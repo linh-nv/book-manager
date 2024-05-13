@@ -17,7 +17,25 @@ class LendTicket extends Model
         'note',
     ];
 
-    public function user() {
+    public function user() 
+    {
+
         return $this->belongsTo(User::class);
     }
+    
+    public function ticketDetails()
+    {
+
+        return $this->belongsToMany(TicketDetail::class, 'ticket_details','lend_ticket_id','book_id');
+    }
+    
+    protected static function boot()
+    {
+        parent::boot();
+    
+        static::deleting(function (LendTicket $lendTicket) {
+            $lendTicket->ticketDetails()->detach();
+        });
+    }
+    
 }

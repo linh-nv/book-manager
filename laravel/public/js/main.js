@@ -180,7 +180,7 @@ function convertToSlug(text) {
 
 function showConfirmModal(id) {
     document.getElementById('confirmModal').style.display = 'block';
-    // Lưu ID của category muốn xóa vào một hidden input trong modal
+
     document.getElementById('categoryId').value = id;
 }
 
@@ -189,8 +189,34 @@ function hideConfirmModal() {
 }
 
 function deleteCategory() {
-    // Lấy ID của category từ hidden input
     var categoryId = document.getElementById('categoryId').value;
-    // Submit form xóa với ID của category đã lưu
+
     document.getElementById('deleteForm' + categoryId).submit();
+}
+
+function chooseQuantityOfBook() {
+    const bookSelect = document.getElementById('bookSelect');
+    const quantityFields = document.getElementById('quantityFields');
+
+    bookSelect.addEventListener('change', function () {
+        quantityFields.innerHTML = '';
+
+        Array.from(bookSelect.selectedOptions).forEach(option => {
+            const bookNameLabel = document.createElement('span');
+            bookNameLabel.textContent = 'Quantity of: ' + option.textContent;
+            quantityFields.appendChild(bookNameLabel);
+
+            const quantityField = document.createElement('input');
+            quantityField.setAttribute('type', 'number');
+            quantityField.setAttribute('name', `quantities[${option.value}]`);
+            quantityField.setAttribute('value', '1'); // Mặc định là 1
+            quantityField.setAttribute('min', '1');
+            quantityField.setAttribute('class', 'quantity-field');
+            quantityFields.appendChild(quantityField);
+
+            // Tạo một dòng mới
+            const lineBreak = document.createElement('br');
+            quantityFields.appendChild(lineBreak);
+        });
+    });
 }

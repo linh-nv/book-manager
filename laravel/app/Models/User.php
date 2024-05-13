@@ -53,16 +53,15 @@ class User extends Authenticatable
         return $this->hasMany(LendTicket::class);
     }
 
-    public function roles() {
+    public function role() {
         return $this->belongsTo(Role::class);
     }
 
     /*
     *
-    * User code fomat là: XXxxx 
-        Trong đó: 
-            + XX là mã role (admin: AD, manager: MN)
-            + xxx là id của user 
+    * Format user code: XXxxx 
+            + XX: role code (admin: AD, manager: MN)
+            + xxx: user id
     *
     */ 
     protected static function boot()

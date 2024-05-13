@@ -19,8 +19,8 @@
                 <th>Status</th>
                 <th>Action</th>
             </tr>
-            @foreach ($lendTickets as $lend)    
-            {{-- <tr class="{{ $index % 2 == 0 ? 'bg-slate-100' : '' }}"> --}}
+            @foreach ($lendTickets as $index => $lend)    
+            <tr class="{{ $index % 2 == 0 ? 'bg-slate-100' : '' }}">
                 <td class="p-10">{{ $lend->user->name }}</td>
                 <td class="p-10">{{ $lend->start_date }}</td>
                 <td class="p-10">{{ $lend->end_date }}</td>

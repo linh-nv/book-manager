@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('lend_ticket_id');
-            $table->date('return_date');
+            $table->date('return_date')->nullable();
             $table->tinyInteger('status');
             $table->integer('quantity');
             $table->timestamps();

@@ -37,7 +37,9 @@ class LendTicketController extends Controller
         $lendTickets = $this->lendTicketRepository->getAll();   
         $this->lendTicketRepository->loadRelationship($lendTickets);
 
-        return view('pages.lend_ticket.form', compact('lendTickets'));
+        $books = $this->lendTicketRepository->getAllBooks();
+
+        return view('pages.lend_ticket.form', compact('lendTickets', 'books'));
     }
 
     /**
@@ -45,6 +47,7 @@ class LendTicketController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request);
         if ($request->has([
             'user_id',
             'start_date',
@@ -53,7 +56,7 @@ class LendTicketController extends Controller
             'note',
         ])) {
 
-            $this->lendTicketRepository->create([
+            $lendTicketed = $this->lendTicketRepository->create([
                 'user_id' => $request->user_id,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
@@ -62,6 +65,7 @@ class LendTicketController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
+            $this->lendTicketRepository->attach($lendTicketed, $request->book_id, $request->quantities);
             
             return redirect()->route('lend_ticket.index');
         }
@@ -85,7 +89,9 @@ class LendTicketController extends Controller
         $lendTickets = $this->lendTicketRepository->getAll();   
         $this->lendTicketRepository->loadRelationship($lendTickets);
 
-        return view('pages.lend_ticket.form', compact('lendTicketed', 'lendTickets'));
+        $books = $this->lendTicketRepository->getAllBooks();
+
+        return view('pages.lend_ticket.form', compact('lendTicketed', 'lendTickets', 'books'));
     }
 
     /**
@@ -101,7 +107,7 @@ class LendTicketController extends Controller
             'note',
         ])) {
 
-            $this->lendTicketRepository->update($id, [
+            $lendTicketed = $this->lendTicketRepository->update( $id, [
                 'user_id' => $request->user_id,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,

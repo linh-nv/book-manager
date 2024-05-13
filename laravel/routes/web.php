@@ -23,6 +23,8 @@ use App\Http\Controllers\LendTicketController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Middleware\Authenticate;
+use App\Util\Constains;
+use App\Util\Constants;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +54,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/handle_login', [LoginController::class, 'handleLogin'])->name('handle_login');
 
 // Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
-use App\Util\Constants;
 
 Route::get('/test', function(){
-    return Constants::PER_PAGE;
+    return Constains::PER_PAGE;
 });

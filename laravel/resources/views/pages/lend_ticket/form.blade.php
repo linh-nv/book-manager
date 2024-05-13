@@ -54,6 +54,20 @@
                     <input value="{{ $lendTicketed->end_date ?? '' }}" type="date" name="end_date" id="end_date" placeholder="Enter lend_ticket end_date">
                 </div>
             </div>
+            @if (!isset($lendTicketed))           
+            <div class="form-input">
+                <div class="form-group">
+                    <label for="book">Book</label>
+                    <select multiple name="book_id[]" id="bookSelect">
+                        @foreach ($books as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>                     
+                </div>
+            </div>
+            @endif
+            <div id="quantityFields"></div>
+            
             <div class="form-input">
                 <div class="form-group">
                     <label for="note">Note</label>
@@ -72,6 +86,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         typePage('Lend Ticket');
+        chooseQuantityOfBook();
     });
 </script>
 @endsection
