@@ -220,3 +220,12 @@ function chooseQuantityOfBook() {
         });
     });
 }
+function loadNameFilesUpload() {
+    document.querySelectorAll('.upload-photo').forEach(function (input) {
+        input.addEventListener('change', function () {
+            var fileName = input.files[0]?.name || "No file chosen";
+            var label = input.parentElement.nextElementSibling;
+            label.textContent = fileName;
+        });
+    });
+}

@@ -9,23 +9,30 @@
         List Category
     </a>
     <div class="add-content">
-        <form action="{{ isset($category) ? route('category.update', $category) : route('category.store') }}" method="POST" class="form-box">
+        <form id="form-category" action="{{ isset($category) ? route('category.update', $category) : route('category.store') }}" method="POST" class="form-box">
             @csrf 
             @if(isset($category))
                 @method('PUT')
             @endif
+
             <div class="form-input">
                 <div class="form-group">
+                    <span class="message text-red-500">&nbsp;</span>
                     <label for="name">Name</label>
-                    <input oninput="changeToSlug()" value="{{ $category->name ?? '' }}" type="text" name="name" id="name" placeholder="Enter category name">
-                </div>
-                <div class="form-group">
-                    <label for="slug">Slug</label>
-                    <input value="{{ $category->slug ?? '' }}" type="text" name="slug" id="slug" placeholder="Enter category slug">
+                    <input value="{{ $category->name ?? '' }}" type="text" name="name" id="name" placeholder="Enter category name">
                 </div>
             </div>
             <div class="form-input">
                 <div class="form-group">
+                    <span class="message text-red-500">&nbsp;</span>
+                    <label for="slug">Slug</label>
+                    <input value="{{ $category->slug ?? '' }}" type="text" name="slug" id="slug" placeholder="Enter category slug">
+                </div>
+            </div>
+
+            <div class="form-input">
+                <div class="form-group">
+                    <span class="message text-red-500">&nbsp;</span>
                     <label for="description">Description</label>
                     <textarea name="description" id="description" placeholder="Enter category description">{{ $category->description ?? '' }}</textarea>
                 </div>
@@ -39,4 +46,10 @@
         
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    validate('#form-category', slug = true);
+});
+</script>
 @endsection

@@ -24,5 +24,6 @@
 
 </body>
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/validator.js')}}"></script>
 
 </html>

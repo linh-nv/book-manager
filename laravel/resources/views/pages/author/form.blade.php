@@ -9,19 +9,21 @@
         List author
     </a>
     <div class="add-content">
-        <form action="{{ isset($author) ? route('author.update', $author) : route('author.store') }}" method="POST" class="form-box">
+        <form id="form-author" action="{{ isset($author) ? route('author.update', $author) : route('author.store') }}" method="POST" class="form-box">
             @csrf 
             @if(isset($author))
                 @method('PUT')
             @endif
             <div class="form-input">
                 <div class="form-group">
+                    <span class="message text-red-500">&nbsp;</span>
                     <label for="name">Name</label>
                     <input value="{{ $author->name ?? '' }}" type="text" name="name" id="name" placeholder="Enter author name">
                 </div>
             </div>
             <div class="form-input">
                 <div class="form-group">
+                    <span class="message text-red-500">&nbsp;</span>
                     <label for="description">Description</label>
                     <textarea name="description" id="description" placeholder="Enter author description">{{ $author->description ?? '' }}</textarea>
                 </div>
@@ -35,4 +37,9 @@
         
     </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    validate('#form-author');
+});
+</script>
 @endsection

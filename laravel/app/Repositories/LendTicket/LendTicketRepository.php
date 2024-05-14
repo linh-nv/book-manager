@@ -5,12 +5,9 @@ use App\Models\Book;
 use App\Repositories\BaseRepository;
 use App\Repositories\LendTicket\LendTicketRepositoryInterface;
 use App\Util\Constains;
-use App\Util\Constants;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Collection;
 class LendTicketRepository extends BaseRepository implements LendTicketRepositoryInterface
 {
     /**
@@ -35,7 +32,7 @@ class LendTicketRepository extends BaseRepository implements LendTicketRepositor
         return $this->_model->with('user')->paginate(Constains::PER_PAGE);
     }
 
-    public function getAllBooks(): Book
+    public function getAllBooks(): Collection
     {
         $books = Book::pluck('name', 'id');       
 
