@@ -3,7 +3,18 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Author;
+use App\Models\Book;
+use App\Models\Category;
+use App\Models\ChildCategory;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Publisher;
+use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +23,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::create([
+            'username' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 1,
+            'phone' => '0123456789',
+            'address' => '123 Admin St.',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        UserFactory::factory(5)->create();
+        Category::factory(5)->create();
+        ChildCategory::factory(10)->create();
+        Author::factory(10)->create();
+        Publisher::factory(10)->create();
+        Book::factory(10)->create();
+        Order::factory(10)->create();
+        OrderDetail::factory(10)->create();
     }
 }
