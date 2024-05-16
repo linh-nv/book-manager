@@ -23,24 +23,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'username' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 1,
-            'phone' => '0123456789',
-            'address' => '123 Admin St.',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // User::create([
+        //     'username' => 'admin',
+        //     'email' => 'admin@gmail.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 1,
+        //     'phone' => '0123456789',
+        //     'address' => '123 Admin St.',
+        //     'created_at' => now(),
+        //     'updated_at' => now(),
+        // ]);
 
-        UserFactory::factory(5)->create();
-        Category::factory(5)->create();
-        ChildCategory::factory(10)->create();
-        Author::factory(10)->create();
-        Publisher::factory(10)->create();
-        Book::factory(10)->create();
-        Order::factory(10)->create();
-        OrderDetail::factory(10)->create();
+        // UserFactory::factory(5)->create();
+        // Category::factory(5)->create();
+        // ChildCategory::factory(10)->create();
+        // Author::factory(10)->create();
+        // Publisher::factory(10)->create();
+        // Book::factory(10)->create();
+        // Order::factory(10)->create();
+        // OrderDetail::factory(10)->create();
+        $this->call([
+            UserSeeder::class,
+            CategorySeeder::class,
+            ChildCategorySeeder::class,
+            AuthorSeeder::class,
+            PublisherSeeder::class,
+            BookSeeder::class,
+            OrderSeeder::class,
+            OrderDetailSeeder::class,
+        ]);
     }
 }
