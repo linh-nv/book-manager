@@ -8,8 +8,14 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\Comment;
+use App\Models\Coupon;
+use App\Models\CouponUser;
+use App\Models\News;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Preview;
+use App\Models\PreviewComment;
 use App\Models\Publisher;
 use App\Models\User;
 use Database\Factories\UserFactory;
@@ -34,7 +40,7 @@ class DatabaseSeeder extends Seeder
         //     'updated_at' => now(),
         // ]);
 
-        // UserFactory::factory(5)->create();
+        // User::factory(5)->create();
         // Category::factory(5)->create();
         // ChildCategory::factory(10)->create();
         // Author::factory(10)->create();
@@ -42,6 +48,13 @@ class DatabaseSeeder extends Seeder
         // Book::factory(10)->create();
         // Order::factory(10)->create();
         // OrderDetail::factory(10)->create();
+        // Comment::factory(10)->create();
+        // Coupon::factory(10)->create();
+        // News::factory(10)->create();
+        // CouponUser::factory(10)->create();
+        // Preview::factory(10)->create();
+        // PreviewComment::factory(10)->create();
+
         $this->call([
             UserSeeder::class,
             CategorySeeder::class,
@@ -51,6 +64,12 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             OrderSeeder::class,
             OrderDetailSeeder::class,
+            CommentSeeder::class,
+            CouponSeeder::class,
+            NewsSeeder::class,
+            CouponUserSeeder::class,
+            PreviewSeeder::class,
+            PreviewCommentSeeder::class,
         ]);
     }
 }
