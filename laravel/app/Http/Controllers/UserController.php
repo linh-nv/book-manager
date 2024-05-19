@@ -3,18 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Enum\RoleStatus;
-use App\Jobs\SendEmailNotify;
-use App\Jobs\SendEmailVerify;
-use App\Models\TokensVerify;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 class UserController extends Controller
 {
     /**

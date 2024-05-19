@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -34,13 +35,18 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         return compact('categories', 'authors', 'publishers');
     }
 
-    public function loadRelationship(Book $book, array $relationships): Book
+    public function getRelationship(array $relationships): Collection
     {
-        return $book->load($relationships);
+        return $this->_model->with($relationships)->get();
     }
 
-    public function loadAllRelationship(Book $book, array $relationships = ['category', 'author', 'publisher']): Book
+    public function getAllRelationship(array $relationships = ['category', 'author', 'publisher']): Collection
     {
-        return $book->load($relationships);
+        return $this->_model->with($relationships)->get();
+    }
+
+    public function findAllRelationship($id, array $relationships = ['category', 'author', 'publisher']): Collection
+    {
+        return $this->_model->where('id', $id)->with($relationships)->get();
     }
 }

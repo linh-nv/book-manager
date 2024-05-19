@@ -98,7 +98,7 @@ class BookController extends Controller
     public function edit(Book $book): View
     {
         $select = $this->bookRepository->getAllCategoriesAuthorsPublishers();   
-        $book = $this->bookRepository->loadAllRelationship($book);
+        $book = $this->bookRepository->getAllRelationship();
 
         return view('pages.book.form', compact('book', 'select'));
     }

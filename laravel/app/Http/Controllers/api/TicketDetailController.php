@@ -1,0 +1,105 @@
+<?php
+
+namespace App\Http\Controllers\api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TicketDetailRequest;
+use App\Models\TicketDetail;
+use App\Repositories\TicketDetail\TicketDetailRepository;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use App\Traits\ResponseHandler;
+
+class TicketDetailController extends Controller
+{
+    use ResponseHandler;
+
+    protected $ticketDetailRepository;
+
+    public function __construct(TicketDetailRepository $ticketDetailRepository)
+    {
+        $this->ticketDetailRepository = $ticketDetailRepository;
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(): JsonResponse
+    {
+        $ticketDetail = $this->ticketDetailRepository->getAllRelationship();
+    
+        return $this->responseSuccess(200, $ticketDetail);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(TicketDetailRequest $request): JsonResponse
+    {
+        try {
+
+            $ticketDetailed = $this->ticketDetailRepository->create([
+                'book_id' => $request->book_id,
+                'lend_ticket_id' => $request->lend_ticket_id,
+                'return_date' => $request->return_date,
+                'status' => $request->status,
+                'quantity' => $request->quantity,
+                'created_at' => Carbon::now(),
+            ]);
+
+            return $this->responseSuccess(200, $this->ticketDetailRepository->findAllRelationship($ticketDetailed->id));
+        } catch (\Exception $e) {
+
+            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the TicketDetail.');
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(TicketDetail $ticketDetail): JsonResponse
+    {
+
+        return $this->responseSuccess(200, $this->ticketDetailRepository->findAllRelationship($ticketDetail->id));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(TicketDetailRequest $request, TicketDetail $ticketDetail): JsonResponse
+    {
+        try {
+
+            $ticketDetailData = [
+                'book_id' => $request->book_id,
+                'lend_ticket_id' => $request->lend_ticket_id,
+                'return_date' => $request->return_date,
+                'status' => $request->status,
+                'quantity' => $request->quantity,
+            ];
+
+            $ticketDetail = $this->ticketDetailRepository->update($ticketDetail->id, $ticketDetailData);
+
+            return $this->responseSuccess(200, $this->ticketDetailRepository->findAllRelationship($ticketDetail->id));
+        } catch (\Exception $e) {
+
+            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the TicketDetail.');
+        }
+    }
+
+    
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(TicketDetail $ticketDetail): JsonResponse
+    {
+        try {
+            $this->ticketDetailRepository->delete($ticketDetail->id);
+
+            return $this->responseSuccess(200, null);
+        } catch (\Exception $e) {
+
+            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the TicketDetail.');
+        }
+    }
+}

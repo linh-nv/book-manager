@@ -45,7 +45,7 @@ abstract class BaseRepository implements RepositoryInterface
     public function getAll()
     {
 
-        return $this->_model->all();
+        return $this->_model->orderBy('id', 'DESC')->get();
     }
 
     /**
@@ -82,6 +82,7 @@ abstract class BaseRepository implements RepositoryInterface
         $result = $this->find($id);
         if ($result) {
             $result->update($attributes);
+            
             return $result;
         }
 
@@ -108,7 +109,7 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function getPaginate()
     {
-        return $this->_model->paginate(Constains::PER_PAGE);
+        return $this->_model->orderBy('id', 'DESC')->paginate(Constains::PER_PAGE);
     }
     
 }

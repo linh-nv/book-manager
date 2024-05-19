@@ -8,6 +8,7 @@ use App\Util\Constains;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 class LendTicketRepository extends BaseRepository implements LendTicketRepositoryInterface
 {
     /**
@@ -20,10 +21,10 @@ class LendTicketRepository extends BaseRepository implements LendTicketRepositor
         return \App\Models\LendTicket::class;
     }
 
-    public function loadRelationship($lendTicket): Collection
+    public function loadRelationship($relationship): Model
     {
 
-        return $lendTicket->load('user');
+        return $this->_model->load($relationship);
     }
 
     public function getPaginateAndRelationship(): LengthAwarePaginator
@@ -37,6 +38,24 @@ class LendTicketRepository extends BaseRepository implements LendTicketRepositor
         $books = Book::pluck('name', 'id');       
 
         return $books;
+    }
+
+    public function getRelationship(array $relationships): Collection
+    {
+
+        return $this->_model->with($relationships)->get();
+    }
+
+    public function getAllRelationship(array $relationships = ['user']): Collection
+    {
+
+        return $this->_model->with($relationships)->get();
+    }
+
+    public function findAllRelationship($id, array $relationships = ['user']): Collection
+    {
+        
+        return $this->_model->where('id', $id)->with($relationships)->get();
     }
 
     public function attach($lendTicketed, $book_ids, $quantities, $type = null): void

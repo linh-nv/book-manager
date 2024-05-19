@@ -2,7 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\AuthorController;
+use App\Http\Controllers\api\BookController;
+use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\LendTicketController;
+use App\Http\Controllers\api\PublisherController;
+use App\Http\Controllers\api\TicketDetailController;
+use App\Http\Controllers\api\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +21,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::post('refresh', [AuthController::class, 'refresh']);
+Route::get('me', [AuthController::class, 'userProfile'])->middleware('jwt.verify');
+
+Route::group(['middleware' => 'jwt.verify'], function() {
+    Route::apiResource('author', AuthorController::class);
+    Route::apiResource('book', BookController::class);
+    Route::apiResource('category', CategoryController::class);
+    Route::apiResource('lend-ticket', LendTicketController::class);
+    Route::apiResource('publisher', PublisherController::class);
+    Route::apiResource('ticket-detail', TicketDetailController::class);
+    Route::apiResource('user', UserController::class);
 });

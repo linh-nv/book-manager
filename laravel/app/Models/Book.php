@@ -29,13 +29,33 @@ class Book extends Model
         'publisher_id',
     ];
 
-    public function category() {
+    public function category() 
+    {
+
         return $this->belongsTo(Category::class,'category_id','id');
     }
-    public function author() {
+
+    public function author() 
+    {
+
         return $this->belongsTo(Author::class,'author_id','id');
     }
-    public function publisher() {
+
+    public function publisher() 
+    {
+
         return $this->belongsTo(Publisher::class,'publisher_id','id');
+    }
+
+    public function ticketDetails()
+    {
+
+        return $this->hasMany(TicketDetail::class, 'book_id');
+    }
+
+    public function lendTickets()
+    {
+        
+        return $this->belongsToMany(LendTicket::class, 'ticket_details', 'book_id', 'lend_ticket_id');
     }
 }

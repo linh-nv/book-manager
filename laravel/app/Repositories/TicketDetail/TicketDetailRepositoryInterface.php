@@ -1,13 +1,12 @@
 <?php
 namespace App\Repositories\TicketDetail;
 
-use App\Models\TicketDetail;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 interface TicketDetailRepositoryInterface
 {
-    public function getPaginateAndRelationship(): LengthAwarePaginator;
-
+    public function getRelationship(array $relationships): Collection;
+    public function getAllRelationship(array $relationships): Collection;
+    public function findAllRelationship($id, array $relationships): Collection;
 }
+

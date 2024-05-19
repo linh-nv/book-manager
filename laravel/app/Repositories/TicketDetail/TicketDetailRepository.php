@@ -1,16 +1,9 @@
 <?php
 namespace App\Repositories\TicketDetail;
 
-use App\Models\Author;
-use App\Models\Category;
-use App\Models\TicketDetail;
-use App\Models\Publisher;
-use App\Repositories\BaseRepository;
-use App\Repositories\TicketDetail\TicketDetailRepositoryInterface;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
+use App\Models\TicketDetail;
+use App\Repositories\BaseRepository;
 
 class TicketDetailRepository extends BaseRepository implements TicketDetailRepositoryInterface
 {
@@ -20,12 +13,26 @@ class TicketDetailRepository extends BaseRepository implements TicketDetailRepos
      */
     public function getModel()
     {
-        return \App\Models\TicketDetail::class;
+
+        return TicketDetail::class;
     }
 
-    public function getPaginateAndRelationship(): LengthAwarePaginator
+    public function getRelationship(array $relationships): Collection
     {
 
-        return $this->_model->with('user')->paginate(Constants::PER_PAGE);
+        return $this->_model->with($relationships)->get();
+    }
+
+    public function getAllRelationship(array $relationships = ['book', 'lendTicket']): Collection
+    {
+
+        return $this->_model->with($relationships)->get();
+    }
+
+    public function findAllRelationship($id, array $relationships = ['book', 'lendTicket']): Collection
+    {
+        
+        return $this->_model->where('id', $id)->with($relationships)->get();
     }
 }
+

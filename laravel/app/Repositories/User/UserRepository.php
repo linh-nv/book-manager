@@ -1,10 +1,10 @@
 <?php
-namespace App\Repositories\Author;
+namespace App\Repositories\User;
 
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Carbon;
 
-class AuthorRepository extends BaseRepository
+class UserRepository extends BaseRepository
 {
     /**
      * get model
@@ -12,7 +12,8 @@ class AuthorRepository extends BaseRepository
      */
     public function getModel()
     {
-        return \App\Models\Author::class;
+        
+        return \App\Models\User::class;
     }
-    
+
 }

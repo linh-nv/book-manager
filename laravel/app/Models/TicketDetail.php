@@ -31,13 +31,13 @@ class TicketDetail extends Model
         });
     }
 
-    public function lendTickets()
+    public function book()
     {
-
-        return $this->belongsToMany(LendTicket::class, 'lend_tickets','book_id' ,'lend_ticket_id');
+        return $this->belongsTo(Book::class, 'book_id');
     }
-    public function books() 
+
+    public function lendTicket()
     {
-        return $this->belongsTo(Book::class);
+        return $this->belongsTo(LendTicket::class, 'lend_ticket_id');
     }
 }
