@@ -27,7 +27,7 @@ class BookRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'author_id' => 'required|exists:authors,id',
             'publisher_id' => 'required|exists:publishers,id',
-            'price' => 'required|integer|min:0',
+            'price' => 'required|integer|min:0|max:2000000000',
         ];
     }
 
@@ -64,6 +64,7 @@ class BookRequest extends FormRequest
             'price.required' => 'Giá là bắt buộc.',
             'price.integer' => 'Giá phải là một số nguyên.',
             'price.min' => 'Giá không được nhỏ hơn 0.',
+            'price.max' => 'Giá không được lớn hơn 2.000.000.000.',
         ];
     }
 
