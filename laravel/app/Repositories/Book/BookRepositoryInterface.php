@@ -15,4 +15,5 @@ interface BookRepositoryInterface
     public function getAllCategoriesAuthorsPublishers(): Array;
     public function getRelationship(array $relationships): Collection;
     public function getAllRelationship(array $relationships): Collection;
+    public function search(string $keyword): Collection;
 }

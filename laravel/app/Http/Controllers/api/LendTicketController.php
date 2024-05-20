@@ -9,6 +9,8 @@ use App\Repositories\LendTicket\LendTicketRepository;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class LendTicketController extends Controller
 {
@@ -26,9 +28,12 @@ class LendTicketController extends Controller
      */
     public function index(): JsonResponse
     {
-        $lendTicket = $this->lendTicketRepository->getAllRelationship();
-    
-        return $this->responseSuccess(200, $lendTicket);
+        try {
+            $lendTicket = $this->lendTicketRepository->getAllRelationship();
+            return $this->responseSuccess(200, $lendTicket);
+        } catch (\Exception $e) {
+            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while fetching the lend tickets.');
+        }
     }
 
     /**
@@ -37,7 +42,6 @@ class LendTicketController extends Controller
     public function store(LendTicketRequest $request): JsonResponse
     {
         try {
-
             $lendTicketed = $this->lendTicketRepository->create([
                 'user_id' => $request->user_id,
                 'start_date' => $request->start_date,
@@ -50,7 +54,6 @@ class LendTicketController extends Controller
 
             return $this->responseSuccess(200, $this->lendTicketRepository->findAllRelationship($lendTicketed->id));
         } catch (\Exception $e) {
-
             return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the LendTicket.');
         }
     }
@@ -58,18 +61,34 @@ class LendTicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LendTicket $lendTicket): JsonResponse
+    public function show(int $id): JsonResponse
     {
+        try {
+            $lendTicket = $this->lendTicketRepository->findAllRelationship($id);
 
-        return $this->responseSuccess(200, $this->lendTicketRepository->findAllRelationship($lendTicket->id));
+            if (!$lendTicket) {
+                return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+            }
+
+            return $this->responseSuccess(200, $lendTicket);
+        } catch (ModelNotFoundException $e) {
+            return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+        } catch (\Exception $e) {
+            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while retrieving the LendTicket.');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(LendTicketRequest $request, LendTicket $lendTicket): JsonResponse
+    public function update(LendTicketRequest $request, int $id): JsonResponse
     {
         try {
+            $lendTicket = $this->lendTicketRepository->find($id);
+
+            if (!$lendTicket) {
+                return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+            }
 
             $lendTicketData = [
                 'user_id' => $request->user_id,
@@ -82,25 +101,51 @@ class LendTicketController extends Controller
             $lendTicket = $this->lendTicketRepository->update($lendTicket->id, $lendTicketData);
 
             return $this->responseSuccess(200, $this->lendTicketRepository->findAllRelationship($lendTicket->id));
+        } catch (ModelNotFoundException $e) {
+            return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
         } catch (\Exception $e) {
-
             return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the LendTicket.');
         }
     }
 
-    
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LendTicket $lendTicket): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         try {
-            $this->lendTicketRepository->delete($lendTicket->id);
+            $lendTicket = $this->lendTicketRepository->find($id);
+
+            if (!$lendTicket) {
+                return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+            }
+
+            $this->lendTicketRepository->delete($id);
 
             return $this->responseSuccess(200, null);
+        } catch (ModelNotFoundException $e) {
+            return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
         } catch (\Exception $e) {
-throw $e;
             return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the LendTicket.');
+        }
+    }
+
+    /**
+     * Search for lend tickets by a keyword.
+     */
+    public function search(Request $request): JsonResponse
+    {
+        $keyword = $request->keyword;
+
+        if (!$keyword) {
+            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+        }
+
+        try {
+            $results = $this->lendTicketRepository->search($keyword);
+            return $this->responseSuccess(200, $results);
+        } catch (\Exception $e) {
+            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for lend tickets.');
         }
     }
 }

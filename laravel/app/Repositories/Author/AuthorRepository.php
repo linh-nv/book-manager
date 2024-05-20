@@ -2,9 +2,10 @@
 namespace App\Repositories\Author;
 
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 
-class AuthorRepository extends BaseRepository
+class AuthorRepository extends BaseRepository implements AuthorRepositoryInterface
 {
     /**
      * get model
@@ -15,4 +16,10 @@ class AuthorRepository extends BaseRepository
         return \App\Models\Author::class;
     }
     
+    public function search(string $keyword): Collection
+    {
+        return $this->_model->where('name', 'like', '%' . $keyword . '%')
+                           ->orWhere('description', 'like', '%' . $keyword . '%')
+                           ->get();
+    }
 }

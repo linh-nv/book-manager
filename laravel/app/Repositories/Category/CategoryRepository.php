@@ -2,6 +2,7 @@
 namespace App\Repositories\Category;
 
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 
 class CategoryRepository extends BaseRepository
@@ -15,13 +16,11 @@ class CategoryRepository extends BaseRepository
         return \App\Models\Category::class;
     }
 
-    // /**
-    //  * Get 5 posts hot in a month the last
-    //  * @return mixed
-    //  */
-    // public function getPostHost()
-    // {
-    //     return $this->_model::where('created_at', '>=', Carbon::now()->subMonth())->orderBy('view', 'desc')->take(5)->get();
-    // };
+    public function search(string $keyword): Collection
+    {
+        return $this->_model->where('name', 'like', '%' . $keyword . '%')
+                           ->orWhere('description', 'like', '%' . $keyword . '%')
+                           ->get();
+    }
     
 }

@@ -9,6 +9,7 @@ use App\Repositories\TicketDetail\TicketDetailRepository;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
+use Illuminate\Http\Request;
 
 class TicketDetailController extends Controller
 {
@@ -69,6 +70,12 @@ class TicketDetailController extends Controller
     public function update(TicketDetailRequest $request, TicketDetail $ticketDetail): JsonResponse
     {
         try {
+            $ticketDetail = $this->ticketDetailRepository->find($ticketDetail->id);
+            
+            if (!$ticketDetail) {
+
+                return $this->responseError(404, 'NOT_FOUND', 'ticketDetail not found.');
+            }
 
             $ticketDetailData = [
                 'book_id' => $request->book_id,
@@ -93,13 +100,36 @@ class TicketDetailController extends Controller
      */
     public function destroy(TicketDetail $ticketDetail): JsonResponse
     {
-        try {
+        try {            
+            $ticketDetail = $this->ticketDetailRepository->find($ticketDetail->id);
+            
+            if (!$ticketDetail) {
+
+                return $this->responseError(404, 'NOT_FOUND', 'ticketDetail not found.');
+            }
+
             $this->ticketDetailRepository->delete($ticketDetail->id);
 
             return $this->responseSuccess(200, null);
         } catch (\Exception $e) {
 
             return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the TicketDetail.');
+        }
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $keyword = $request->keyword;
+
+        if (!$keyword) {
+            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+        }
+
+        try {
+            $results = $this->ticketDetailRepository->search($keyword);
+            return $this->responseSuccess(200, $results);
+        } catch (\Exception $e) {
+            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for ticket details.');
         }
     }
 }

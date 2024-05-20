@@ -18,4 +18,13 @@ class Category extends Model
     {
         return $this->hasMany(Book::class)->orderBy('id','DESC');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+    
+        static::deleting(function (Category $category) {
+            $category->books()->delete();
+        });
+    }
 }

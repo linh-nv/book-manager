@@ -49,4 +49,25 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
     {
         return $this->_model->where('id', $id)->with($relationships)->get();
     }
+
+    public function search(string $keyword): Collection
+    {
+
+        return $this->_model->where('name', 'like', '%' . $keyword . '%')
+                           ->orWhere('description', 'like', '%' . $keyword . '%')
+                           ->orWhere('slug', 'like', '%' . $keyword . '%')
+                           ->orWhere('description', 'like', '%' . $keyword . '%')
+                           ->orWhere('price', 'like', '%' . $keyword . '%')
+                           ->orWhereHas('author', function ($query) use ($keyword) {
+                               $query->where('name', 'like', '%' . $keyword . '%');
+                           })
+                           ->orWhereHas('category', function ($query) use ($keyword) {
+                               $query->where('name', 'like', '%' . $keyword . '%');
+                           })
+                           ->orWhereHas('publisher', function ($query) use ($keyword) {
+                               $query->where('name', 'like', '%' . $keyword . '%');
+                           })
+                           ->with(['author', 'category', 'publisher'])
+                           ->get();
+    }
 }

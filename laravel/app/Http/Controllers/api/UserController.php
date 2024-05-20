@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
 use App\Enum\RoleStatus;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -53,7 +54,7 @@ class UserController extends Controller
 
             return $this->responseSuccess(201, $user);
         } catch (\Exception $e) {
-
+throw $e;
             return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the user.');
         }
     }
@@ -73,6 +74,13 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user): JsonResponse
     {
         try {
+            $user = $this->userRepository->find($user->id);
+            
+            if (!$user) {
+
+                return $this->responseError(404, 'NOT_FOUND', 'user not found.');
+            }
+
             $user = $this->userRepository->update($user->id, [
                 'name' => $request->name,
                 'email' => $request->email,
@@ -97,12 +105,38 @@ class UserController extends Controller
     public function destroy(User $user): JsonResponse
     {
         try {
+            $user = $this->userRepository->find($user->id);
+            
+            if (!$user) {
+
+                return $this->responseError(404, 'NOT_FOUND', 'user not found.');
+            }
+
             $this->userRepository->delete($user->id);
 
             return $this->responseSuccess(200, null);
         } catch (\Exception $e) {
 
             return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the user.');
+        }
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $keyword = $request->keyword;
+
+        if (!$keyword) {
+            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+        }
+
+        try {
+            $results = $this->userRepository->search($keyword);
+            if ($results->isEmpty()) {
+                return $this->responseError(404, 'NOT_FOUND', 'No users found matching the search criteria.');
+            }
+            return $this->responseSuccess(200, $results);
+        } catch (\Exception $e) {
+            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for users.');
         }
     }
 }

@@ -74,4 +74,14 @@ class LendTicketRepository extends BaseRepository implements LendTicketRepositor
     
         $this->_model->ticketDetails()->attach($data);
     }
+
+    public function search(string $keyword): Collection
+    {
+        return $this->_model->where('note', 'like', '%' . $keyword . '%')
+                           ->orWhereHas('user', function ($query) use ($keyword) {
+                               $query->where('name', 'like', '%' . $keyword . '%');
+                           })
+                           ->with(['user'])
+                           ->get();
+    }
 }
