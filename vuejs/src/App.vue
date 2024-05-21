@@ -1,16 +1,12 @@
+<script setup>
+// import Header from './components/Header.vue';
+</script>
+
 <template>
-  <div id="app">
-    <Test />
-  </div>
+  <!-- <Header/> -->
+  <router-view></router-view>
 </template>
 
-<script>
-import Test from './components/Test.vue';
+<style scoped>
 
-export default {
-  name: 'App',
-  components: {
-    Test
-  }
-};
-</script>
+</style>

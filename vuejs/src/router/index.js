@@ -1,40 +1,25 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../components/Home.vue';
-import Login from '../components/Login.vue';
-import auth from '../auth';
+import { createRouter, createWebHistory } from "vue-router";
+import admin from "./admin";
+import Login from "../pages/login.vue";
+import Register from "../pages/register.vue";
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  }
+    ...admin,
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: Register
+    }
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
-});
-
-// Global guard để kiểm tra xác thực
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!auth.isAuthenticated()) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath } // Lưu route hiện tại để chuyển hướng sau khi đăng nhập
-      });
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-});
+    history: createWebHistory(),
+    routes,
+})
 
 export default router;

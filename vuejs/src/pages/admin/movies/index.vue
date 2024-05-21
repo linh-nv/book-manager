@@ -1,0 +1,3 @@
+<template>
+    Movies management
+</template>
