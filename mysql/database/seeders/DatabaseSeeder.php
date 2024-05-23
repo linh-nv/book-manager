@@ -6,8 +6,8 @@ namespace Database\Seeders;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\CartItem;
 use App\Models\Category;
-use App\Models\ChildCategory;
 use App\Models\Comment;
 use App\Models\Coupon;
 use App\Models\CouponUser;
@@ -29,47 +29,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::create([
-        //     'username' => 'admin',
-        //     'email' => 'admin@gmail.com',
-        //     'password' => Hash::make('password'),
-        //     'role' => 1,
-        //     'phone' => '0123456789',
-        //     'address' => '123 Admin St.',
-        //     'created_at' => now(),
-        //     'updated_at' => now(),
-        // ]);
-
-        // User::factory(5)->create();
-        // Category::factory(5)->create();
-        // ChildCategory::factory(10)->create();
-        // Author::factory(10)->create();
-        // Publisher::factory(10)->create();
-        // Book::factory(10)->create();
-        // Order::factory(10)->create();
-        // OrderDetail::factory(10)->create();
-        // Comment::factory(10)->create();
-        // Coupon::factory(10)->create();
-        // News::factory(10)->create();
-        // CouponUser::factory(10)->create();
-        // Preview::factory(10)->create();
-        // PreviewComment::factory(10)->create();
-
         $this->call([
             UserSeeder::class,
+            CitiesTableSeeder::class,
+            DistrictSeeder::class,
+            CommuneSeeder::class,
+            AddressSeeder::class,
+            AdminSeeder::class,
             CategorySeeder::class,
-            ChildCategorySeeder::class,
             AuthorSeeder::class,
             PublisherSeeder::class,
             BookSeeder::class,
-            OrderSeeder::class,
-            OrderDetailSeeder::class,
             CommentSeeder::class,
             CouponSeeder::class,
-            NewsSeeder::class,
             CouponUserSeeder::class,
             PreviewSeeder::class,
             PreviewCommentSeeder::class,
+            OrderSeeder::class,
+            OrderDetailSeeder::class,
+            TransactionSeeder::class,
+            CartSeeder::class,
+            CartItemSeeder::class,
+            NewsImageSeeder::class,
+            BookAuthorSeeder::class,
+            NewsSeeder::class,
         ]);
     }
 }

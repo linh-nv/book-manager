@@ -3,12 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
 use App\Models\Book;
+use App\Models\Author;
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comment>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BookAuthor>
  */
-class CommentFactory extends Factory
+class BookAuthorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +18,8 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id,
-            'book_id' => Book::inRandomOrder()->first()->id,
-            'content' => $this->faker->paragraph,
-            'rating' => $this->faker->randomFloat(2, 0, 5),
+            'book_id' => Book::factory(),
+            'author_id' => Author::factory(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

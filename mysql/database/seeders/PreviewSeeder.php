@@ -13,10 +13,6 @@ class PreviewSeeder extends Seeder
      */
     public function run(): void
     {
-        Preview::create([
-            'book_id' => '1',
-            'cover_image_url' => 'preview.jpg',
-            'preview_content' => 'preview sachs ',
-        ]);
+        Preview::factory(10)->create();
     }
 }

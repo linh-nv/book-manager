@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('name', 255);
             $table->string('slug', 255)->unique();
             $table->text('description')->nullable();
-            $table->foreignId('parent_id')->constrained('categories')->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained('categories');
             $table->timestamps();
-
         });
     }
 

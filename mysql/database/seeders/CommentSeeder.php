@@ -13,23 +13,6 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        Comment::create([
-            'user_id' => '1',
-            'book_id' => '1',
-            'content' => 'Sách hay',
-            'rating' => random_int(1, 5),
-        ]);
-        Comment::create([
-            'user_id' => '2',
-            'book_id' => '1',
-            'content' => 'Sách không hay',
-            'rating' => random_int(1, 5),
-        ]);
-        Comment::create([
-            'user_id' => '3',
-            'book_id' => '1',
-            'content' => 'Sách cũng được',
-            'rating' => random_int(1, 5),
-        ]);
+        Comment::factory()->count(50)->create();
     }
 }

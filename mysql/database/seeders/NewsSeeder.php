@@ -13,11 +13,6 @@ class NewsSeeder extends Seeder
      */
     public function run(): void
     {
-        News::create([
-            'title' => 'Tin sách mới',
-            'content' => 'Sách mới về hay lắm',
-            'user_id' => '1',
-            'published_at' => now(),
-        ]);
+        News::factory()->count(50)->create();
     }
 }

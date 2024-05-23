@@ -13,11 +13,6 @@ class PreviewCommentSeeder extends Seeder
      */
     public function run(): void
     {
-        PreviewComment::create([
-            'user_id' => '1',
-            'preview_id' => '1',
-            'content' => 'Hữu ích',
-            'rating' => random_int(1, 5),
-        ]);
+        PreviewComment::factory(10)->create();
     }
 }

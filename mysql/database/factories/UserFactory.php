@@ -20,11 +20,11 @@ class UserFactory extends Factory
     {
         return [
             'username' => $this->faker->userName,
-            'password' => Hash::make($this->faker->randomNumber()),
+            'password' => bcrypt('password'), // Mã hóa mật khẩu
             'email' => $this->faker->unique()->safeEmail,
-            'role' => $this->faker->randomElement([0, 1]),
             'phone' => $this->faker->phoneNumber,
-            'address' => $this->faker->address,
+            'google_id' => $this->faker->uuid,
+            'google_verified_at' => $this->faker->optional()->dateTime,
             'created_at' => now(),
             'updated_at' => now(),
         ];

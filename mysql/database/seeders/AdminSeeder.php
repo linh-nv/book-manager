@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Coupon;
+use App\Models\Admin;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CouponSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Coupon::factory(10)->create();
+        Admin::factory()->count(50)->create();
     }
 }

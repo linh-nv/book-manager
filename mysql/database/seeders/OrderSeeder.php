@@ -15,17 +15,6 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        Order::create([
-            'user_id' => 1, 
-            'total_amount' => 100.00,
-            'status' => 1,
-        ]);
-
-        Order::create([
-            'user_id' => 2,
-            'total_amount' => 150.00,
-            'status' => 0,
-        ]);
-
+        Order::factory()->count(50)->create();
     }
 }

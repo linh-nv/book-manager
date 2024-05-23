@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use Illuminate\Support\Str;
+use App\Models\Category;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
  */
@@ -16,10 +17,12 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $name = $this->faker->unique()->word;
         return [
-            'name' => $this->faker->unique()->name,
-            'slug' => $this->faker->unique()->slug,
-            'description' => $this->faker->text,
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'description' => $this->faker->sentence,
+            'parent_id' => Category::inRandomOrder()->first()?->id,
             'created_at' => now(),
             'updated_at' => now(),
         ];

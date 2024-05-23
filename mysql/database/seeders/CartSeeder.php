@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Coupon;
+use App\Models\Cart;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CouponSeeder extends Seeder
+class CartSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Coupon::factory(10)->create();
+        Cart::factory()->count(50)->create();
     }
 }
