@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Header />
-    <Navbar />
+    <HeaderComponent />
+    <NavbarComponent />
     <div class="home-container flex mb-40 pl-[240px] pt-[66px] relative z-20">
       <h1>Welcome, {{ user.name }}</h1>
       <p>Email: {{ user.email }}</p>
@@ -14,16 +14,16 @@
         Logout
       </button>
     </div>
-    <Footer />
+    <FooterComponent />
   </div>
 </template>
 
 <script setup>
 import { useUserStore } from "../stores/userStore";
 import { useRouter } from "vue-router";
-import Header from "../components/Header.vue";
-import Navbar from '../components/Navbar.vue';
-import Footer from "../components/Footer.vue";
+import HeaderComponent from "../components/HeaderComponent.vue";
+import NavbarComponent from '../components/NavbarComponent.vue';
+import FooterComponent from "../components/FooterComponent.vue";
 
 const userStore = useUserStore();
 const user = userStore.user

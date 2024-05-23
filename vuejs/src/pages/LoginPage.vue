@@ -57,15 +57,15 @@ const userStore = useUserStore();
 const email = ref("");
 const password = ref("");
 const loginAccount = async () => {
-  try {
+  // try {
     const response = await login({
       email: email.value,
       password: password.value,
     });
     router.push({ name: "home" });
-  } catch (error) {
-    alert("An unexpected error occurred. Please try again.");
-  }
+  // } catch (error) {
+  //   alert("An unexpected error occurred. Please try again.");
+  // }
 };
 
 const validationSchema = yup.object({

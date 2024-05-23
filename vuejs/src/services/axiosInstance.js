@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { API_BASE_URL } from '../config'
+import { API_BASE_URL } from '../config';
+import { useUserStore } from '../stores/userStore';
+import router from '../router'; 
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -8,10 +10,13 @@ const axiosInstance = axios.create({
   },
 });
 
-// Thêm các interceptor nếu cần thiết
 axiosInstance.interceptors.request.use(
   config => {
-    // Thêm logic xử lý request tại đây
+    const userStore = useUserStore();
+    const token = userStore.accessToken;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   error => {
@@ -21,10 +26,14 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   response => {
-    // Thêm logic xử lý response tại đây
     return response;
   },
   error => {
+    if (error.response) {
+      const userStore = useUserStore();
+      userStore.setAccessToken(null);  // Clear the access token
+      router.push({ name: 'login' });  // Redirect to login page
+    }
     return Promise.reject(error);
   }
 );

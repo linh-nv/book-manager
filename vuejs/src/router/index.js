@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import admin from "./admin";
+import adminRoutes from "./admin";
 import Login from "../pages/LoginPage.vue";
-import Register from "../pages/register.vue";
-import Home from "../pages/Home.vue";
+import Register from "../pages/RegisterPage.vue";
+import Home from "../pages/HomePage.vue";
 import { useUserStore } from '../stores/userStore';
 
 const routes = [
-    ...admin,
+  ...adminRoutes,
   {
     path: "/login",
     name: "login",
@@ -21,7 +21,7 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
-    meta: { requiresAuth: true }, // Thêm meta để xác định route yêu cầu đăng nhập
+    meta: { requiresAuth: true },
   },
 ];
 
@@ -32,10 +32,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-  if (
-    to.matched.some((record) => record.meta.requiresAuth) &&
-    !userStore.accessToken
-  ) {
+  if (to.matched.some(record => record.meta.requiresAuth) && !userStore.accessToken) {
     next({ name: "login" });
   } else {
     next();

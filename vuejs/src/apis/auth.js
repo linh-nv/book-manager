@@ -4,92 +4,59 @@ import { useUserStore } from "../stores/userStore";
 export async function login(credentials) {
   try {
     const response = await axiosInstance.post("/login", credentials);
+    const { access_token, expires_in, user } = response.data;
+    const userStore = useUserStore();
 
-    if (response.status >= 200 && response.status < 300) {
-      const { access_token, expires_in, user } = response.data;
-      const userStore = useUserStore();
+    const expirationTime = new Date().getTime() + expires_in * 1000;
 
-      // Set token expiration time
-      const expirationTime = new Date().getTime() + expires_in * 1000;
+    userStore.setUser(user);
+    userStore.setAccessToken(access_token);
+    userStore.setTokenExpiration(expirationTime);
 
-      // Save user info and token to Pinia store
-      userStore.setUser(user);
-      userStore.setAccessToken(access_token);
-      userStore.setTokenExpiration(expirationTime);
+    axiosInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${access_token}`;
 
-      // Set Axios default header with the token
-      axiosInstance.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${access_token}`;
+    setTimeout(refreshToken, (expires_in - 60) * 1000); 
 
-      // Set up token refresh before it expires
-      setTimeout(refreshToken, (expires_in - 60) * 1000); // refresh 1 minute before expiration
-
-      alert("Login successful.");
-      return response;
-    } else {
-      alert("Unauthorized access.");
-    }
+    return response;
   } catch (error) {
-    if (error.response) {
-      alert(error.response.data.error || "Unauthorized access.");
-    } else {
-      alert("An unexpected error occurred.");
-    }
+    handleError(error);
+    throw error; 
   }
 }
 
 export async function register(userData) {
   try {
     const response = await axiosInstance.post("/register", userData);
-    if (response.status >= 200 && response.status < 300) {
-      alert("Registration successful.");
-      return response;
-    } else {
-      alert("Registration failed.");
-    }
+    return response;
   } catch (error) {
-    if (error.response) {
-      alert(error.response.data.error || "Registration failed.");
-    } else {
-      alert("An unexpected error occurred.");
-    }
+    handleError(error);
+    throw error;
   }
 }
 
 export async function refreshToken() {
   try {
     const response = await axiosInstance.post("/refresh");
-    if (response.status >= 200 && response.status < 300) {
-      const { access_token, expires_in } = response.data;
-      const userStore = useUserStore();
+    const { access_token, expires_in } = response.data;
+    const userStore = useUserStore();
 
-      // Update token expiration time
-      const expirationTime = new Date().getTime() + expires_in * 1000;
+    const expirationTime = new Date().getTime() + expires_in * 1000;
 
-      // Update Pinia store with new token and expiration
-      userStore.setAccessToken(access_token);
-      userStore.setTokenExpiration(expirationTime);
+    userStore.setAccessToken(access_token);
+    userStore.setTokenExpiration(expirationTime);
 
-      // Update Axios default header with the new token
-      axiosInstance.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${access_token}`;
+    axiosInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${access_token}`;
 
-      // Set up token refresh before it expires
-      setTimeout(refreshToken, (expires_in - 60) * 1000); // refresh 1 minute before expiration
+    setTimeout(refreshToken, (expires_in - 60) * 1000);
 
-      alert("Token refreshed successfully.");
-      return response;
-    } else {
-      alert("Token refresh failed.");
-    }
+    return response;
   } catch (error) {
-    if (error.response) {
-      alert(error.response.data.error || "Token refresh failed.");
-    } else {
-      alert("An unexpected error occurred.");
-    }
+    handleError(error);
+    throw error;
   }
 }
 
@@ -106,5 +73,13 @@ export function initializeAuth() {
     if (expirationTime > 0) {
       setTimeout(refreshToken, expirationTime - 60000); // refresh 1 minute before expiration
     }
+  }
+}
+
+function handleError(error) {
+  if (error.response) {
+    console.error(error.response.data.error || "Request failed.");
+  } else {
+    console.error("An unexpected error occurred.");
   }
 }
