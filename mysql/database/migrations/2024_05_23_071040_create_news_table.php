@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->text('content');
             $table->foreignId('user_id')->constrained('users');
-            $table->timestamp('published_at')->nullable();
+            $table->string('title');
+            $table->text('summary')->nullable();
+            $table->longText('content');
+            $table->foreignId('news_images_id')->nullable()->constrained('news_images')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->nullable();
+            $table->bigInteger('views')->default(0);
+            $table->decimal('rating', 3, 2)->default(0);
+            $table->boolean('is_featured')->default(false);
+            $table->timestamp('published_at');
             $table->timestamps();
         });
     }

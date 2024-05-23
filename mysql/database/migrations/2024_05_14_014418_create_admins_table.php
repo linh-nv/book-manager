@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('publishers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('admins', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->text('address')->nullable();
-            $table->string('contact')->nullable();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('google_id');
+            $table->timestamp('google_verified_at')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('publishers');
+        Schema::dropIfExists('admins');
     }
 };

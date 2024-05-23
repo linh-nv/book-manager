@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('username');
             $table->string('password');
             $table->string('email')->unique();
-            $table->tinyInteger('role')->comment('0: admin, 1: user');
             $table->string('phone');
-            $table->text('address');
+            $table->string('google_id');
+            $table->timestamp('google_verified_at')->nullable();
             $table->timestamps();
         });
     }

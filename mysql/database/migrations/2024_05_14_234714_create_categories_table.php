@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
+            $table->bigIncrements('id');
+            $table->string('name', 255);
+            $table->string('slug', 255)->unique();
             $table->text('description')->nullable();
+            $table->foreignId('parent_id')->constrained('categories')->nullable();
             $table->timestamps();
+
         });
     }
 

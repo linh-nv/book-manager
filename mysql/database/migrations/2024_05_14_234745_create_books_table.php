@@ -16,12 +16,11 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->tinyInteger('status');
-            $table->foreignId('author_id')->constrained('authors');
-            $table->foreignId('category_id')->constrained('categories');
-            $table->foreignId('child_category_id')->constrained('child_categories');
-            $table->foreignId('publisher_id')->constrained('publishers');
-            $table->decimal('regular_price', 10, 2);
-            $table->decimal('sale_price', 10, 2)->nullable();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('publisher_id')->constrained('publishers')->onDelete('cascade');
+            $table->decimal('regular_price', 19, 4);
+            $table->decimal('sale_price', 19, 4)->nullable();
+            $table->decimal('discount_percentage', 5, 2)->default(0);
             $table->date('publication_date')->nullable();
             $table->string('language', 20)->nullable();
             $table->integer('pages')->nullable();

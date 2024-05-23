@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('preview_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('preview_id')->constrained('previews');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('preview_id')->constrained('previews')->onDelete('cascade');
             $table->text('content');
             $table->decimal('rating', 3, 2)->default(0);
             $table->timestamps();

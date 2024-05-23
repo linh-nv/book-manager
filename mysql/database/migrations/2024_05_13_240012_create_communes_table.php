@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->timestamp('order_date')->useCurrent();
-            $table->decimal('total_amount', 10, 2);
-            $table->tinyInteger('status');
+        Schema::create('communes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->foreignId('district_id')->constrained('districts')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('communes');
     }
 };

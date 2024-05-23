@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('order_id')->constrained('orders');
-            $table->foreignId('book_id')->constrained('books');
-            $table->integer('quantity');
-            $table->decimal('unit_price', 10, 2);
+        Schema::create('carts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_details');
+        Schema::dropIfExists('carts');
     }
 };

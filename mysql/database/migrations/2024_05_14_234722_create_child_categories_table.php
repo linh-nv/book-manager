@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('child_categories', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('category_id')->constrained('categories');
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('child_categories', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('category_id')->constrained('categories');
+        //     $table->string('name');
+        //     $table->string('slug')->unique();
+        //     $table->text('description')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**

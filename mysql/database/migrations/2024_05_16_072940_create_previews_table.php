@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('previews', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('book_id')->constrained('books');
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
             $table->string('cover_image_url')->nullable();
             $table->text('preview_content');
             $table->timestamps();
