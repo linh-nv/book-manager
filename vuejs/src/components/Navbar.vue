@@ -1,0 +1,45 @@
+<template>
+  <section class="top-bar translate-x-[240px] fixed z-10">
+    <div class="top-bar-left">
+      <label for="menu-click" class="menu-icon">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+      <input type="checkbox" id="menu-click" />
+      <div class="search-box">
+        <div class="search-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="search-input">
+          <input
+            id="search"
+            type="text"
+            placeholder="Search category, book title"
+          />
+          <ul id="search-result" class="list-search-category"></ul>
+        </div>
+      </div>
+    </div>
+    <div class="top-bar-right">
+      <div class="user-box">
+        <div class="user-info">
+          <div class="user-name">
+            <span>{{ user.name }}</span>
+          </div>
+          <div class="user-code">
+            <span>{{ user.user_code }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { useUserStore } from "../stores/userStore";
+
+const userStore = useUserStore();
+const user = userStore.user;
+</script>
+
+<style>
+</style>
