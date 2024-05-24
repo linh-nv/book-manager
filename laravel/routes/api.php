@@ -2,14 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\AuthorController;
-use App\Http\Controllers\api\BookController;
-use App\Http\Controllers\api\CategoryController;
-use App\Http\Controllers\api\LendTicketController;
-use App\Http\Controllers\api\PublisherController;
-use App\Http\Controllers\api\TicketDetailController;
-use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AuthorController;
+use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\LendTicketController;
+use App\Http\Controllers\Api\PublisherController;
+use App\Http\Controllers\Api\TicketDetailController;
+use App\Http\Controllers\Api\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
