@@ -2,7 +2,7 @@
   <div>
     <HeaderComponent />
     <NavbarComponent />
-    <div class="home-container flex mb-40 pl-[240px] pt-[66px] relative z-20">
+    <div class="container flex mb-40 pl-[240px] pt-[66px] relative z-20">
       <h1>Welcome, {{ user.name }}</h1>
       <p>Email: {{ user.email }}</p>
       <p>Address: {{ user.address }}</p>

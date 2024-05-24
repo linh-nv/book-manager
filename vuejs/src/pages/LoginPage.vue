@@ -9,27 +9,27 @@
         <div class="form-group">
           <label for="email">Email address:</label>
           <Field
-          v-model="email"
+            v-model="email"
             name="email"
             id="email"
             type="text"
             placeholder="esteban_schiller@gmail.com"
             class="focus:outline-none"
           />
-          <ErrorMessage name="email" class="form-message" />
+          <ErrorMessage name="email" class="form-message text-red-500" />
         </div>
         <div class="form-group">
           <div class="password-note">
             <label for="password">Password:</label>
           </div>
           <Field
-          v-model="password"
+            v-model="password"
             name="password"
             id="password"
             type="password"
             class="focus:outline-none"
           />
-          <ErrorMessage name="password" class="form-message" />
+          <ErrorMessage name="password" class="form-message text-red-500" />
         </div>
       </div>
       <div class="form-bottom">
@@ -42,7 +42,6 @@
     </form>
   </div>
 </template>
-
 
 <script setup>
 import { ref } from "vue";
@@ -57,15 +56,15 @@ const userStore = useUserStore();
 const email = ref("");
 const password = ref("");
 const loginAccount = async () => {
-  // try {
+  try {
     const response = await login({
       email: email.value,
       password: password.value,
     });
     router.push({ name: "home" });
-  // } catch (error) {
-  //   alert("An unexpected error occurred. Please try again.");
-  // }
+  } catch (error) {
+    alert("An unexpected error occurred. Please try again.");
+  }
 };
 
 const validationSchema = yup.object({
