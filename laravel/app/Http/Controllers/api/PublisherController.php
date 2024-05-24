@@ -9,6 +9,7 @@ use App\Repositories\Publisher\PublisherRepository;
 use App\Traits\ResponseHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PublisherController extends Controller
 {
@@ -28,7 +29,7 @@ class PublisherController extends Controller
     {
         $publisher = $this->publisherRepository->getPaginate();
 
-        return $this->responseSuccess(200, $publisher);
+        return $this->responseSuccess(Response::HTTP_OK, $publisher);
     }
 
     /**
@@ -43,10 +44,10 @@ class PublisherController extends Controller
                 'created_at' => now(),
             ]);
 
-            return $this->responseSuccess(201, $publisher);
+            return $this->responseSuccess(Response::HTTP_CREATED, $publisher);
         } catch (\Exception $e) {
 
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the publisher.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the publisher.');
         }
     }
 
@@ -56,7 +57,7 @@ class PublisherController extends Controller
     public function show(Publisher $publisher): JsonResponse
     {
 
-        return $this->responseSuccess(200, $publisher);
+        return $this->responseSuccess(Response::HTTP_OK, $publisher);
     }
 
     /**
@@ -68,7 +69,7 @@ class PublisherController extends Controller
             $publisher = $this->publisherRepository->find($publisher->id);
             
             if (!$publisher) {
-                return $this->responseError(404, 'NOT_FOUND', 'Publisher not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Publisher not found.');
             }
 
             $publisher = $this->publisherRepository->update($publisher->id, [
@@ -76,10 +77,10 @@ class PublisherController extends Controller
                 'description' => $request->description,
             ]);
 
-            return $this->responseSuccess(200, $publisher);
+            return $this->responseSuccess(Response::HTTP_OK, $publisher);
         } catch (\Exception $e) {
 
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the publisher.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the publisher.');
         }
     }
     
@@ -92,15 +93,15 @@ class PublisherController extends Controller
             $publisher = $this->publisherRepository->find($publisher->id);
             
             if (!$publisher) {
-                return $this->responseError(404, 'NOT_FOUND', 'Publisher not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Publisher not found.');
             }
 
             $this->publisherRepository->delete($publisher->id);
 
-            return $this->responseSuccess(200, null);
+            return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (\Exception $e) {
 
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the publisher.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the publisher.');
         }
     }
 
@@ -109,14 +110,14 @@ class PublisherController extends Controller
         $keyword = $request->keyword;
 
         if (!$keyword) {
-            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
         }
 
         try {
             $results = $this->publisherRepository->search($keyword);
-            return $this->responseSuccess(200, $results);
+            return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
         }
     }
 }

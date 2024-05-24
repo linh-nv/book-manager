@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LendTicketController extends Controller
 {
@@ -30,9 +31,9 @@ class LendTicketController extends Controller
     {
         try {
             $lendTicket = $this->lendTicketRepository->getAllRelationship();
-            return $this->responseSuccess(200, $lendTicket);
+            return $this->responseSuccess(Response::HTTP_OK, $lendTicket);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while fetching the lend tickets.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while fetching the lend tickets.');
         }
     }
 
@@ -52,9 +53,9 @@ class LendTicketController extends Controller
             ]);
             // $this->lendTicketRepository->attach($lendTicketed, $request->book_id, $request->quantities);
 
-            return $this->responseSuccess(200, $this->lendTicketRepository->findAllRelationship($lendTicketed->id));
+            return $this->responseSuccess(Response::HTTP_CREATED, $this->lendTicketRepository->findAllRelationship($lendTicketed->id));
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the LendTicket.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the LendTicket.');
         }
     }
 
@@ -67,14 +68,14 @@ class LendTicketController extends Controller
             $lendTicket = $this->lendTicketRepository->findAllRelationship($id);
 
             if (!$lendTicket) {
-                return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
             }
 
-            return $this->responseSuccess(200, $lendTicket);
+            return $this->responseSuccess(Response::HTTP_OK, $lendTicket);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while retrieving the LendTicket.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the LendTicket.');
         }
     }
 
@@ -87,7 +88,7 @@ class LendTicketController extends Controller
             $lendTicket = $this->lendTicketRepository->find($id);
 
             if (!$lendTicket) {
-                return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
             }
 
             $lendTicketData = [
@@ -100,11 +101,11 @@ class LendTicketController extends Controller
 
             $lendTicket = $this->lendTicketRepository->update($lendTicket->id, $lendTicketData);
 
-            return $this->responseSuccess(200, $this->lendTicketRepository->findAllRelationship($lendTicket->id));
+            return $this->responseSuccess(Response::HTTP_OK, $this->lendTicketRepository->findAllRelationship($lendTicket->id));
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the LendTicket.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the LendTicket.');
         }
     }
 
@@ -117,16 +118,16 @@ class LendTicketController extends Controller
             $lendTicket = $this->lendTicketRepository->find($id);
 
             if (!$lendTicket) {
-                return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
             }
 
             $this->lendTicketRepository->delete($id);
 
-            return $this->responseSuccess(200, null);
+            return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'LendTicket not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the LendTicket.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the LendTicket.');
         }
     }
 
@@ -138,14 +139,14 @@ class LendTicketController extends Controller
         $keyword = $request->keyword;
 
         if (!$keyword) {
-            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
         }
 
         try {
             $results = $this->lendTicketRepository->search($keyword);
-            return $this->responseSuccess(200, $results);
+            return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for lend tickets.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for lend tickets.');
         }
     }
 }

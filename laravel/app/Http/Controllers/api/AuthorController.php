@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Response;
 
 class AuthorController extends Controller
 {
@@ -30,7 +31,7 @@ class AuthorController extends Controller
     {
         $authors = $this->authorRepository->getPaginate();
 
-        return $this->responseSuccess(200, $authors);
+        return $this->responseSuccess(Response::HTTP_OK, $authors);
     }
 
     /**
@@ -45,9 +46,9 @@ class AuthorController extends Controller
                 'created_at' => Carbon::now(),
             ]);
 
-            return $this->responseSuccess(201, $author);
+            return $this->responseSuccess(Response::HTTP_CREATED, $author);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the author.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the author.');
         }
     }
 
@@ -60,12 +61,12 @@ class AuthorController extends Controller
             $author = $this->authorRepository->find($id);
 
             if (!$author) {
-                return $this->responseError(404, 'NOT_FOUND', 'Author not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Author not found.');
             }
 
-            return $this->responseSuccess(200, $author);
+            return $this->responseSuccess(Response::HTTP_OK, $author);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while retrieving the author.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the author.');
         }
     }
 
@@ -78,7 +79,7 @@ class AuthorController extends Controller
             $author = $this->authorRepository->find($author->id);
 
             if (!$author) {
-                return $this->responseError(404, 'NOT_FOUND', 'Author not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Author not found.');
             }
 
             $author = $this->authorRepository->update($author->id, [
@@ -86,9 +87,9 @@ class AuthorController extends Controller
                 'description' => $request->description,
             ]);
 
-            return $this->responseSuccess(200, $author);
+            return $this->responseSuccess(Response::HTTP_OK, $author);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the author.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the author.');
         }
     }
 
@@ -101,16 +102,16 @@ class AuthorController extends Controller
             $author = $this->authorRepository->find($author->id);
 
             if ($author) {
-                return $this->responseError(404, 'NOT_FOUND', $author);
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', $author);
             }
 
             $this->authorRepository->delete($author->id);
 
-            return $this->responseSuccess(200, null);
+            return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'Author not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Author not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
         }
     }
 
@@ -119,14 +120,14 @@ class AuthorController extends Controller
         $keyword = $request->keyword;
 
         if (!$keyword) {
-            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
         }
 
         try {
             $results = $this->authorRepository->search($keyword);
-            return $this->responseSuccess(200, $results);
+            return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
         }
     }
 }

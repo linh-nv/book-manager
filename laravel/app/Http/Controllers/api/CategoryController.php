@@ -10,6 +10,7 @@ use App\Traits\ResponseHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
@@ -29,9 +30,9 @@ class CategoryController extends Controller
     {
         try {
             $category = $this->categoryRepository->getPaginate();
-            return $this->responseSuccess(200, $category);
+            return $this->responseSuccess(Response::HTTP_CREATED, $category);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while fetching the categories.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while fetching the categories.');
         }
     }
 
@@ -48,9 +49,9 @@ class CategoryController extends Controller
                 'created_at' => now(),
             ]);
 
-            return $this->responseSuccess(201, $category);
+            return $this->responseSuccess(Response::HTTP_CREATED, $category);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the category.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the category.');
         }
     }
 
@@ -63,14 +64,14 @@ class CategoryController extends Controller
             $category = $this->categoryRepository->find($id);
 
             if (!$category) {
-                return $this->responseError(404, 'NOT_FOUND', 'Category not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
             }
 
-            return $this->responseSuccess(200, $category);
+            return $this->responseSuccess(Response::HTTP_OK, $category);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'Category not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while retrieving the category.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the category.');
         }
     }
 
@@ -83,7 +84,7 @@ class CategoryController extends Controller
             $category = $this->categoryRepository->find($category->id);
 
             if (!$category) {
-                return $this->responseError(404, 'NOT_FOUND', 'Category not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
             }
 
             $category = $this->categoryRepository->update($category->id, [
@@ -92,11 +93,11 @@ class CategoryController extends Controller
                 'description' => $request->description,
             ]);
 
-            return $this->responseSuccess(200, $category);
+            return $this->responseSuccess(Response::HTTP_OK, $category);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'Category not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the category.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the category.');
         }
     }
     
@@ -109,17 +110,17 @@ class CategoryController extends Controller
             $category = $this->categoryRepository->find($category->id);
 
             if (!$category) {
-                return $this->responseError(404, 'NOT_FOUND', 'Category not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
             }
 
             $this->categoryRepository->delete($category->id);
 
-            return $this->responseSuccess(200, null);
+            return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'Category not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
         } catch (\Exception $e) {
             throw $e;
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the category.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the category.');
         }
     }
 
@@ -128,14 +129,14 @@ class CategoryController extends Controller
         $keyword = $request->keyword;
 
         if (!$keyword) {
-            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
         }
 
         try {
             $results = $this->categoryRepository->search($keyword);
-            return $this->responseSuccess(200, $results);
+            return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
         }
     }
 }

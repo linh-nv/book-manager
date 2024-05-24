@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TicketDetailController extends Controller
 {
@@ -29,7 +30,7 @@ class TicketDetailController extends Controller
     {
         $ticketDetail = $this->ticketDetailRepository->getAllRelationship();
     
-        return $this->responseSuccess(200, $ticketDetail);
+        return $this->responseSuccess(Response::HTTP_OK, $ticketDetail);
     }
 
     /**
@@ -48,10 +49,10 @@ class TicketDetailController extends Controller
                 'created_at' => Carbon::now(),
             ]);
 
-            return $this->responseSuccess(200, $this->ticketDetailRepository->findAllRelationship($ticketDetailed->id));
+            return $this->responseSuccess(Response::HTTP_CREATED, $this->ticketDetailRepository->findAllRelationship($ticketDetailed->id));
         } catch (\Exception $e) {
 
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the TicketDetail.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the TicketDetail.');
         }
     }
 
@@ -61,7 +62,7 @@ class TicketDetailController extends Controller
     public function show(TicketDetail $ticketDetail): JsonResponse
     {
 
-        return $this->responseSuccess(200, $this->ticketDetailRepository->findAllRelationship($ticketDetail->id));
+        return $this->responseSuccess(Response::HTTP_OK, $this->ticketDetailRepository->findAllRelationship($ticketDetail->id));
     }
 
     /**
@@ -74,7 +75,7 @@ class TicketDetailController extends Controller
             
             if (!$ticketDetail) {
 
-                return $this->responseError(404, 'NOT_FOUND', 'ticketDetail not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'ticketDetail not found.');
             }
 
             $ticketDetailData = [
@@ -87,10 +88,10 @@ class TicketDetailController extends Controller
 
             $ticketDetail = $this->ticketDetailRepository->update($ticketDetail->id, $ticketDetailData);
 
-            return $this->responseSuccess(200, $this->ticketDetailRepository->findAllRelationship($ticketDetail->id));
+            return $this->responseSuccess(Response::HTTP_OK, $this->ticketDetailRepository->findAllRelationship($ticketDetail->id));
         } catch (\Exception $e) {
 
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the TicketDetail.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the TicketDetail.');
         }
     }
 
@@ -105,15 +106,15 @@ class TicketDetailController extends Controller
             
             if (!$ticketDetail) {
 
-                return $this->responseError(404, 'NOT_FOUND', 'ticketDetail not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'ticketDetail not found.');
             }
 
             $this->ticketDetailRepository->delete($ticketDetail->id);
 
-            return $this->responseSuccess(200, null);
+            return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (\Exception $e) {
 
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the TicketDetail.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the TicketDetail.');
         }
     }
 
@@ -122,14 +123,14 @@ class TicketDetailController extends Controller
         $keyword = $request->keyword;
 
         if (!$keyword) {
-            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
         }
 
         try {
             $results = $this->ticketDetailRepository->search($keyword);
-            return $this->responseSuccess(200, $results);
+            return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for ticket details.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for ticket details.');
         }
     }
 }

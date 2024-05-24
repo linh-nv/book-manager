@@ -12,6 +12,7 @@ use App\Traits\ResponseHandler;
 use App\Enum\RoleStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -31,7 +32,7 @@ class UserController extends Controller
     {
         $user = $this->userRepository->getPaginate();
 
-        return $this->responseSuccess(200, $user);
+        return $this->responseSuccess(Response::HTTP_OK, $user);
     }
 
     /**
@@ -52,10 +53,10 @@ class UserController extends Controller
                 'created_at' => Carbon::now(),
             ]);
 
-            return $this->responseSuccess(201, $user);
+            return $this->responseSuccess(Response::HTTP_CREATED, $user);
         } catch (\Exception $e) {
 throw $e;
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the user.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the user.');
         }
     }
 
@@ -65,7 +66,7 @@ throw $e;
     public function show(User $user): JsonResponse
     {
 
-        return $this->responseSuccess(200, $user);
+        return $this->responseSuccess(Response::HTTP_OK, $user);
     }
 
     /**
@@ -78,7 +79,7 @@ throw $e;
             
             if (!$user) {
 
-                return $this->responseError(404, 'NOT_FOUND', 'user not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'user not found.');
             }
 
             $user = $this->userRepository->update($user->id, [
@@ -92,10 +93,10 @@ throw $e;
                 'role_id' => RoleStatus::MANAGER->value,
             ]);
 
-            return $this->responseSuccess(200, $user);
+            return $this->responseSuccess(Response::HTTP_OK, $user);
         } catch (\Exception $e) {
 
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the user.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the user.');
         }
     }
     
@@ -109,15 +110,15 @@ throw $e;
             
             if (!$user) {
 
-                return $this->responseError(404, 'NOT_FOUND', 'user not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'user not found.');
             }
 
             $this->userRepository->delete($user->id);
 
-            return $this->responseSuccess(200, null);
+            return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (\Exception $e) {
 
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the user.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the user.');
         }
     }
 
@@ -126,17 +127,17 @@ throw $e;
         $keyword = $request->keyword;
 
         if (!$keyword) {
-            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
         }
 
         try {
             $results = $this->userRepository->search($keyword);
             if ($results->isEmpty()) {
-                return $this->responseError(404, 'NOT_FOUND', 'No users found matching the search criteria.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'No users found matching the search criteria.');
             }
-            return $this->responseSuccess(200, $results);
+            return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for users.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for users.');
         }
     }
 }

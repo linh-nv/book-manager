@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BookController extends Controller
 {
@@ -31,9 +32,9 @@ class BookController extends Controller
     {
         try {
             $books = $this->bookRepository->getAllRelationship();
-            return $this->responseSuccess(200, $books);
+            return $this->responseSuccess(Response::HTTP_OK, $books);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while fetching the books.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while fetching the books.');
         }
     }
 
@@ -63,9 +64,9 @@ class BookController extends Controller
 
             $book = $this->bookRepository->create($bookData);
 
-            return $this->responseSuccess(201, $book);
+            return $this->responseSuccess(Response::HTTP_CREATED, $book);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while creating the book.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the book.');
         }
     }
 
@@ -78,14 +79,14 @@ class BookController extends Controller
             $book = $this->bookRepository->findAllRelationship($id);
 
             if (!$book) {
-                return $this->responseError(404, 'NOT_FOUND', 'Book not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
             }
 
-            return $this->responseSuccess(200, $book);
+            return $this->responseSuccess(Response::HTTP_OK, $book);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'Book not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while retrieving the book.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the book.');
         }
     }
 
@@ -98,7 +99,7 @@ class BookController extends Controller
             $book = $this->bookRepository->find($id);
 
             if (!$book) {
-                return $this->responseError(404, 'NOT_FOUND', 'Book not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
             }
 
             $uploadImages = new ImageController();
@@ -129,11 +130,11 @@ class BookController extends Controller
 
             $book = $this->bookRepository->update($book->id, $bookData);
 
-            return $this->responseSuccess(200, $book);
+            return $this->responseSuccess(Response::HTTP_OK, $book);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'Book not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while updating the book.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the book.');
         }
     }
 
@@ -146,16 +147,16 @@ class BookController extends Controller
             $book = $this->bookRepository->find($id);
 
             if (!$book) {
-                return $this->responseError(404, 'NOT_FOUND', 'Book not found.');
+                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
             }
 
             $this->bookRepository->delete($id);
 
-            return $this->responseSuccess(200, null);
+            return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (ModelNotFoundException $e) {
-            return $this->responseError(404, 'NOT_FOUND', 'Book not found.');
+            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while deleting the book.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the book.');
         }
     }
 
@@ -164,14 +165,14 @@ class BookController extends Controller
         $keyword = $request->keyword;
 
         if (!$keyword) {
-            return $this->responseError(400, 'BAD_REQUEST', 'Keyword is required for search.');
+            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
         }
 
         try {
             $results = $this->bookRepository->search($keyword);
-            return $this->responseSuccess(200, $results);
+            return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
-            return $this->responseError(500, 'INTERNAL_ERROR', 'An error occurred while searching for books.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for books.');
         }
     }
 }
