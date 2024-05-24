@@ -6,12 +6,11 @@ html {
   font-size: 62.5%;
 }
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 body {
@@ -24,7 +23,7 @@ body {
 :root {
   --background-color: #4880ff;
   --primary-color: #f5f6fa;
-  --text-color: #404040;
+  --text-color: #000;
   --subtext-color: #565656;
   --border-color: #d8d8d8;
   --input-color: #f1f4f9;
@@ -36,12 +35,27 @@ a {
   color: var(--text-color);
   text-decoration: none;
 }
+.content-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  background-color: var(--primary-color);
+  min-height: 100vh;
+  min-width: 100vw;
+  height: 100%;
+  width: 100%;
+  padding: 12rem 60px 0 300px;
+}
+
 .loader {
   width: 30px;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 5px solid;
-  border-color: #fff #0000;
+  border-color: var(--background-color) #0000;
   animation: l1 1s infinite;
 }
 @keyframes l1 {
@@ -133,7 +147,7 @@ a {
   height: 66px;
   background-color: #fff;
   padding: 0 26px;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
 }
 .top-bar-left {
   display: flex;

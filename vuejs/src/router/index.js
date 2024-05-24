@@ -3,15 +3,15 @@ import adminRoutes from "./admin";
 import Login from "../pages/LoginPage.vue";
 import Register from "../pages/RegisterPage.vue";
 import Home from "../pages/HomePage.vue";
-import Dashboard from "../pages/DashboardPage.vue";
 import Author from "../pages/AuthorPage.vue";
 import Publisher from "../pages/PublisherPage.vue";
 import Category from "../pages/CategoryPage.vue";
 import Book from "../pages/BookPage.vue";
 import LendTicket from "../pages/LendTicketPage.vue";
-import Setting from "../pages/SettingPage.vue";
+import UserProfile from "../pages/UserProfile.vue";
 import Logout from "../pages/LogoutPage.vue";
 import { useUserStore } from '../stores/userStore';
+import { useActiveRouteStore } from '../stores/activeRouteStore';
 
 const routes = [
   ...adminRoutes,
@@ -39,11 +39,6 @@ const routes = [
     component: Home,
   },
   {
-    path: "/dashboard",
-    name: "dashboard",
-    component: Dashboard,
-  },
-  {
     path: "/author",
     name: "author",
     component: Author,
@@ -69,9 +64,9 @@ const routes = [
     component: LendTicket,
   },
   {
-    path: "/setting",
-    name: "setting",
-    component: Setting,
+    path: "/profile",
+    name: "profile",
+    component: UserProfile,
   },
   {
     path: "/logout",
@@ -87,9 +82,12 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-  if (to.matched.some(record => !record.meta.publicPath) && !userStore.accessToken) {
+  const activeRouteStore = useActiveRouteStore();
+  
+  if (to.matched.some(record => record.meta.requiresAuth) && !userStore.accessToken) {
     next({ name: "login" });
   } else {
+    activeRouteStore.setActiveRoute(to.path);
     next();
   }
 });

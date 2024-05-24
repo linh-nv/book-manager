@@ -1,5 +1,5 @@
 <template>
-  <section class="top-bar translate-x-[240px] fixed z-10">
+  <section class="top-bar translate-x-[240px] fixed z-50">
     <div class="top-bar-left">
       <label for="menu-click" class="menu-icon">
         <i class="fa-solid fa-bars"></i>

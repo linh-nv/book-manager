@@ -2,14 +2,14 @@
   <header class="flex fixed z-50">
     <nav class="navigation">
       <div class="sidebar-menu">
-        <router-view>
+        <router-link to="/home">
           <div class="logo cursor-pointer">
             <img src="../assets/images/Logo.png" alt="logo" />
           </div>
-        </router-view>
+        </router-link>
         <ul class="sidebar-top">
-          <li class="sidebar-item">
-            <router-link to="/dashboard" class="product">
+          <li :class="{ active: activeRoute === '/home' }" class="sidebar-item">
+            <router-link to="/home" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-house"></i>
               </div>
@@ -18,7 +18,10 @@
               </div>
             </router-link>
           </li>
-          <li class="sidebar-item">
+          <li
+            :class="{ active: activeRoute === '/author' }"
+            class="sidebar-item"
+          >
             <router-link to="/author" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-user-graduate"></i>
@@ -28,7 +31,10 @@
               </div>
             </router-link>
           </li>
-          <li class="sidebar-item">
+          <li
+            :class="{ active: activeRoute === '/publisher' }"
+            class="sidebar-item"
+          >
             <router-link to="/publisher" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-newspaper"></i>
@@ -38,7 +44,10 @@
               </div>
             </router-link>
           </li>
-          <li class="sidebar-item">
+          <li
+            :class="{ active: activeRoute === '/category' }"
+            class="sidebar-item"
+          >
             <router-link to="/category" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-list"></i>
@@ -48,7 +57,7 @@
               </div>
             </router-link>
           </li>
-          <li class="sidebar-item">
+          <li :class="{ active: activeRoute === '/book' }" class="sidebar-item">
             <router-link to="/book" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-book-open"></i>
@@ -58,7 +67,10 @@
               </div>
             </router-link>
           </li>
-          <li class="sidebar-item">
+          <li
+            :class="{ active: activeRoute === '/lend-ticket' }"
+            class="sidebar-item"
+          >
             <router-link to="/lend-ticket" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-cash-register"></i>
@@ -70,8 +82,11 @@
           </li>
         </ul>
         <ul class="sidebar-bottom">
-          <li class="sidebar-item">
-            <router-link to="/setting" class="product">
+          <li
+            :class="{ active: activeRoute === '/profile' }"
+            class="sidebar-item"
+          >
+            <router-link to="/profile" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-gear"></i>
               </div>
@@ -81,14 +96,14 @@
             </router-link>
           </li>
           <li class="sidebar-item">
-            <router-link to="/logout" class="product">
+            <button @click="logout" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-power-off"></i>
               </div>
               <div class="iteam-text">
                 <span>Logout</span>
               </div>
-            </router-link>
+            </button>
           </li>
         </ul>
       </div>
@@ -98,14 +113,26 @@
 
 <script setup>
 import { useUserStore } from "../stores/userStore";
+import { useActiveRouteStore } from '../stores/activeRouteStore';
+import { useRouter } from "vue-router";
+import { computed } from 'vue';
 
 const userStore = useUserStore();
-const user = userStore.user
+const router = useRouter();
+const activeRouteStore = useActiveRouteStore();
 
 const logout = () => {
   userStore.logout();
   router.push({ name: "login" });
 };
+
+const activeRoute = computed(() => activeRouteStore.activeRoute);
 </script>
 
-<style></style>
+<style scoped>
+.sidebar-item.active .product {
+  background-color: #4880FF;
+  color: white;
+  border-radius: 1rem;
+}
+</style>
