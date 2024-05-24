@@ -32,8 +32,10 @@ class BookController extends Controller
     {
         try {
             $books = $this->bookRepository->getAllRelationship();
+
             return $this->responseSuccess(Response::HTTP_OK, $books);
         } catch (\Exception $e) {
+
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while fetching the books.');
         }
     }
@@ -78,10 +80,6 @@ class BookController extends Controller
         try {
             $book = $this->bookRepository->findAllRelationship($id);
 
-            if (!$book) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
-            }
-
             return $this->responseSuccess(Response::HTTP_OK, $book);
         } catch (ModelNotFoundException $e) {
             return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
@@ -97,10 +95,6 @@ class BookController extends Controller
     {
         try {
             $book = $this->bookRepository->find($id);
-
-            if (!$book) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
-            }
 
             $uploadImages = new ImageController();
             $arrPathImages = $uploadImages->uploadBookImage($request);
@@ -145,10 +139,6 @@ class BookController extends Controller
     {
         try {
             $book = $this->bookRepository->find($id);
-
-            if (!$book) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Book not found.');
-            }
 
             $this->bookRepository->delete($id);
 

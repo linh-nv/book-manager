@@ -30,8 +30,10 @@ class CategoryController extends Controller
     {
         try {
             $category = $this->categoryRepository->getPaginate();
+
             return $this->responseSuccess(Response::HTTP_CREATED, $category);
         } catch (\Exception $e) {
+
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while fetching the categories.');
         }
     }
@@ -51,6 +53,7 @@ class CategoryController extends Controller
 
             return $this->responseSuccess(Response::HTTP_CREATED, $category);
         } catch (\Exception $e) {
+
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the category.');
         }
     }
@@ -62,10 +65,6 @@ class CategoryController extends Controller
     {
         try {
             $category = $this->categoryRepository->find($id);
-
-            if (!$category) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
-            }
 
             return $this->responseSuccess(Response::HTTP_OK, $category);
         } catch (ModelNotFoundException $e) {
@@ -82,10 +81,6 @@ class CategoryController extends Controller
     {
         try {
             $category = $this->categoryRepository->find($category->id);
-
-            if (!$category) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
-            }
 
             $category = $this->categoryRepository->update($category->id, [
                 'name' => $request->name,
@@ -109,10 +104,6 @@ class CategoryController extends Controller
         try {
             $category = $this->categoryRepository->find($category->id);
 
-            if (!$category) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
-            }
-
             $this->categoryRepository->delete($category->id);
 
             return $this->responseSuccess(Response::HTTP_OK, null);
@@ -129,13 +120,16 @@ class CategoryController extends Controller
         $keyword = $request->keyword;
 
         if (!$keyword) {
+
             return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
         }
 
         try {
             $results = $this->categoryRepository->search($keyword);
+
             return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
+            
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
         }
     }

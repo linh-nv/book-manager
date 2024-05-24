@@ -31,8 +31,10 @@ class LendTicketController extends Controller
     {
         try {
             $lendTicket = $this->lendTicketRepository->getAllRelationship();
+
             return $this->responseSuccess(Response::HTTP_OK, $lendTicket);
         } catch (\Exception $e) {
+
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while fetching the lend tickets.');
         }
     }
@@ -67,10 +69,6 @@ class LendTicketController extends Controller
         try {
             $lendTicket = $this->lendTicketRepository->findAllRelationship($id);
 
-            if (!$lendTicket) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
-            }
-
             return $this->responseSuccess(Response::HTTP_OK, $lendTicket);
         } catch (ModelNotFoundException $e) {
             return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
@@ -86,10 +84,6 @@ class LendTicketController extends Controller
     {
         try {
             $lendTicket = $this->lendTicketRepository->find($id);
-
-            if (!$lendTicket) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
-            }
 
             $lendTicketData = [
                 'user_id' => $request->user_id,
@@ -116,10 +110,6 @@ class LendTicketController extends Controller
     {
         try {
             $lendTicket = $this->lendTicketRepository->find($id);
-
-            if (!$lendTicket) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'LendTicket not found.');
-            }
 
             $this->lendTicketRepository->delete($id);
 

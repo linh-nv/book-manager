@@ -72,11 +72,6 @@ class TicketDetailController extends Controller
     {
         try {
             $ticketDetail = $this->ticketDetailRepository->find($ticketDetail->id);
-            
-            if (!$ticketDetail) {
-
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'ticketDetail not found.');
-            }
 
             $ticketDetailData = [
                 'book_id' => $request->book_id,
@@ -103,11 +98,6 @@ class TicketDetailController extends Controller
     {
         try {            
             $ticketDetail = $this->ticketDetailRepository->find($ticketDetail->id);
-            
-            if (!$ticketDetail) {
-
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'ticketDetail not found.');
-            }
 
             $this->ticketDetailRepository->delete($ticketDetail->id);
 

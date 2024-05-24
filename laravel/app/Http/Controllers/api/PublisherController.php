@@ -67,10 +67,6 @@ class PublisherController extends Controller
     {
         try {
             $publisher = $this->publisherRepository->find($publisher->id);
-            
-            if (!$publisher) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Publisher not found.');
-            }
 
             $publisher = $this->publisherRepository->update($publisher->id, [
                 'name' => $request->name,
@@ -91,10 +87,6 @@ class PublisherController extends Controller
     {
         try {
             $publisher = $this->publisherRepository->find($publisher->id);
-            
-            if (!$publisher) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Publisher not found.');
-            }
 
             $this->publisherRepository->delete($publisher->id);
 

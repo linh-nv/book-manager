@@ -55,7 +55,7 @@ class UserController extends Controller
 
             return $this->responseSuccess(Response::HTTP_CREATED, $user);
         } catch (\Exception $e) {
-throw $e;
+            
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the user.');
         }
     }
@@ -76,11 +76,6 @@ throw $e;
     {
         try {
             $user = $this->userRepository->find($user->id);
-            
-            if (!$user) {
-
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'user not found.');
-            }
 
             $user = $this->userRepository->update($user->id, [
                 'name' => $request->name,
@@ -107,11 +102,6 @@ throw $e;
     {
         try {
             $user = $this->userRepository->find($user->id);
-            
-            if (!$user) {
-
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'user not found.');
-            }
 
             $this->userRepository->delete($user->id);
 

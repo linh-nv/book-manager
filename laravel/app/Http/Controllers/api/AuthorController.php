@@ -60,10 +60,6 @@ class AuthorController extends Controller
         try {
             $author = $this->authorRepository->find($id);
 
-            if (!$author) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Author not found.');
-            }
-
             return $this->responseSuccess(Response::HTTP_OK, $author);
         } catch (\Exception $e) {
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the author.');
@@ -77,10 +73,6 @@ class AuthorController extends Controller
     {
         try {
             $author = $this->authorRepository->find($author->id);
-
-            if (!$author) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Author not found.');
-            }
 
             $author = $this->authorRepository->update($author->id, [
                 'name' => $request->name,
@@ -100,10 +92,6 @@ class AuthorController extends Controller
     {
         try {
             $author = $this->authorRepository->find($author->id);
-
-            if ($author) {
-                return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', $author);
-            }
 
             $this->authorRepository->delete($author->id);
 
