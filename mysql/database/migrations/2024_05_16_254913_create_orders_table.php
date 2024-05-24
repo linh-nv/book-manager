@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -29,9 +29,9 @@ return new class extends Migration
             $table->decimal('shipping_fee', 19, 4)->default(0);
             $table->decimal('total_money', 19, 4)->default(0);
             $table->timestamp('paid_at')->nullable();
-            $table->timestamp('canceled_at')->nullable();
-            $table->tinyInteger('payment_type')->nullable();
-            $table->tinyInteger('status')->default(OrderStatus::UNPAY->value);
+            $table->timestamp('canceled_at')->nullable()->default(0);
+            $table->tinyInteger('payment_type')->nullable()->default(0);
+            $table->tinyInteger('status')->default(PaymentStatus::UNPAY->value);
             $table->timestamps();
         });
     }

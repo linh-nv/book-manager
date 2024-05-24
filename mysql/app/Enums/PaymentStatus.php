@@ -1,7 +1,7 @@
 <?php
 namespace App\Enums;
 
-enum OrderStatus: int
+enum PaymentStatus: int
 {
     case UNPAY = 0;
     case PAYMENT_SUCCESS = 1;
@@ -14,13 +14,13 @@ enum OrderStatus: int
     public function label(): string
     {
         return match ($this) {
-        OrderStatus::UNPAY => 'UNPAY',
-        OrderStatus::PAYMENT_SUCCESS => 'PAYMENT_SUCCESS',
-        OrderStatus::PAYMENT_FAILED => 'PAYMENT_FAILED',
-        OrderStatus::PROCESSING => 'PROCESSING',
-        OrderStatus::COMPLETED => 'COMPLETED',
-        OrderStatus::CANCEL => 'CANCEL',
-        OrderStatus::PAYMENT_TIMEOUT => 'PAYMENT_TIMEOUT',
+        PaymentStatus::UNPAY => 'UNPAY',
+        PaymentStatus::PAYMENT_SUCCESS => 'PAYMENT_SUCCESS',
+        PaymentStatus::PAYMENT_FAILED => 'PAYMENT_FAILED',
+        PaymentStatus::PROCESSING => 'PROCESSING',
+        PaymentStatus::COMPLETED => 'COMPLETED',
+        PaymentStatus::CANCEL => 'CANCEL',
+        PaymentStatus::PAYMENT_TIMEOUT => 'PAYMENT_TIMEOUT',
 
         };
     }
