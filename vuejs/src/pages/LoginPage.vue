@@ -1,9 +1,16 @@
 <template>
   <div class="auth">
-    <form @submit.prevent="loginAccount" class="form-login" id="form-login">
+    <Form
+      @submit="onSubmit"
+      :validation-schema="validationSchema"
+      class="form-login"
+      id="form-login"
+    >
       <header class="form-top">
         <h1>Login to Account</h1>
-        <span class="note">Please enter your email and password to continue</span>
+        <span class="note"
+          >Please enter your email and password to continue</span
+        >
       </header>
       <div class="form-mid">
         <div class="form-group">
@@ -39,7 +46,7 @@
           <a href="#register">Create Account</a>
         </div>
       </div>
-    </form>
+    </Form>
   </div>
 </template>
 
@@ -48,14 +55,27 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/userStore";
 import { login } from "../apis/auth";
-import { useForm, Field, ErrorMessage } from "vee-validate";
+import { useForm, Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 
 const router = useRouter();
 const userStore = useUserStore();
 const email = ref("");
 const password = ref("");
-const loginAccount = async () => {
+
+const validationSchema = yup.object({
+  email: yup.string().email().required("Email is required"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+});
+
+const { handleSubmit } = useForm({
+  validationSchema,
+});
+
+const onSubmit = async () => {
   try {
     const response = await login({
       email: email.value,
@@ -66,17 +86,7 @@ const loginAccount = async () => {
     alert("An unexpected error occurred. Please try again.");
   }
 };
-
-const validationSchema = yup.object({
-  email: yup.string().email().required("Email is required"),
-  password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
-});
-
-const { handleSubmit } = useForm({
-  validationSchema,
-});
 </script>
-
 
 <style scoped>
 .auth {

@@ -1,5 +1,4 @@
 import axiosInstance from "../services/axiosInstance";
-import { useUserStore } from "../stores/userStore";
 
 export const apiService = {
   async getAll(endpoint, page = 1) {
@@ -50,7 +49,17 @@ export const apiService = {
       handleError(error);
       throw error;
     }
-  }
+  },
+
+  async search(endpoint, keyword) {
+    try {
+      const response = await axiosInstance.get(`${endpoint}?keyword=${keyword}`);
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
 };
 
 function handleError(error) {

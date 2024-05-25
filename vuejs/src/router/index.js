@@ -4,21 +4,23 @@ import Login from "../pages/LoginPage.vue";
 import Register from "../pages/RegisterPage.vue";
 import Home from "../pages/HomePage.vue";
 import Author from "../pages/AuthorPage.vue";
+import AuthorForm from "../components/Author/AuthorForm.vue";
+import AuthorList from "../components/Author/AuthorList.vue";
 import Publisher from "../pages/PublisherPage.vue";
 import Category from "../pages/CategoryPage.vue";
 import Book from "../pages/BookPage.vue";
 import LendTicket from "../pages/LendTicketPage.vue";
 import UserProfile from "../pages/UserProfile.vue";
 import Logout from "../pages/LogoutPage.vue";
-import { useUserStore } from '../stores/userStore';
-import { useActiveRouteStore } from '../stores/activeRouteStore';
+import { useUserStore } from "../stores/userStore";
+import { useActiveRouteStore } from "../stores/activeRouteStore";
 
 const routes = [
   ...adminRoutes,
-  { 
-    path: '/', 
-    component: Login, 
-    alias: '/login',
+  {
+    path: "/",
+    component: Login,
+    alias: "/login",
     meta: { publicPath: true },
   },
   {
@@ -42,6 +44,24 @@ const routes = [
     path: "/author",
     name: "author",
     component: Author,
+    redirect: "/author/list",
+    children: [
+      {
+        path: "list",
+        name: "author-list",
+        component: AuthorList,
+      },
+      {
+        path: "form",
+        name: "author-form",
+        component: AuthorForm,
+      },
+      {
+        path: "form/:id",
+        name: "author-form-edit",
+        component: AuthorForm,
+      },
+    ],
   },
   {
     path: "/publisher",
@@ -83,8 +103,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   const activeRouteStore = useActiveRouteStore();
-  
-  if (to.matched.some(record => record.meta.requiresAuth) && !userStore.accessToken) {
+
+  if (
+    !to.matched.some((record) => record.meta.publicPath) &&
+    !userStore.accessToken
+  ) {
     next({ name: "login" });
   } else {
     activeRouteStore.setActiveRoute(to.path);

@@ -5,19 +5,6 @@
         <i class="fa-solid fa-bars"></i>
       </label>
       <input type="checkbox" id="menu-click" />
-      <div class="search-box">
-        <div class="search-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
-        <div class="search-input">
-          <input
-            id="search"
-            type="text"
-            placeholder="Search category, book title"
-          />
-          <ul id="search-result" class="list-search-category"></ul>
-        </div>
-      </div>
     </div>
     <div class="top-bar-right">
       <div class="user-box">

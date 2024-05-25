@@ -19,7 +19,7 @@
             </router-link>
           </li>
           <li
-            :class="{ active: activeRoute === '/author' }"
+            :class="{ active: activeRoute === '/author/list' ||  activeRoute === '/author/form'}"
             class="sidebar-item"
           >
             <router-link to="/author" class="product">
