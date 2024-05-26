@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TicketDetailRequest;
-use App\Models\TicketDetail;
-use App\Repositories\TicketDetail\TicketDetailRepository;
-use Carbon\Carbon;
+use App\Services\TicketDetailService;
 use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
@@ -16,21 +14,28 @@ class TicketDetailController extends Controller
 {
     use ResponseHandler;
 
-    protected $ticketDetailRepository;
+    protected $ticketDetailService;
 
-    public function __construct(TicketDetailRepository $ticketDetailRepository)
+    public function __construct(TicketDetailService $ticketDetailService)
     {
-        $this->ticketDetailRepository = $ticketDetailRepository;
+        $this->ticketDetailService = $ticketDetailService;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $ticketDetail = $this->ticketDetailRepository->getAllRelationship();
-    
-        return $this->responseSuccess(Response::HTTP_OK, $ticketDetail);
+        $keyword = $request->query('keyword');
+
+        try {
+            $ticketDetails = $this->ticketDetailService->getPaginate($keyword);
+
+            return $this->responseSuccess(Response::HTTP_OK, $ticketDetails);
+        } catch (\Exception $e) {
+
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the TicketDetails.');
+        }
     }
 
     /**
@@ -39,17 +44,9 @@ class TicketDetailController extends Controller
     public function store(TicketDetailRequest $request): JsonResponse
     {
         try {
+            $ticketDetail = $this->ticketDetailService->createTicketDetail($request->all());
 
-            $ticketDetailed = $this->ticketDetailRepository->create([
-                'book_id' => $request->book_id,
-                'lend_ticket_id' => $request->lend_ticket_id,
-                'return_date' => $request->return_date,
-                'status' => $request->status,
-                'quantity' => $request->quantity,
-                'created_at' => Carbon::now(),
-            ]);
-
-            return $this->responseSuccess(Response::HTTP_CREATED, $this->ticketDetailRepository->findAllRelationship($ticketDetailed->id));
+            return $this->responseSuccess(Response::HTTP_CREATED, $ticketDetail);
         } catch (\Exception $e) {
 
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the TicketDetail.');
@@ -59,68 +56,45 @@ class TicketDetailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TicketDetail $ticketDetail): JsonResponse
+    public function show(int $id): JsonResponse
     {
+        try {
+            $ticketDetail = $this->ticketDetailService->getTicketDetailById($id);
 
-        return $this->responseSuccess(Response::HTTP_OK, $this->ticketDetailRepository->findAllRelationship($ticketDetail->id));
+            return $this->responseSuccess(Response::HTTP_OK, $ticketDetail);
+        } catch (\Exception $e) {
+
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the TicketDetail.');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(TicketDetailRequest $request, TicketDetail $ticketDetail): JsonResponse
+    public function update(TicketDetailRequest $request, int $id): JsonResponse
     {
         try {
-            $ticketDetail = $this->ticketDetailRepository->find($ticketDetail->id);
+            $ticketDetail = $this->ticketDetailService->updateTicketDetail($id, $request->all());
 
-            $ticketDetailData = [
-                'book_id' => $request->book_id,
-                'lend_ticket_id' => $request->lend_ticket_id,
-                'return_date' => $request->return_date,
-                'status' => $request->status,
-                'quantity' => $request->quantity,
-            ];
-
-            $ticketDetail = $this->ticketDetailRepository->update($ticketDetail->id, $ticketDetailData);
-
-            return $this->responseSuccess(Response::HTTP_OK, $this->ticketDetailRepository->findAllRelationship($ticketDetail->id));
+            return $this->responseSuccess(Response::HTTP_OK, $ticketDetail);
         } catch (\Exception $e) {
 
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the TicketDetail.');
         }
     }
 
-    
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TicketDetail $ticketDetail): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        try {            
-            $ticketDetail = $this->ticketDetailRepository->find($ticketDetail->id);
-
-            $this->ticketDetailRepository->delete($ticketDetail->id);
+        try {
+            $this->ticketDetailService->deleteTicketDetail($id);
 
             return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (\Exception $e) {
-
+            
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the TicketDetail.');
-        }
-    }
-
-    public function search(Request $request): JsonResponse
-    {
-        $keyword = $request->keyword;
-
-        if (!$keyword) {
-            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
-        }
-
-        try {
-            $results = $this->ticketDetailRepository->search($keyword);
-            return $this->responseSuccess(Response::HTTP_OK, $results);
-        } catch (\Exception $e) {
-            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for ticket details.');
         }
     }
 }

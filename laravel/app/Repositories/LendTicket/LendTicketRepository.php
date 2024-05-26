@@ -46,10 +46,10 @@ class LendTicketRepository extends BaseRepository implements LendTicketRepositor
         return $this->_model->with($relationships)->get();
     }
 
-    public function getAllRelationship(array $relationships = ['user']): Collection
+    public function getAllRelationship(array $relationships = ['user']): LengthAwarePaginator
     {
 
-        return $this->_model->with($relationships)->get();
+        return $this->_model->with($relationships)->paginate(Constains::PER_PAGE);
     }
 
     public function findAllRelationship($id, array $relationships = ['user']): Collection

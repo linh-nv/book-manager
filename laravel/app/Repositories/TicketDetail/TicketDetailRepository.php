@@ -4,7 +4,8 @@ namespace App\Repositories\TicketDetail;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\TicketDetail;
 use App\Repositories\BaseRepository;
-
+use App\Util\Constains;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 class TicketDetailRepository extends BaseRepository implements TicketDetailRepositoryInterface
 {
     /**
@@ -23,10 +24,10 @@ class TicketDetailRepository extends BaseRepository implements TicketDetailRepos
         return $this->_model->with($relationships)->get();
     }
 
-    public function getAllRelationship(array $relationships = ['book', 'lendTicket']): Collection
+    public function getAllRelationship(array $relationships = ['book', 'lendTicket']): LengthAwarePaginator
     {
 
-        return $this->_model->with($relationships)->get();
+        return $this->_model->with($relationships)->paginate(Constains::PER_PAGE);
     }
 
     public function findAllRelationship($id, array $relationships = ['book', 'lendTicket']): Collection

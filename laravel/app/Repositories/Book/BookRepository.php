@@ -6,9 +6,9 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Repositories\BaseRepository;
+use App\Util\Constains;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookRepository extends BaseRepository implements BookRepositoryInterface
 {
@@ -40,14 +40,14 @@ class BookRepository extends BaseRepository implements BookRepositoryInterface
         return $this->_model->with($relationships)->get();
     }
 
-    public function getAllRelationship(array $relationships = ['category', 'author', 'publisher']): Collection
+    public function getAllRelationship(array $relationships = ['category', 'author', 'publisher']): LengthAwarePaginator
     {
-        return $this->_model->with($relationships)->get();
+        return $this->_model->with($relationships)->orderBy('id', 'DESC')->paginate(Constains::PER_PAGE);
     }
 
-    public function findAllRelationship($id, array $relationships = ['category', 'author', 'publisher']): Collection
+    public function findAllRelationship($id, array $relationships = ['category', 'author', 'publisher']): ?Book
     {
-        return $this->_model->where('id', $id)->with($relationships)->get();
+        return $this->_model->where('id', $id)->with($relationships)->first();
     }
 
     public function search(string $keyword): Collection

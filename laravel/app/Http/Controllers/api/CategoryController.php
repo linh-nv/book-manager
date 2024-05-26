@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Models\Category;
-use App\Repositories\Category\CategoryRepository;
-use App\Traits\ResponseHandler;
+use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -16,25 +14,27 @@ class CategoryController extends Controller
 {
     use ResponseHandler;
 
-    protected $categoryRepository;
+    protected $categoryService;
 
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoryService $categoryService)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->categoryService = $categoryService;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        try {
-            $category = $this->categoryRepository->getPaginate();
+        $keyword = $request->query('keyword');
 
-            return $this->responseSuccess(Response::HTTP_CREATED, $category);
+        try {
+            $categories = $this->categoryService->getPaginate($keyword);
+
+            return $this->responseSuccess(Response::HTTP_OK, $categories);
         } catch (\Exception $e) {
 
-            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while fetching the categories.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the Categorys.');
         }
     }
 
@@ -44,17 +44,12 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request): JsonResponse
     {
         try {
-            $category = $this->categoryRepository->create([
-                'name' => $request->name,
-                'slug' => $request->slug,
-                'description' => $request->description,
-                'created_at' => now(),
-            ]);
+            $category = $this->categoryService->createCategory($request->all());
 
             return $this->responseSuccess(Response::HTTP_CREATED, $category);
         } catch (\Exception $e) {
 
-            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the category.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the Category.');
         }
     }
 
@@ -64,73 +59,42 @@ class CategoryController extends Controller
     public function show(int $id): JsonResponse
     {
         try {
-            $category = $this->categoryRepository->find($id);
+            $category = $this->categoryService->getCategoryById($id);
 
             return $this->responseSuccess(Response::HTTP_OK, $category);
-        } catch (ModelNotFoundException $e) {
-            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
         } catch (\Exception $e) {
-            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the category.');
+
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the Category.');
         }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, Category $category): JsonResponse
+    public function update(CategoryRequest $request, int $id): JsonResponse
     {
         try {
-            $category = $this->categoryRepository->find($category->id);
-
-            $category = $this->categoryRepository->update($category->id, [
-                'name' => $request->name,
-                'slug' => $request->slug,
-                'description' => $request->description,
-            ]);
+            $category = $this->categoryService->updateCategory($id, $request->all());
 
             return $this->responseSuccess(Response::HTTP_OK, $category);
-        } catch (ModelNotFoundException $e) {
-            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
         } catch (\Exception $e) {
-            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the category.');
+
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the Category.');
         }
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         try {
-            $category = $this->categoryRepository->find($category->id);
-
-            $this->categoryRepository->delete($category->id);
+            $this->categoryService->deleteCategory($id);
 
             return $this->responseSuccess(Response::HTTP_OK, null);
-        } catch (ModelNotFoundException $e) {
-            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Category not found.');
-        } catch (\Exception $e) {
-            throw $e;
-            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the category.');
-        }
-    }
-
-    public function search(Request $request): JsonResponse
-    {
-        $keyword = $request->keyword;
-
-        if (!$keyword) {
-
-            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
-        }
-
-        try {
-            $results = $this->categoryRepository->search($keyword);
-
-            return $this->responseSuccess(Response::HTTP_OK, $results);
         } catch (\Exception $e) {
             
-            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the Category.');
         }
     }
 }

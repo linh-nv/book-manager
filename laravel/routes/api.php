@@ -30,21 +30,12 @@ Route::get('me', [AuthController::class, 'userProfile'])->middleware('jwt.verify
 
 Route::group(['middleware' => 'jwt.verify'], function() {
     Route::apiResource('author', AuthorController::class);
+    Route::get('book/all', [BookController::class, 'getAllCategoriesAuthorsPublishers']);
     Route::apiResource('book', BookController::class);
+    Route::post('book/{id}', [BookController::class, 'update']);
     Route::apiResource('category', CategoryController::class);
     Route::apiResource('lend-ticket', LendTicketController::class);
     Route::apiResource('publisher', PublisherController::class);
     Route::apiResource('ticket-detail', TicketDetailController::class);
     Route::apiResource('user', UserController::class);
-
-    Route::prefix('search')->group(function () {
-        Route::post('author', [AuthorController::class, 'search']);
-        Route::post('publisher', [PublisherController::class, 'search']);
-        Route::post('category', [CategoryController::class, 'search']);
-        Route::post('book', [BookController::class, 'search']);
-        Route::post('lend-ticket', [LendTicketController::class, 'search']);
-        Route::post('ticket-detail', [TicketDetailController::class, 'search']);
-        Route::post('user', [UserController::class, 'search']);
-
-    });
 });

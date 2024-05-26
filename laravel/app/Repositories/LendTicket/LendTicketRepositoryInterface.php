@@ -12,7 +12,7 @@ interface LendTicketRepositoryInterface
     public function getPaginateAndRelationship(): LengthAwarePaginator;
     public function attach($lendTicketed, $book_ids, $quantities): void;
     public function getRelationship(array $relationships): Collection;
-    public function getAllRelationship(array $relationships): Collection;
+    public function getAllRelationship(array $relationships): LengthAwarePaginator;
     public function findAllRelationship($id, array $relationships): Collection;
     public function search(string $keyword): Collection;
 

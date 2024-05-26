@@ -3,7 +3,7 @@ namespace App\Repositories\Book;
 
 use App\Models\Book;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface BookRepositoryInterface
 {
@@ -14,6 +14,6 @@ interface BookRepositoryInterface
      */
     public function getAllCategoriesAuthorsPublishers(): Array;
     public function getRelationship(array $relationships): Collection;
-    public function getAllRelationship(array $relationships): Collection;
+    public function getAllRelationship(array $relationships): LengthAwarePaginator;
     public function search(string $keyword): Collection;
 }

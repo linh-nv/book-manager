@@ -1,37 +1,41 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthorRequest;
-use App\Models\Author;
-use App\Repositories\Author\AuthorRepository;
-use Carbon\Carbon;
+use App\Services\AuthorService;
 use Illuminate\Http\JsonResponse;
 use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 
 class AuthorController extends Controller
 {
     use ResponseHandler;
 
-    protected $authorRepository;
+    protected $authorService;
 
-    public function __construct(AuthorRepository $authorRepository)
+    public function __construct(AuthorService $authorService)
     {
-        $this->authorRepository = $authorRepository;
+        $this->authorService = $authorService;
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $authors = $this->authorRepository->getPaginate();
+        $keyword = $request->query('keyword');
 
-        return $this->responseSuccess(Response::HTTP_OK, $authors);
+        try {
+            $authors = $this->authorService->getPaginate($keyword);
+
+            return $this->responseSuccess(Response::HTTP_OK, $authors);
+        } catch (\Exception $e) {
+
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the authors.');
+        }
     }
 
     /**
@@ -40,14 +44,11 @@ class AuthorController extends Controller
     public function store(AuthorRequest $request): JsonResponse
     {
         try {
-            $author = $this->authorRepository->create([
-                'name' => $request->name,
-                'description' => $request->description,
-                'created_at' => Carbon::now(),
-            ]);
+            $author = $this->authorService->createAuthor($request->all());
 
             return $this->responseSuccess(Response::HTTP_CREATED, $author);
         } catch (\Exception $e) {
+
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the author.');
         }
     }
@@ -58,10 +59,11 @@ class AuthorController extends Controller
     public function show(int $id): JsonResponse
     {
         try {
-            $author = $this->authorRepository->find($id);
+            $author = $this->authorService->getAuthorById($id);
 
             return $this->responseSuccess(Response::HTTP_OK, $author);
         } catch (\Exception $e) {
+
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the author.');
         }
     }
@@ -69,18 +71,14 @@ class AuthorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AuthorRequest $request, Author $author): JsonResponse
+    public function update(AuthorRequest $request, int $id): JsonResponse
     {
         try {
-            $author = $this->authorRepository->find($author->id);
-
-            $author = $this->authorRepository->update($author->id, [
-                'name' => $request->name,
-                'description' => $request->description,
-            ]);
+            $author = $this->authorService->updateAuthor($id, $request->all());
 
             return $this->responseSuccess(Response::HTTP_OK, $author);
         } catch (\Exception $e) {
+
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while updating the author.');
         }
     }
@@ -88,34 +86,15 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Author $author): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         try {
-            $author = $this->authorRepository->find($author->id);
-
-            $this->authorRepository->delete($author->id);
+            $this->authorService->deleteAuthor($id);
 
             return $this->responseSuccess(Response::HTTP_OK, null);
-        } catch (ModelNotFoundException $e) {
-            return $this->responseError(Response::HTTP_NOT_FOUND, 'NOT_FOUND', 'Author not found.');
         } catch (\Exception $e) {
+            
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
-        }
-    }
-
-    public function search(Request $request): JsonResponse
-    {
-        $keyword = $request->keyword;
-
-        if (!$keyword) {
-            return $this->responseError(Response::HTTP_BAD_REQUEST, 'BAD_REQUEST', 'Keyword is required for search.');
-        }
-
-        try {
-            $results = $this->authorRepository->search($keyword);
-            return $this->responseSuccess(Response::HTTP_OK, $results);
-        } catch (\Exception $e) {
-            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while searching for authors.');
         }
     }
 }
