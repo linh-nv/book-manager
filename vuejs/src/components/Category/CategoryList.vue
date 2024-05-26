@@ -3,26 +3,32 @@
     <table id="table">
       <tr class="table-title bg-slate-200">
         <th>Name</th>
+        <th>Slug</th>
         <th>Description</th>
         <th>Action</th>
       </tr>
-      <tr v-for="author in authors" :key="author.id" class="author-item">
+      <tr v-for="category in categorys" :key="category.id" class="category-item">
         <td
           class="p-10 text-nowrap max-w-[20vw] w-[20vw] overflow-hidden text-ellipsis whitespace-nowrap"
         >
-          {{ author.name }}
+          {{ category.name }}
+        </td>
+        <td
+          class="p-10 text-nowrap max-w-[20vw] w-[20vw] overflow-hidden text-ellipsis whitespace-nowrap"
+        >
+          {{ category.slug }}
         </td>
         <td
           class="p-10 text-nowrap max-w-[30rem] overflow-hidden text-ellipsis whitespace-nowrap"
         >
-          {{ author.description }}
+          {{ category.description }}
         </td>
         <td class="flex justify-center items-center p-10">
           <div class="action">
-            <button class="edit" @click="editItem(author.id)">
+            <button class="edit" @click="editItem(category.id)">
               <img src="../../assets/icon/pencil-write.svg" alt="icon-edit" />
             </button>
-            <button class="delete" @click="confirmDelete(author.id)">
+            <button class="delete" @click="confirmDelete(category.id)">
               <img src="../../assets/icon/bin.svg" alt="icon-delete" />
             </button>
           </div>
@@ -52,24 +58,24 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { authorService } from "../../apis/author";
+import { categoryService } from "../../apis/category";
 import { useRouter } from "vue-router";
 
-const authors = ref([]);
+const categorys = ref([]);
 const pagination = ref({});
 
 // getAll
 const fetchItems = async (page = 1) => {
   try {
-    const response = await authorService.getAll(page);
-    authors.value = response.data.data;
+    const response = await categoryService.getAll(page);
+    categorys.value = response.data.data;
     pagination.value = {
       current_page: response.data.current_page,
       next_page_url: response.data.next_page_url,
       prev_page_url: response.data.prev_page_url,
     };
   } catch (error) {
-    console.error("Failed to fetch authors:", error);
+    console.error("Failed to fetch categorys:", error);
   }
 };
 
@@ -87,17 +93,17 @@ const prevPage = () => {
 
 // delete
 const confirmDelete = (id) => {
-  if (window.confirm("Are you sure you want to delete this author?")) {
+  if (window.confirm("Are you sure you want to delete this category?")) {
     deleteItem(id);
   }
 };
 
 const deleteItem = async (id) => {
   try {
-    await authorService.delete(id);
+    await categoryService.delete(id);
     fetchItems(pagination.value.current_page);
   } catch (error) {
-    console.error("Failed to delete author:", error);
+    console.error("Failed to delete category:", error);
   }
 };
 
@@ -105,7 +111,7 @@ const deleteItem = async (id) => {
 const router = useRouter();
 
 const editItem = (id) => {
-  router.push({ name: "author-form-edit", params: { id } });
+  router.push({ name: "category-form-edit", params: { id } });
 };
 
 onMounted(() => {

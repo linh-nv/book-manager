@@ -13,7 +13,9 @@ export const apiService = {
 
   async create(endpoint, data) {
     try {
-      const response = await axiosInstance.post(endpoint, data);
+      const response = await axiosInstance.post(endpoint, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       return response.data;
     } catch (error) {
       handleError(error);
@@ -53,7 +55,9 @@ export const apiService = {
 
   async search(endpoint, keyword) {
     try {
-      const response = await axiosInstance.get(`${endpoint}?keyword=${keyword}`);
+      const response = await axiosInstance.get(
+        `${endpoint}?keyword=${keyword}`
+      );
       return response.data;
     } catch (error) {
       handleError(error);

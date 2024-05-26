@@ -8,7 +8,7 @@
           </div>
         </router-link>
         <ul class="sidebar-top">
-          <li :class="{ active: activeRoute === '/home' }" class="sidebar-item">
+          <li :class="{ active: isActiveRoute('/home') }" class="sidebar-item">
             <router-link to="/home" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-house"></i>
@@ -19,7 +19,7 @@
             </router-link>
           </li>
           <li
-            :class="{ active: activeRoute === '/author/list' ||  activeRoute === '/author/form'}"
+            :class="{ active: isActiveRoute('/author') }"
             class="sidebar-item"
           >
             <router-link to="/author" class="product">
@@ -32,7 +32,7 @@
             </router-link>
           </li>
           <li
-            :class="{ active: activeRoute === '/publisher' }"
+            :class="{ active: isActiveRoute('/publisher') }"
             class="sidebar-item"
           >
             <router-link to="/publisher" class="product">
@@ -45,7 +45,7 @@
             </router-link>
           </li>
           <li
-            :class="{ active: activeRoute === '/category' }"
+            :class="{ active: isActiveRoute('/category') }"
             class="sidebar-item"
           >
             <router-link to="/category" class="product">
@@ -57,7 +57,7 @@
               </div>
             </router-link>
           </li>
-          <li :class="{ active: activeRoute === '/book' }" class="sidebar-item">
+          <li :class="{ active: isActiveRoute('/book') }" class="sidebar-item">
             <router-link to="/book" class="product">
               <div class="product-icon">
                 <i class="fa-solid fa-book-open"></i>
@@ -68,7 +68,7 @@
             </router-link>
           </li>
           <li
-            :class="{ active: activeRoute === '/lend-ticket' }"
+            :class="{ active: isActiveRoute('/lend-ticket') }"
             class="sidebar-item"
           >
             <router-link to="/lend-ticket" class="product">
@@ -83,7 +83,7 @@
         </ul>
         <ul class="sidebar-bottom">
           <li
-            :class="{ active: activeRoute === '/profile' }"
+            :class="{ active: isActiveRoute('/profile') }"
             class="sidebar-item"
           >
             <router-link to="/profile" class="product">
@@ -113,12 +113,13 @@
 
 <script setup>
 import { useUserStore } from "../stores/userStore";
-import { useActiveRouteStore } from '../stores/activeRouteStore';
-import { useRouter } from "vue-router";
-import { computed } from 'vue';
+import { useActiveRouteStore } from "../stores/activeRouteStore";
+import { useRouter, useRoute } from "vue-router";
+import { computed, watch } from "vue";
 
 const userStore = useUserStore();
 const router = useRouter();
+const route = useRoute();
 const activeRouteStore = useActiveRouteStore();
 
 const logout = () => {
@@ -127,11 +128,22 @@ const logout = () => {
 };
 
 const activeRoute = computed(() => activeRouteStore.activeRoute);
+
+const isActiveRoute = (pathPrefix) => {
+  return activeRoute.value.startsWith(pathPrefix);
+};
+
+watch(
+  () => route.fullPath,
+  (newRoute) => {
+    activeRouteStore.setActiveRoute(newRoute);
+  }
+);
 </script>
 
 <style scoped>
 .sidebar-item.active .product {
-  background-color: #4880FF;
+  background-color: #4880ff;
   color: white;
   border-radius: 1rem;
 }

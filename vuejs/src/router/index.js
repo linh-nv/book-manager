@@ -7,8 +7,14 @@ import Author from "../pages/AuthorPage.vue";
 import AuthorForm from "../components/Author/AuthorForm.vue";
 import AuthorList from "../components/Author/AuthorList.vue";
 import Publisher from "../pages/PublisherPage.vue";
+import PublisherForm from "../components/Publisher/PublisherForm.vue";
+import PublisherList from "../components/Publisher/PublisherList.vue";
 import Category from "../pages/CategoryPage.vue";
+import CategoryForm from "../components/Category/CategoryForm.vue";
+import CategoryList from "../components/Category/CategoryList.vue";
 import Book from "../pages/BookPage.vue";
+import BookForm from "../components/Book/BookForm.vue";
+import BookList from "../components/Book/BookList.vue";
 import LendTicket from "../pages/LendTicketPage.vue";
 import UserProfile from "../pages/UserProfile.vue";
 import Logout from "../pages/LogoutPage.vue";
@@ -67,16 +73,70 @@ const routes = [
     path: "/publisher",
     name: "publisher",
     component: Publisher,
+    redirect: "/publisher/list",
+    children: [
+      {
+        path: "list",
+        name: "publisher-list",
+        component: PublisherList,
+      },
+      {
+        path: "form",
+        name: "publisher-form",
+        component: PublisherForm,
+      },
+      {
+        path: "form/:id",
+        name: "publisher-form-edit",
+        component: PublisherForm,
+      },
+    ],
   },
   {
     path: "/category",
     name: "category",
     component: Category,
+    redirect: "/category/list",
+    children: [
+      {
+        path: "list",
+        name: "category-list",
+        component: CategoryList,
+      },
+      {
+        path: "form",
+        name: "category-form",
+        component: CategoryForm,
+      },
+      {
+        path: "form/:id",
+        name: "category-form-edit",
+        component: CategoryForm,
+      },
+    ],
   },
   {
     path: "/book",
     name: "book",
     component: Book,
+    redirect: "/book/list",
+    children: [
+      {
+        path: "list",
+        name: "book-list",
+        component: BookList,
+      },
+      {
+        path: "form",
+        name: "book-form",
+        component: BookForm,
+      },
+      {
+        path: "form/:id",
+        name: "book-form-edit",
+        component: BookForm,
+      },
+    ],
   },
   {
     path: "/lend-ticket",

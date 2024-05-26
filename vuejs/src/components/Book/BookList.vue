@@ -1,33 +1,53 @@
 <template>
   <div class="list">
-    <table id="table">
-      <tr class="table-title bg-slate-200">
-        <th>Name</th>
-        <th>Description</th>
-        <th>Action</th>
+    <table id="table" class="table-fixed w-full">
+    <thead class="table-title bg-slate-200">
+      <tr>
+        <th class="w-1/8 p-10">Name</th>
+        <th class="w-1/8 p-10">Slug</th>
+        <th class="w-1/8 p-10">Description</th>
+        <th class="w-1/8 p-10">Category</th>
+        <th class="w-1/8 p-10">Author</th>
+        <th class="w-1/8 p-10">Publisher</th>
+        <th class="w-1/8 p-10">Price</th>
+        <th class="w-1/8 p-10">Action</th>
       </tr>
-      <tr v-for="author in authors" :key="author.id" class="author-item">
-        <td
-          class="p-10 text-nowrap max-w-[20vw] w-[20vw] overflow-hidden text-ellipsis whitespace-nowrap"
-        >
-          {{ author.name }}
+    </thead>
+    <tbody>
+      <tr v-for="book in books" :key="book.id" class="book-item">
+        <td class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8">
+          {{ book.name }}
         </td>
-        <td
-          class="p-10 text-nowrap max-w-[30rem] overflow-hidden text-ellipsis whitespace-nowrap"
-        >
-          {{ author.description }}
+        <td class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8">
+          {{ book.slug }}
+        </td>
+        <td class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8">
+          {{ book.description }}
+        </td>
+        <td class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8">
+          {{ book.category.name }}
+        </td>
+        <td class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8">
+          {{ book.author.name }}
+        </td>
+        <td class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8">
+          {{ book.publisher.name }}
+        </td>
+        <td class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8">
+          {{ book.price }}
         </td>
         <td class="flex justify-center items-center p-10">
           <div class="action">
-            <button class="edit" @click="editItem(author.id)">
+            <button class="edit" @click="editItem(book.id)">
               <img src="../../assets/icon/pencil-write.svg" alt="icon-edit" />
             </button>
-            <button class="delete" @click="confirmDelete(author.id)">
+            <button class="delete" @click="confirmDelete(book.id)">
               <img src="../../assets/icon/bin.svg" alt="icon-delete" />
             </button>
           </div>
         </td>
       </tr>
+    </tbody>
     </table>
   </div>
   <div class="pagination flex gap-10 mt-10">
@@ -52,24 +72,24 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { authorService } from "../../apis/author";
+import { bookService } from "../../apis/book";
 import { useRouter } from "vue-router";
 
-const authors = ref([]);
+const books = ref([]);
 const pagination = ref({});
 
 // getAll
 const fetchItems = async (page = 1) => {
   try {
-    const response = await authorService.getAll(page);
-    authors.value = response.data.data;
+    const response = await bookService.getAll(page);
+    books.value = response.data.data;
     pagination.value = {
       current_page: response.data.current_page,
       next_page_url: response.data.next_page_url,
       prev_page_url: response.data.prev_page_url,
     };
   } catch (error) {
-    console.error("Failed to fetch authors:", error);
+    console.error("Failed to fetch books:", error);
   }
 };
 
@@ -87,17 +107,17 @@ const prevPage = () => {
 
 // delete
 const confirmDelete = (id) => {
-  if (window.confirm("Are you sure you want to delete this author?")) {
+  if (window.confirm("Are you sure you want to delete this book?")) {
     deleteItem(id);
   }
 };
 
 const deleteItem = async (id) => {
   try {
-    await authorService.delete(id);
+    await bookService.delete(id);
     fetchItems(pagination.value.current_page);
   } catch (error) {
-    console.error("Failed to delete author:", error);
+    console.error("Failed to delete book:", error);
   }
 };
 
@@ -105,7 +125,7 @@ const deleteItem = async (id) => {
 const router = useRouter();
 
 const editItem = (id) => {
-  router.push({ name: "author-form-edit", params: { id } });
+  router.push({ name: "book-form-edit", params: { id } });
 };
 
 onMounted(() => {

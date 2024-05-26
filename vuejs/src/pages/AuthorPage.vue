@@ -9,7 +9,7 @@
           v-if="isListPage"
           class="create-btn rounded-[50%] bg-[#74C0FC] flex cursor-pointer justify-center items-center w-16 h-16 shadow shadow-slate-300"
           style="color: #74c0fc"
-          @click="navigateToCreateAuthor"
+          @click="navigateToCreate"
         >
           <i class="fa-solid fa-plus fa-xl" style="color: #fff"></i>
         </button>
@@ -17,7 +17,7 @@
           v-else
           class="list-btn cursor-pointer rounded-[50%] bg-[#63E6BE] flex justify-center items-center w-16 h-16 shadow shadow-slate-300"
           style="color: #74c0fc"
-          @click="navigateToListAuthor"
+          @click="navigateToList"
         >
           <i class="fa-solid fa-list-ul fa-xl" style="color: #fff"></i>
         </button>
@@ -27,19 +27,20 @@
             type="text"
             placeholder="Search ..."
             class="py-3 pl-5 pr-16 shadow shadow-slate-300 rounded-2xl focus:outline-none"
-            @input="handleInput"
+            @input="debouncedSearch"
           />
           <i
             class="fa-solid fa-magnifying-glass absolute top-1/3 right-5 cursor-pointer"
             style="color: #74c0fc"
           ></i>
           <div
-            v-if="searchResults.length > 0"
+            v-if="searchResults.length > 0 && searchKeyword !== ''"
             class="absolute flex flex-col gap-5 rounded-2xl bottom-0 top-16 right-0 w-[20vw] h-fit p-5 cursor-pointer bg-white shadow-sm shadow-slate-300"
           >
             <div
               v-for="author in limitedSearchResults"
               :key="author.id"
+              @click="showItem(author.id)"
               class="hover:bg-slate-100 rounded-xl p-5"
             >
               <strong>
@@ -60,6 +61,7 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { debounce } from "lodash-es";
 import { apiService } from "../apis/base";
 
 const router = useRouter();
@@ -67,26 +69,23 @@ const route = useRoute();
 
 const isListPage = ref(route.name === "author-list");
 
-const navigateToCreateAuthor = () => {
+const navigateToCreate = () => {
   router.push({ name: "author-form" });
 };
 
-const navigateToListAuthor = () => {
+const navigateToList = () => {
   router.push({ name: "author-list" });
 };
 
+watch(route, (newRoute) => {
+  isListPage.value = newRoute.name === "author-list";
+});
+
+// search
 const searchKeyword = ref("");
 const searchResults = ref([]);
-let timeout;
 
-const handleInput = () => {
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
-    searchAuthors();
-  }, 1000);
-};
-
-const searchAuthors = async () => {
+const searchItems = async () => {
   try {
     const data = await apiService.search("/author", searchKeyword.value);
     searchResults.value = data.data;
@@ -95,13 +94,16 @@ const searchAuthors = async () => {
   }
 };
 
+const debouncedSearch = debounce(searchItems, 1000);
+
 const limitedSearchResults = computed(() => {
   return searchResults.value.slice(0, 8);
 });
 
-watch(route, (newRoute) => {
-  isListPage.value = newRoute.name === "author-list";
-});
+const showItem = (id) => {
+  searchKeyword.value = "";
+  router.push({ name: "author-form-edit", params: { id } });
+};
 </script>
 
 <style scoped></style>
