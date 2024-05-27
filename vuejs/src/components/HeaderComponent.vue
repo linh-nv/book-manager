@@ -68,7 +68,7 @@
             </router-link>
           </li>
           <li
-            :class="{ active: isActiveRoute('/lend-ticket') }"
+            :class="{ active: isActiveRoute('/lend-ticket') || isActiveRoute('/ticket-detail') }"
             class="sidebar-item"
           >
             <router-link to="/lend-ticket" class="product">

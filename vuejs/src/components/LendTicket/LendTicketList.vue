@@ -1,13 +1,14 @@
 <template>
   <div class="list">
-    <table id="table">
-      <tr class="table-title bg-slate-200">
-        <th>User Name</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Note</th>
-        <th>Status</th>
-        <th>Action</th>
+    <table id="table" class="table-fixed w-full">
+      <tr class="table-title bg-slate-200 w-full">
+        <th class="w-1/6">User Name</th>
+        <th class="w-1/6">Start Date</th>
+        <th class="w-1/6">End Date</th>
+        <th class="w-1/6">Note</th>
+        <th class="w-1/6">Status</th>
+        <th class="w-1/6">Detail</th>
+        <th class="w-1/6">Action</th>
       </tr>
       <tr
         v-for="lendTicket in lendTickets"
@@ -15,29 +16,43 @@
         class="lend-ticket-item"
       >
         <td
-          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8"
+          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/6"
         >
           {{ lendTicket.user.name }}
         </td>
         <td
-          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8"
+          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/6"
         >
           {{ lendTicket.start_date }}
         </td>
         <td
-          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8"
+          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/6"
         >
           {{ lendTicket.end_date }}
         </td>
         <td
-          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8"
+          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/6"
         >
           {{ lendTicket.note }}
         </td>
         <td
-          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/8"
+          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/6"
         >
           {{ getStatusLabelById(lendTicket.status) }}
+        </td>
+        <td
+          class="p-10 text-nowrap overflow-hidden text-ellipsis whitespace-nowrap w-1/6"
+        >
+          <button @click="showTicketDetail(lendTicket.id)"
+            class="flex justify-center items-center w-full"
+          >
+            <button class="detail flex justify-center items-center">
+              <i
+                class="fa-solid fa-circle-info fa-2xl"
+                style="color: #16a34a"
+              ></i>
+            </button>
+          </button>
         </td>
         <td class="flex justify-center items-center p-10">
           <div class="action">
@@ -76,7 +91,7 @@
 import { ref, onMounted } from "vue";
 import { lendTicketService } from "../../apis/lendTicket";
 import { useRouter } from "vue-router";
-import { getStatusLabelById  } from "../../constants/lendTicketStatus";
+import { getStatusLabelById } from "../../constants/lendTicketStatus";
 const lendTickets = ref([]);
 const pagination = ref({});
 
@@ -130,6 +145,9 @@ const editItem = (id) => {
   router.push({ name: "lend-ticket-form-edit", params: { id } });
 };
 
+const showTicketDetail = (id) => {
+  router.push({ name: "ticket-detail-list", params: { id } });
+};
 onMounted(() => {
   fetchItems();
 });

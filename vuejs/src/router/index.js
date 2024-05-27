@@ -18,7 +18,9 @@ import LendTicket from "../pages/LendTicketPage.vue";
 import LendTicketForm from "../components/LendTicket/LendTicketForm.vue";
 import LendTicketList from "../components/LendTicket/LendTicketList.vue";
 import UserProfile from "../pages/UserProfile.vue";
-import Logout from "../pages/LogoutPage.vue";
+import TicketDetail from "../pages/TicketDetailPage.vue";
+import TicketDetailForm from "../components/TicketDetail/TicketDetailForm.vue";
+import TicketDetailList from "../components/TicketDetail/TicketDetailList.vue";
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
 
@@ -167,9 +169,27 @@ const routes = [
     component: UserProfile,
   },
   {
-    path: "/logout",
-    name: "logout",
-    component: Logout,
+    path: "/ticket-detail/lend-ticket",
+    name: "ticket-detail",
+    component: TicketDetail,
+    redirect: "/ticket-detail/lend-ticket/:id",
+    children: [
+      {
+        path: ":id",
+        name: "ticket-detail-list",
+        component: TicketDetailList,
+      },
+      {
+        path: "form/:id",
+        name: "ticket-detail-form",
+        component: TicketDetailForm,
+      },
+      {
+        path: "form-edit/:id",
+        name: "ticket-detail-form-edit",
+        component: TicketDetailForm,
+      },
+    ],
   },
 ];
 
