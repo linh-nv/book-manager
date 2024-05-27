@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import adminRoutes from "./admin";
 import Login from "../pages/LoginPage.vue";
 import Register from "../pages/RegisterPage.vue";
 import Home from "../pages/HomePage.vue";
@@ -16,13 +15,14 @@ import Book from "../pages/BookPage.vue";
 import BookForm from "../components/Book/BookForm.vue";
 import BookList from "../components/Book/BookList.vue";
 import LendTicket from "../pages/LendTicketPage.vue";
+import LendTicketForm from "../components/LendTicket/LendTicketForm.vue";
+import LendTicketList from "../components/LendTicket/LendTicketList.vue";
 import UserProfile from "../pages/UserProfile.vue";
 import Logout from "../pages/LogoutPage.vue";
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
 
 const routes = [
-  ...adminRoutes,
   {
     path: "/",
     component: Login,
@@ -142,6 +142,24 @@ const routes = [
     path: "/lend-ticket",
     name: "lend-ticket",
     component: LendTicket,
+    redirect: "/lend-ticket/list",
+    children: [
+      {
+        path: "list",
+        name: "lend-ticket-list",
+        component: LendTicketList,
+      },
+      {
+        path: "form",
+        name: "lend-ticket-form",
+        component: LendTicketForm,
+      },
+      {
+        path: "form/:id",
+        name: "lend-ticket-form-edit",
+        component: LendTicketForm,
+      },
+    ],
   },
   {
     path: "/profile",
