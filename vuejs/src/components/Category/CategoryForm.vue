@@ -7,12 +7,12 @@
         class="flex flex-col gap-14"
       >
         <div class="form-group form-category">
-          <label for="category-name">Category Name</label>
+          <label for="category_name">Category Name</label>
           <Field
             type="text"
             name="name"
             v-model="category.name"
-            id="category-name"
+            id="category_name"
             class="focus:outline-none"
             placeholder="Enter category name"
             @input="updateSlug"
@@ -20,24 +20,24 @@
           <ErrorMessage name="name" class="form-message text-red-500" />
         </div>
         <div class="form-group form-category">
-          <label for="category-slug">Category Slug</label>
+          <label for="category_slug">Category Slug</label>
           <Field
             type="text"
             name="slug"
             v-model="category.slug"
-            id="category-slug"
+            id="category_slug"
             class="focus:outline-none"
             placeholder="Enter category slug"
           />
           <ErrorMessage name="slug" class="form-message text-red-500" />
         </div>
         <div class="form-group form-category">
-          <label for="category-description">Description</label>
+          <label for="category_description">Description</label>
           <Field
             as="textarea"
             name="description"
             v-model="category.description"
-            id="category-description"
+            id="category_description"
             class="focus:outline-none"
             placeholder="Enter description"
           ></Field>
