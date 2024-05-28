@@ -14,26 +14,26 @@
           >
             <div class="upload">
               <input
-                :id="'upload-' + field"
+                :id="'upload_' + field"
                 type="file"
                 class="upload-photo"
                 :name="field"
                 accept="image/*"
                 @change="onImageChange(field)"
               />
-              <label v-if="book[field]" :for="'upload-' + field">
+              <label v-if="book[field]" :for="'upload_' + field">
                 <img class="w-40 h-40" :src="book[field]" :alt="field" />
               </label>
               <label
                 v-else
-                :for="'upload-' + field"
+                :for="'upload_' + field"
                 class="upload-icon bg-blue-100"
               >
                 <i class="fa-solid fa-images fa-xl text-blue-500"></i>
               </label>
             </div>
             <label
-              :for="'upload-' + field"
+              :for="'upload_' + field"
               class="label-text truncate overflow-ellipsis overflow-hidden whitespace-nowrap w-36 text-center"
             >
               {{
@@ -48,7 +48,7 @@
           v-for="(value, key) in bookFields"
           :key="key"
         >
-          <label :for="'book-' + key">{{
+          <label :for="'book_' + key">{{
             key.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase())
           }}</label>
           <template
@@ -58,7 +58,7 @@
               as="select"
               :name="key"
               v-model="book[key]"
-              :id="'book-' + key"
+              :id="'book_' + key"
               class="focus:outline-none"
             >
               <option :value="null">Select {{ key }}</option>
@@ -78,7 +78,7 @@
               type="text"
               :name="key"
               v-model="book[key]"
-              :id="'book-' + key"
+              :id="'book_' + key"
               class="focus:outline-none"
               :placeholder="'Enter ' + key.replace('_', ' ')"
               @input="key === 'name' && updateSlug"
@@ -89,7 +89,7 @@
               as="textarea"
               :name="key"
               v-model="book[key]"
-              :id="'book-' + key"
+              :id="'book_' + key"
               class="focus:outline-none"
               :placeholder="'Enter ' + key.replace('_', ' ')"
             ></Field>

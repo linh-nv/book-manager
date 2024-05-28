@@ -1,5 +1,5 @@
 import { apiService } from "./base";
-import axiosInstance from "../services/axiosInstance";
+import axiosInstance from "./axiosInstance";
 
 const endpoint = "/book";
 
