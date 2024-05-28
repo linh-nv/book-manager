@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,7 +27,7 @@ class UserFactory extends Factory
             'tel' => $this->faker->phoneNumber(),
             'birthday' => $this->faker->date(),
             'gender' => $this->faker->randomElement([0, 1]),
-            'role_id' => \App\Models\Role::factory()->create()->id,
+            'role_id' => Role::factory()->create()->id,
             'created_at' => $this->faker->dateTimeBetween('year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('year', 'now'),
         ];
