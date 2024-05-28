@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <table id="table" class="w-full">
+    <table id="table">
       <thead>
         <tr class="table-title bg-slate-200">
           <slot name="header"></slot>

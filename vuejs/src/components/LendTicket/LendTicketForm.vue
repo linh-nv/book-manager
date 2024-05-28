@@ -17,7 +17,7 @@
             class="focus:outline-none"
             :class="route.params.id ? 'opacity-50' : ''"
             placeholder="Enter lend ticket name"
-            @input="debouncedSearch"
+            @input="debouncedSearchUsers"
             :disabled="route.params.id"
           />
           <ErrorMessage name="name" class="form-message text-red-500" />
@@ -100,45 +100,77 @@
         </div>
 
         <!-- Ticket Details -->
-        <div class="form-group form-category">
-          <label>Ticket Details</label>
-          <div
-            v-for="(detail, index) in lendTicket.ticketDetails"
-            :key="index"
-            class="flex gap-4"
-          >
-            <div class="flex-1">
-              <label>Book ID</label>
-              <input
-                type="text"
-                v-model="detail.book_id"
-                class="focus:outline-none"
-                v-validate="''"
-              />
-            </div>
-            <div class="flex-1">
-              <label>Quantity</label>
-              <input
-                type="number"
-                v-model="detail.quantity"
-                class="focus:outline-none"
-                v-validate="''"
-              />
-            </div>
-            <button
-              type="button"
-              @click="removeTicketDetail(index)"
-              class="bg-red-500 text-white px-4 py-2 rounded"
+        <div
+          class="form-group flex flex-col gap-10 border-t border-gray-200 py-10"
+        >
+          <div class="flex flex-col gap-5">
+            <label>Books</label>
+            <div
+              v-for="(detail, index) in lendTicket.ticketDetails"
+              :key="index"
+              class="flex gap-4"
             >
-              Remove
-            </button>
+              <div class="flex-1">
+                <label>Book Name</label>
+                <input
+                  name="book_name"
+                  type="text"
+                  v-model="bookSearchInputs[index]"
+                  class="focus:outline-none"
+                  placeholder="Search book name"
+                  @input="debouncedSearchBooks(index)"
+                />
+                <ErrorMessage
+                  name="book_name"
+                  class="form-message text-red-500"
+                />
+                <ul
+                  v-if="
+                    searchBookResults[index] && searchBookResults[index].length
+                  "
+                  class="search-results"
+                >
+                  <li
+                    v-for="book in searchBookResults[index]"
+                    :key="book.id"
+                    @click="selectBook(book, index)"
+                  >
+                    {{ book.name }}
+                  </li>
+                </ul>
+              </div>
+              <div class="flex-1">
+                <label>Quantity</label>
+                <input
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  v-model="detail.quantity"
+                  class="focus:outline-none"
+                />
+                <ErrorMessage
+                  name="quantity"
+                  class="form-message text-red-500"
+                />
+              </div>
+              <button
+                type="button"
+                @click="removeTicketDetail(index)"
+                class="p-10"
+              >
+                <i
+                  class="fa-solid fa-trash-can fa-xl"
+                  style="color: #ef2d0b"
+                ></i>
+              </button>
+            </div>
           </div>
           <button
             type="button"
             @click="addTicketDetail"
             class="bg-green-500 text-white px-4 py-2 rounded"
           >
-            Add Ticket Detail
+            Add Book
           </button>
         </div>
 
@@ -173,11 +205,14 @@ const lendTicket = ref({
   note: "",
   user_id: null,
   userName: "",
-  ticketDetails: [{ book_id: "", quantity: 1 }],
+  ticketDetails: [{ book_id: "", book_name: "", quantity: 1 }],
 });
 
 const userNameInput = ref("");
 const searchUserResults = ref([]);
+const bookSearchInputs = ref([]);
+const searchBookResults = ref([]);
+
 const router = useRouter();
 const route = useRoute();
 
@@ -217,7 +252,15 @@ const validationSchema = yup.object({
       }
     ),
   status: yup.number().required("Status is required"),
-  note: yup.string().required("Note is required"),
+  ticketDetails: yup.array().of(
+    yup.object({
+      book_name: yup.string().required("Book Name is required"),
+      quantity: yup
+        .number()
+        .min(1, "Quantity must be at least 1")
+        .required("Quantity is required"),
+    })
+  ),
 });
 
 const { handleSubmit } = useForm({
@@ -237,7 +280,7 @@ const searchUsers = async () => {
   }
 };
 
-const debouncedSearch = debounce(searchUsers, 1000);
+const debouncedSearchUsers = debounce(searchUsers, 1000);
 
 const selectUser = (user) => {
   userNameInput.value = user.name;
@@ -245,12 +288,43 @@ const selectUser = (user) => {
   searchUserResults.value = [];
 };
 
+const searchBooks = async (index) => {
+  try {
+    const searchInput = bookSearchInputs.value[index];
+    if (searchInput && searchInput.length > 0) {
+      const response = await apiService.search("/book", searchInput);
+      searchBookResults.value[index] = response.data;
+    } else {
+      searchBookResults.value[index] = [];
+    }
+  } catch (error) {
+    console.error("Error searching books:", error);
+  }
+};
+
+const debouncedSearchBooks = debounce(searchBooks, 1000);
+
+const selectBook = (book, index) => {
+  lendTicket.value.ticketDetails[index].book_name = book.name;
+  lendTicket.value.ticketDetails[index].book_id = book.id;
+  bookSearchInputs.value[index] = book.name;
+  searchBookResults.value[index] = [];
+};
+
 const addTicketDetail = () => {
-  lendTicket.value.ticketDetails.push({ book_id: "", quantity: 1 });
+  lendTicket.value.ticketDetails.push({
+    book_id: "",
+    book_name: "",
+    quantity: 1,
+  });
+  bookSearchInputs.value.push("");
+  searchBookResults.value.push([]);
 };
 
 const removeTicketDetail = (index) => {
   lendTicket.value.ticketDetails.splice(index, 1);
+  bookSearchInputs.value.splice(index, 1);
+  searchBookResults.value.splice(index, 1);
 };
 
 const onSubmit = async () => {
@@ -280,7 +354,7 @@ const statusOptions = lendTicketStatusList;
   cursor: pointer;
   padding: 8px;
   border: 1px solid #ddd;
-  margin-top: -1px; 
+  margin-top: -1px;
 }
 
 .search-results li:hover {

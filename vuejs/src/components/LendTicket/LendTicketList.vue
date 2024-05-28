@@ -16,7 +16,7 @@
   >
     <template #row="{ item }">
       <td
-        class="p-10 text-nowrap max-w-[20vw] overflow-hidden text-ellipsis whitespace-nowrap"
+        class="p-10 text-nowrap max-w-[30rem] overflow-hidden text-ellipsis whitespace-nowrap"
       >
         {{ item.user.name }}
       </td>
