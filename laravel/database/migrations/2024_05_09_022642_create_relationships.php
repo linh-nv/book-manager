@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('lend_tickets', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
         Schema::table('books', function (Blueprint $table) {
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('publisher_id')->references('id')->on('publishers');
-            $table->foreign('author_id')->references('id')->on('authors');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('publisher_id')->references('id')->on('publishers')->onDelete('cascade');
+            $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
         });
         Schema::table('ticket_details', function (Blueprint $table) {
-            $table->foreign('book_id')->references('id')->on('books');
-            $table->foreign('lend_ticket_id')->references('id')->on('lend_tickets');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreign('lend_ticket_id')->references('id')->on('lend_tickets')->onDelete('cascade');
         });
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 

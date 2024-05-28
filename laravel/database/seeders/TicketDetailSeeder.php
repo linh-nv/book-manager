@@ -2,20 +2,17 @@
 
 namespace Database\Seeders;
 
-use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\TicketDetail;
 
-class UserSeeder extends Seeder
+class TicketDetailSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory()->count(5)->create();
+        TicketDetail::factory()->count(5)->create();
     }
 }

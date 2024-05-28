@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Author;
+use App\Models\Category;
+use App\Models\Publisher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,9 +27,9 @@ class BookFactory extends Factory
             'front_image' => $this->faker->imageUrl(),
             'thumbnail' => $this->faker->imageUrl(),
             'rear_image' => $this->faker->imageUrl(),
-            'category_id' => \App\Models\Category::factory(),
-            'author_id' => \App\Models\Author::factory(),
-            'publisher_id' => \App\Models\Publisher::factory(),
+            'category_id' => Category::factory(),
+            'author_id' => Author::factory(),
+            'publisher_id' => Publisher::factory(),
             'price' => $this->faker->numberBetween(100, 1000),
             'created_at' => $this->faker->dateTimeBetween('year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('year', 'now'),
