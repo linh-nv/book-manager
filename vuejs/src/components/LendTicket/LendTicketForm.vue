@@ -21,7 +21,6 @@
             :disabled="route.params.id"
           />
           <ErrorMessage name="name" class="form-message text-red-500" />
-
           <ul v-if="searchUserResults.length" class="search-results">
             <li
               v-for="user in searchUserResults"
@@ -100,6 +99,49 @@
           <ErrorMessage name="note" class="form-message text-red-500" />
         </div>
 
+        <!-- Ticket Details -->
+        <div class="form-group form-category">
+          <label>Ticket Details</label>
+          <div
+            v-for="(detail, index) in lendTicket.ticketDetails"
+            :key="index"
+            class="flex gap-4"
+          >
+            <div class="flex-1">
+              <label>Book ID</label>
+              <input
+                type="text"
+                v-model="detail.book_id"
+                class="focus:outline-none"
+                v-validate="''"
+              />
+            </div>
+            <div class="flex-1">
+              <label>Quantity</label>
+              <input
+                type="number"
+                v-model="detail.quantity"
+                class="focus:outline-none"
+                v-validate="''"
+              />
+            </div>
+            <button
+              type="button"
+              @click="removeTicketDetail(index)"
+              class="bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Remove
+            </button>
+          </div>
+          <button
+            type="button"
+            @click="addTicketDetail"
+            class="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Add Ticket Detail
+          </button>
+        </div>
+
         <!-- Submit Button -->
         <div class="form-button flex justify-center">
           <button
@@ -123,6 +165,7 @@ import * as yup from "yup";
 import { debounce } from "lodash-es";
 import { lendTicketStatusList } from "../../constants/lendTicketStatus.js";
 import { apiService } from "../../apis/base.js";
+
 const lendTicket = ref({
   start_date: "",
   end_date: "",
@@ -130,11 +173,11 @@ const lendTicket = ref({
   note: "",
   user_id: null,
   userName: "",
+  ticketDetails: [{ book_id: "", quantity: 1 }],
 });
 
 const userNameInput = ref("");
 const searchUserResults = ref([]);
-
 const router = useRouter();
 const route = useRoute();
 
@@ -202,6 +245,14 @@ const selectUser = (user) => {
   searchUserResults.value = [];
 };
 
+const addTicketDetail = () => {
+  lendTicket.value.ticketDetails.push({ book_id: "", quantity: 1 });
+};
+
+const removeTicketDetail = (index) => {
+  lendTicket.value.ticketDetails.splice(index, 1);
+};
+
 const onSubmit = async () => {
   try {
     if (route.params.id) {
@@ -220,21 +271,19 @@ const statusOptions = lendTicketStatusList;
 
 <style scoped>
 .search-results {
-  background: white;
-  border: 1px solid #ccc;
-  list-style: none;
-  margin: 0;
-  max-height: 150px;
-  overflow-y: auto;
+  list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .search-results li {
   cursor: pointer;
-  padding: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  margin-top: -1px; 
 }
 
 .search-results li:hover {
-  background: #eee;
+  background-color: #f0f0f0;
 }
 </style>
