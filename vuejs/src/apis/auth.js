@@ -1,4 +1,4 @@
-import axiosInstance from "../services/axiosInstance";
+import axiosInstance from "./axiosInstance";
 import { useUserStore } from "../stores/userStore";
 
 export async function login(credentials) {
