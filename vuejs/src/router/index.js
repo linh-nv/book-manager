@@ -6,6 +6,9 @@ import LendTicketForm from "../components/LendTicket/LendTicketForm.vue";
 import LendTicketList from "../components/LendTicket/LendTicketList.vue";
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
+import TicketDetail from "../pages/TicketDetailPage.vue";
+import TicketDetailForm from "../components/TicketDetail/TicketDetailForm.vue";
+import TicketDetailList from "../components/TicketDetail/TicketDetailList.vue";
 
 const routes = [
   {
@@ -45,6 +48,29 @@ const routes = [
         path: "form/:id",
         name: "lend-ticket-form-edit",
         component: LendTicketForm,
+      },
+    ],
+  },
+  {
+    path: "/ticket-detail/lend-ticket",
+    name: "ticket-detail",
+    component: TicketDetail,
+    redirect: "/ticket-detail/lend-ticket/:id",
+    children: [
+      {
+        path: ":id",
+        name: "ticket-detail-list",
+        component: TicketDetailList,
+      },
+      {
+        path: "form/:id",
+        name: "ticket-detail-form",
+        component: TicketDetailForm,
+      },
+      {
+        path: "form-edit/:id",
+        name: "ticket-detail-form-edit",
+        component: TicketDetailForm,
       },
     ],
   },
