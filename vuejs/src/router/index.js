@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../pages/LoginPage.vue";
 import Home from "../pages/HomePage.vue";
+import Author from "../pages/AuthorPage.vue";
+import AuthorForm from "../components/Author/AuthorForm.vue";
+import AuthorList from "../components/Author/AuthorList.vue";
 
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
@@ -22,6 +25,29 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/author",
+    name: "author",
+    component: Author,
+    redirect: "/author/list",
+    children: [
+      {
+        path: "list",
+        name: "author-list",
+        component: AuthorList,
+      },
+      {
+        path: "form",
+        name: "author-form",
+        component: AuthorForm,
+      },
+      {
+        path: "form/:id",
+        name: "author-form-edit",
+        component: AuthorForm,
+      },
+    ],
   },
 ];
 
