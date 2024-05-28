@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../pages/LoginPage.vue";
 import Home from "../pages/HomePage.vue";
+import Category from "../pages/CategoryPage.vue";
+import CategoryForm from "../components/Category/CategoryForm.vue";
+import CategoryList from "../components/Category/CategoryList.vue";
 
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
@@ -22,6 +25,29 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/category",
+    name: "category",
+    component: Category,
+    redirect: "/category/list",
+    children: [
+      {
+        path: "list",
+        name: "category-list",
+        component: CategoryList,
+      },
+      {
+        path: "form",
+        name: "category-form",
+        component: CategoryForm,
+      },
+      {
+        path: "form/:id",
+        name: "category-form-edit",
+        component: CategoryForm,
+      },
+    ],
   },
 ];
 
