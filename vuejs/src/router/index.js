@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../pages/LoginPage.vue";
 import Home from "../pages/HomePage.vue";
-
+import Book from "../pages/BookPage.vue";
+import BookForm from "../components/Book/BookForm.vue";
+import BookList from "../components/Book/BookList.vue";
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
 
@@ -22,6 +24,29 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/book",
+    name: "book",
+    component: Book,
+    redirect: "/book/list",
+    children: [
+      {
+        path: "list",
+        name: "book-list",
+        component: BookList,
+      },
+      {
+        path: "form",
+        name: "book-form",
+        component: BookForm,
+      },
+      {
+        path: "form/:id",
+        name: "book-form-edit",
+        component: BookForm,
+      },
+    ],
   },
 ];
 

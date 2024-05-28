@@ -2,13 +2,13 @@
   <div>
     <BaseTable :items="items" @edit="editItem" @delete="confirmDelete">
       <template #header>
-        <th v-for="header in headers" :key="header">{{ header }}</th>
-        <th v-if="actions">Action</th>
+        <th class="flex-1 p-10" v-for="header in headers" :key="header">{{ header }}</th>
+        <th class="flex-1 p-10" v-if="actions">Action</th>
       </template>
       <template #body>
         <tr v-for="item in items" :key="item.id">
           <slot name="row" :item="item"></slot>
-          <td v-if="actions" class="flex justify-center items-center p-10">
+          <td v-if="actions" class="flex flex-1 justify-center items-center p-10">
             <div class="action">
               <button class="edit" @click="editItem(item.id)">
                 <img src="../assets/icon/pencil-write.svg" alt="icon-edit" />
