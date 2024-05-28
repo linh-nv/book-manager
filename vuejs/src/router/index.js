@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../pages/LoginPage.vue";
 import Home from "../pages/HomePage.vue";
-
+import Publisher from "../pages/PublisherPage.vue";
+import PublisherForm from "../components/Publisher/PublisherForm.vue";
+import PublisherList from "../components/Publisher/PublisherList.vue";
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
 
@@ -22,6 +24,29 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/publisher",
+    name: "publisher",
+    component: Publisher,
+    redirect: "/publisher/list",
+    children: [
+      {
+        path: "list",
+        name: "publisher-list",
+        component: PublisherList,
+      },
+      {
+        path: "form",
+        name: "publisher-form",
+        component: PublisherForm,
+      },
+      {
+        path: "form/:id",
+        name: "publisher-form-edit",
+        component: PublisherForm,
+      },
+    ],
   },
 ];
 
