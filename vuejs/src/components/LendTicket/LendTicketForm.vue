@@ -8,12 +8,12 @@
       >
         <!-- User Name Input Field -->
         <div class="form-group form-category">
-          <label for="lend-ticket-name">User Name LendTicket</label>
+          <label for="lend_ticket_name">User Name LendTicket</label>
           <Field
             type="text"
             name="name"
             v-model="userNameInput"
-            id="lend-ticket-name"
+            id="lend_ticket_name"
             class="focus:outline-none"
             :class="route.params.id ? 'opacity-50' : ''"
             placeholder="Enter lend ticket name"
@@ -35,12 +35,12 @@
 
         <!-- Start Date Input Field -->
         <div class="form-group form-category">
-          <label for="lend-ticket-start-date">Start Date</label>
+          <label for="lend_ticket_start_date">Start Date</label>
           <Field
             type="date"
             name="start_date"
             v-model="lendTicket.start_date"
-            id="lend-ticket-start-date"
+            id="lend_ticket_start_date"
             class="focus:outline-none"
             placeholder="Enter start_date"
           ></Field>
@@ -49,12 +49,12 @@
 
         <!-- End Date Input Field -->
         <div class="form-group form-category">
-          <label for="lend-ticket-end-date">End Date</label>
+          <label for="lend_ticket_end_date">End Date</label>
           <Field
             type="date"
             name="end_date"
             v-model="lendTicket.end_date"
-            id="lend-ticket-end-date"
+            id="lend_ticket_end_date"
             class="focus:outline-none"
             placeholder="Enter end_date"
           ></Field>
@@ -88,12 +88,12 @@
 
         <!-- Note Input Field -->
         <div class="form-group form-category">
-          <label for="lend-ticket-note">Note</label>
+          <label for="lend_ticket_note">Note</label>
           <Field
             type="text"
             name="note"
             v-model="lendTicket.note"
-            id="lend-ticket-note"
+            id="lend_ticket_note"
             class="focus:outline-none"
             placeholder="Enter note"
           ></Field>

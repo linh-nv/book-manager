@@ -8,12 +8,12 @@
       >
         <!-- Book Name Input Field -->
         <div class="form-group form-category">
-          <label for="ticket-detail-book-name">Book Name</label>
+          <label for="ticket_detail_book_name">Book Name</label>
           <Field
             type="text"
             name="book_name"
             v-model="bookNameInput"
-            id="ticket-detail-book-name"
+            id="ticket_detail_book_name"
             class="focus:outline-none"
             placeholder="Enter book name"
             @input="debouncedSearch"
@@ -33,12 +33,12 @@
 
         <!-- Status Select Field -->
         <div v-if="route.name === 'ticket-detail-form-edit'" class="form-group form-category">
-          <label for="ticket-detail-status">Status</label>
+          <label for="ticket_detail_status">Status</label>
           <Field
             as="select"
             name="status"
             v-model="ticketDetail.status"
-            id="ticket-detail-status"
+            id="ticket_detail_status"
             class="focus:outline-none"
           >
             <option
@@ -54,12 +54,12 @@
 
         <!-- Quantity Input Field -->
         <div class="form-group form-category">
-          <label for="ticket-detail-quantity">Quantity</label>
+          <label for="ticket_detail_quantity">Quantity</label>
           <Field
             type="number"
             name="quantity"
             v-model="ticketDetail.quantity"
-            id="ticket-detail-quantity"
+            id="ticket_detail_quantity"
             class="focus:outline-none"
             placeholder="Enter quantity"
           ></Field>
