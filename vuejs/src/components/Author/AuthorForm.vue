@@ -7,12 +7,12 @@
         class="flex flex-col gap-14"
       >
         <div class="form-group form-category">
-          <label for="author-name">Author Name</label>
+          <label for="author_name">Author Name</label>
           <Field
             type="text"
             name="name"
             v-model="author.name"
-            id="author-name"
+            id="author_name"
             class="focus:outline-none"
             placeholder="Enter author name"
           />
@@ -20,12 +20,12 @@
         </div>
 
         <div class="form-group form-category">
-          <label for="author-description">Description</label>
+          <label for="author_description">Description</label>
           <Field
             as="textarea"
             name="description"
             v-model="author.description"
-            id="author-description"
+            id="author_description"
             class="focus:outline-none"
             placeholder="Enter description"
           ></Field>

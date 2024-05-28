@@ -1,6 +1,6 @@
 <template>
   <div
-    id="toast-danger"
+    id="toast_danger"
     class="absolute bottom-20 right-10 flex justify-between items-center w-full max-w-xs p-4 mb-4 bg-white rounded-xl"
     role="alert"
   >
