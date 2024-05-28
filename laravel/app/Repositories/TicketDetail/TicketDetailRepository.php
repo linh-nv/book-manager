@@ -18,7 +18,7 @@ class TicketDetailRepository extends BaseRepository implements TicketDetailRepos
         return TicketDetail::class;
     }
 
-    public function getRelationship(array $relationships): Collection
+    public function getRelationship(string $relationships): Collection
     {
 
         return $this->_model->with($relationships)->get();
@@ -27,15 +27,20 @@ class TicketDetailRepository extends BaseRepository implements TicketDetailRepos
     public function getAllRelationship(array $relationships = ['book', 'lendTicket']): LengthAwarePaginator
     {
 
-        return $this->_model->with($relationships)->paginate(Constains::PER_PAGE);
+        return $this->_model->with($relationships)->orderBy('id', 'DESC')->paginate(Constains::PER_PAGE);
     }
 
-    public function findAllRelationship($id, array $relationships = ['book', 'lendTicket']): Collection
+    public function findAllRelationship($id, array $relationships = ['book', 'lendTicket']): ?TicketDetail
     {
         
-        return $this->_model->where('id', $id)->with($relationships)->get();
+        return $this->_model->where('id', $id)->with($relationships)->first();
     }
         
+    public function getLendTicket($lend_id): ?Collection
+    {
+        
+        return $this->_model->where('lend_ticket_id', $lend_id)->with('book')->orderBy('id', 'DESC')->get();
+    }
     public function search(string $keyword): Collection
     {
         return $this->_model->whereHas('book', function ($query) use ($keyword) {

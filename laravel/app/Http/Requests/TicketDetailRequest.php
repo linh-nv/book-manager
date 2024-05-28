@@ -20,7 +20,7 @@ class TicketDetailRequest extends FormRequest
             'lend_ticket_id' => 'required|exists:lend_tickets,id',
             'return_date' => 'nullable|date',
             'quantity' => 'required|integer|min:1',
-            'status' => 'required|integer|in:0,1,2,3',
+            'status' => 'required|integer|in:1,2,3,4',
         ];
     }
 

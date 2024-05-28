@@ -20,9 +20,9 @@ class LendTicketService
         return $keyword ? $this->lendTicketRepository->search($keyword) : $this->lendTicketRepository->getAllRelationship();
     }
 
-    public function createLendTicket(array $data): LendTicket
+    public function createLendTicket(array $data, int $book_id = null, int $quantities = 1): LendTicket
     {
-        return $this->lendTicketRepository->create([
+        $lendTicketed = $this->lendTicketRepository->create([
             'user_id' => $data['user_id'],
             'start_date' => $data['start_date'],
             'end_date' => $data['end_date'],
@@ -30,11 +30,14 @@ class LendTicketService
             'note' => $data['note'],
             'created_at' => Carbon::now(),
         ]);
+        // $book_id !== null ? $this->lendTicketRepository->attach($lendTicketed, $book_id, $quantities) : '';
+
+        return $lendTicketed;
     }
 
     public function getLendTicketById(int $id): LendTicket
     {
-        return $this->lendTicketRepository->find($id);
+        return $this->lendTicketRepository->findAllRelationship($id);
     }
 
     public function updateLendTicket(int $id, array $data): LendTicket

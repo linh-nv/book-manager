@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TicketDetailRequest;
@@ -68,6 +68,17 @@ class TicketDetailController extends Controller
         }
     }
 
+    public function showLendTicket(int $lend_id): JsonResponse
+    {
+        try {
+            $ticketDetail = $this->ticketDetailService->getLendTicketById($lend_id);
+
+            return $this->responseSuccess(Response::HTTP_OK, $ticketDetail);
+        } catch (\Exception $e) {
+
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while retrieving the TicketDetail.');
+        }
+    }
     /**
      * Update the specified resource in storage.
      */

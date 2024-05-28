@@ -37,5 +37,6 @@ Route::group(['middleware' => 'jwt.verify'], function() {
     Route::apiResource('lend-ticket', LendTicketController::class);
     Route::apiResource('publisher', PublisherController::class);
     Route::apiResource('ticket-detail', TicketDetailController::class);
+    Route::get('ticket-detail/lend-ticket/{id}', [TicketDetailController::class, 'showLendTicket']);
     Route::apiResource('user', UserController::class);
 });

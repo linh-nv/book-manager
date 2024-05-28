@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LendTicketRequest;
@@ -45,7 +45,6 @@ class LendTicketController extends Controller
     {
         try {
             $lendTicket = $this->lendTicketService->createLendTicket($request->all());
-        // $this->lendTicketRepository->attach($lendTicketed, $request->book_id, $request->quantities);
 
             return $this->responseSuccess(Response::HTTP_CREATED, $lendTicket);
         } catch (\Exception $e) {

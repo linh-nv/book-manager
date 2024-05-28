@@ -13,21 +13,19 @@ class TicketDetail extends Model
     protected $fillable = [
         'book_id',
         'lend_ticket_id',
+        'status',
         'return_date',
         'quantity',
     ];
 
-    // Define the 'creating' event to automatically set status to 1 and add timestamp
     protected static function boot()
     {
         parent::boot();
 
-        // Listen for the 'creating' event
         static::creating(function ($ticketDetail) {
-            $ticketDetail->status = 1; // Set status to 1
-            $ticketDetail->quantity = 1; // Set status to 1
-            $ticketDetail->created_at = Carbon::now(); // Add created_at timestamp
-            $ticketDetail->updated_at = Carbon::now(); // Add updated_at timestamp
+            $ticketDetail->status = 1; 
+            $ticketDetail->created_at = Carbon::now(); 
+            $ticketDetail->updated_at = Carbon::now(); 
         });
     }
 

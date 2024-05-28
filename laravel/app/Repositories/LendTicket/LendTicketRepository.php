@@ -1,7 +1,9 @@
 <?php
 namespace App\Repositories\LendTicket;
 
+use App\Enum\LendTicketStatus;
 use App\Models\Book;
+use App\Models\LendTicket;
 use App\Repositories\BaseRepository;
 use App\Repositories\LendTicket\LendTicketRepositoryInterface;
 use App\Util\Constains;
@@ -9,6 +11,8 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\TextUI\Configuration\Constant;
+
 class LendTicketRepository extends BaseRepository implements LendTicketRepositoryInterface
 {
     /**
@@ -49,30 +53,31 @@ class LendTicketRepository extends BaseRepository implements LendTicketRepositor
     public function getAllRelationship(array $relationships = ['user']): LengthAwarePaginator
     {
 
-        return $this->_model->with($relationships)->paginate(Constains::PER_PAGE);
+        return $this->_model->with($relationships)->orderBy('id', 'DESC')->paginate(Constains::PER_PAGE);
     }
 
-    public function findAllRelationship($id, array $relationships = ['user']): Collection
+    public function findAllRelationship($id, array $relationships = ['user']): ?LendTicket
     {
         
-        return $this->_model->where('id', $id)->with($relationships)->get();
+        return $this->_model->where('id', $id)->with($relationships)->first();
     }
 
     public function attach($lendTicketed, $book_ids, $quantities, $type = null): void
     {
-        $data = [];
+        // $data = [];
+        // $pendingStatus = LendTicketStatus::PENDING;
+
+        // foreach ($book_ids as $book_id) {
+        //     $data[$book_id] = [
+        //         'lend_ticket_id' => $lendTicketed->id,
+        //         'status' => $pendingStatus->value,
+        //         'quantity' => $quantities[$book_id],
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now()
+        //     ];
+        // }
     
-        foreach ($book_ids as $book_id) {
-            $data[$book_id] = [
-                'lend_ticket_id' => $lendTicketed->id,
-                'status' => 1,
-                'quantity' => $quantities[$book_id],
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
-        }
-    
-        $this->_model->ticketDetails()->attach($data);
+        // $this->_model->ticketDetails()->attach($data);
     }
 
     public function search(string $keyword): Collection

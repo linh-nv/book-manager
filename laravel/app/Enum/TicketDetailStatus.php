@@ -3,10 +3,10 @@ namespace App\Enum;
 
 enum TicketDetailStatus: int
 {
-    case BORROWED = 0;
-    case RETURNED = 1;
-    case LOST = 2;
-    case REJECTED = 3;
+    case BORROWED = 1;
+    case RETURNED = 2;
+    case LOST = 3;
+    case REJECTED = 4;
 
     public function label(): string
     {

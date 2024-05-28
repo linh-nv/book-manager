@@ -56,5 +56,7 @@ Route::post('/handle_login', [LoginController::class, 'handleLogin'])->name('han
 // Route::get('/confirm_email_verification/{token}', [UserController::class, 'confirm_email_verification'])->name('confirm_email_verification');
 
 Route::get('/test', function(){
-    return Constains::PER_PAGE;
+    $returnedStatus = TicketDetailStatus::RETURNED;
+
+    return $returnedStatus->value;
 });
