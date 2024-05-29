@@ -9,6 +9,7 @@
       <template #item="{ item }">
         <div>
           <strong>{{ item.name }}</strong>
+          <p class="mb-10 italic">{{ item.slug }}</p>
           <p>{{ item.description }}</p>
         </div>
       </template>
