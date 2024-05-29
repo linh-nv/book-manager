@@ -21,5 +21,14 @@ export const categoryService = {
 
   delete(id) {
     return apiService.delete(endpoint, id);
-  }
+  },
+  
+  getTrashed() {
+    return apiService.get(trashedEndpoint);
+  },
+
+  restore(id) {
+    return apiService.post(`${restoreEndpoint}/${id}`);
+  },
+
 };

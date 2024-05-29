@@ -4,6 +4,7 @@ import Home from "../pages/HomePage.vue";
 import Category from "../pages/CategoryPage.vue";
 import CategoryForm from "../components/Category/CategoryForm.vue";
 import CategoryList from "../components/Category/CategoryList.vue";
+import CategoryRollBack from "../components/Category/CategoryRollBack.vue";
 
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
@@ -47,6 +48,12 @@ const routes = [
         name: "category-form-edit",
         component: CategoryForm,
       },
+      {
+        path: "rollback",
+        name: "rollback-category",
+        component: CategoryRollBack,
+      },
+
     ],
   },
 ];

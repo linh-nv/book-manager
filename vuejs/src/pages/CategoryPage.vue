@@ -5,6 +5,7 @@
       searchEndpoint="/category" 
       listPageName="category-list" 
       formPageName="category-form" 
+      rollbackPageName="rollback-category"
     />
     <router-view />
   </section>
