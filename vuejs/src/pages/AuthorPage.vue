@@ -5,6 +5,7 @@
       searchEndpoint="/author" 
       listPageName="author-list" 
       formPageName="author-form" 
+      rollbackPageName="rollback-author"
     />
     <router-view />
   </section>

@@ -4,6 +4,7 @@ import Home from "../pages/HomePage.vue";
 import Author from "../pages/AuthorPage.vue";
 import AuthorForm from "../components/Author/AuthorForm.vue";
 import AuthorList from "../components/Author/AuthorList.vue";
+import AuthorRollBack from "../components/Author/AuthorRollBack.vue";
 
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
@@ -46,6 +47,11 @@ const routes = [
         path: "form/:id",
         name: "author-form-edit",
         component: AuthorForm,
+      },
+      {
+        path: "rollback",
+        name: "rollback-author",
+        component: AuthorRollBack,
       },
     ],
   },
