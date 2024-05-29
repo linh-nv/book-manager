@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-page w-full">
+  <div class="profile-page w-full p-10">
     <h1>User Profile</h1>
     <Form @submit.prevent="onSubmit" class="flex flex-col gap-6">
       <div class="form-group">
@@ -140,17 +140,17 @@
         </div>
 
         <div class="form-group">
-          <label for="confirm_password">Confirm Password</label>
+          <label for="new_password_confirmation">Confirm Password</label>
           <Field
             type="password"
-            id="confirm_password"
-            name="confirm_password"
-            v-model="passwordForm.confirm_password"
+            id="new_password_confirmation"
+            name="new_password_confirmation"
+            v-model="passwordForm.new_password_confirmation"
             class="focus:outline-none"
             placeholder="Confirm new password"
           />
           <ErrorMessage
-            name="confirm_password"
+            name="new_password_confirmation"
             class="form-message text-red-500"
           />
         </div>
@@ -192,12 +192,12 @@ const user = ref({
   gender: 1,
 });
 
-const showChangePasswordForm = ref(false);
+const showChangePasswordForm = ref(true);
 
 const passwordForm = ref({
   current_password: "",
   new_password: "",
-  confirm_password: "",
+  new_password_confirmation: "",
 });
 
 const router = useRouter();
@@ -233,7 +233,7 @@ const passwordValidationSchema = yup.object({
     .string()
     .min(6, "New password must be at least 6 characters")
     .required("New password is required"),
-  confirm_password: yup
+    new_password_confirmation: yup
     .string()
     .oneOf([yup.ref("new_password"), null], "Passwords must match")
     .required("Confirm password is required"),
@@ -249,7 +249,6 @@ const { handleSubmit: handlePasswordSubmit } = useForm({
 
 const onSubmit = async () => {
   try {
-    console.log("Submitting user:", user.value);
     if (user.value.id) {
       await userService.update(user.value.id, user.value);
       alert("Profile updated successfully!");
@@ -263,8 +262,8 @@ const onSubmit = async () => {
 
 const onSubmitChangePassword = async () => {
   try {
-    const { current_password, new_password } = passwordForm.value;
-    await userService.changePassword({ current_password, new_password });
+    const { current_password, new_password, new_password_confirmation } = passwordForm.value;
+    await userService.changePassword({ current_password, new_password, new_password_confirmation });
     alert("Password changed successfully!");
     showChangePasswordForm.value = false;
   } catch (error) {

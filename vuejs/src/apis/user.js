@@ -13,7 +13,14 @@ export const userService = {
       throw error;
     }
   },
-
+  async changePassword(current_password, new_password, new_password_confirmation) {
+    try {
+      const response = await axiosInstance.post(`${profile}`, current_password, new_password, new_password_confirmation);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
   getAll(page) {
     return apiService.getAll(endpoint, page);
   },
