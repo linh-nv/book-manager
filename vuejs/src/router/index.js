@@ -4,6 +4,8 @@ import Home from "../pages/HomePage.vue";
 import Publisher from "../pages/PublisherPage.vue";
 import PublisherForm from "../components/Publisher/PublisherForm.vue";
 import PublisherList from "../components/Publisher/PublisherList.vue";
+import PublisherRollBack from "../components/Publisher/PublisherRollBack.vue";
+
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
 
@@ -45,6 +47,11 @@ const routes = [
         path: "form/:id",
         name: "publisher-form-edit",
         component: PublisherForm,
+      },
+      {
+        path: "rollback",
+        name: "rollback-publisher",
+        component: PublisherRollBack,
       },
     ],
   },

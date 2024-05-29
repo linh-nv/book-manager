@@ -1,6 +1,8 @@
 import { apiService } from './base';
 
 const endpoint = '/publisher';
+const trashedEndpoint = "/trashed/publisher";
+const restoreEndpoint = "/restore/publisher";
 
 export const publisherService = {
   getAll(page) {
@@ -21,5 +23,14 @@ export const publisherService = {
 
   delete(id) {
     return apiService.delete(endpoint, id);
-  }
+  },
+
+  getTrashed() {
+    return apiService.get(trashedEndpoint);
+  },
+
+  restore(id) {
+    return apiService.post(`${restoreEndpoint}/${id}`);
+  },
+
 };

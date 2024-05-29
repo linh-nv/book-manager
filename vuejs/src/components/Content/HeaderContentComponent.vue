@@ -21,7 +21,13 @@
       >
         <i class="fa-solid fa-list-ul fa-xl" style="color: #fff"></i>
       </button>
-
+      <button
+        class="rollback-btn cursor-pointer rounded-[50%] bg-red-500 flex justify-center items-center w-16 h-16 shadow shadow-slate-300"
+        style="color: #b197fc"
+        @click="navigateToRollback"
+      >
+        <i class="fa-solid fa-arrow-rotate-left fa-xl" style="color: #fff"></i>
+      </button>
       <div class="relative">
         <input
           v-model="searchKeyword"
@@ -63,12 +69,11 @@ const props = defineProps({
   searchEndpoint: String,
   listPageName: String,
   formPageName: String,
+  rollbackPageName: String,
 });
 
-const { navigateToCreate, navigateToList, isListPage } = useNavigation(
-  props.listPageName,
-  props.formPageName
-);
+const { navigateToCreate, navigateToList, isListPage, navigateToRollback } =
+  useNavigation(props.listPageName, props.formPageName, props.rollbackPageName);
 const {
   searchKeyword,
   searchResults,

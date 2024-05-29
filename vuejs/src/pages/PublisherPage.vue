@@ -5,6 +5,7 @@
       searchEndpoint="/publisher" 
       listPageName="publisher-list" 
       formPageName="publisher-form" 
+      rollbackPageName="rollback-publisher"
     />
     <router-view />
   </section>
