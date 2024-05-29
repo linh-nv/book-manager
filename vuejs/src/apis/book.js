@@ -1,7 +1,8 @@
 import { apiService } from "./base";
-import axiosInstance from "./axiosInstance";
 
 const endpoint = "/book";
+const trashedEndpoint = "/trashed/book";
+const restoreEndpoint = "/restore/book";
 
 export const bookService = {
   getAll(page) {
@@ -24,23 +25,11 @@ export const bookService = {
     return apiService.delete(endpoint, id);
   },
 
-  async getAllCategoriesAuthorsPublishers() {
-    try {
-      const response = await axiosInstance.get(`${endpoint}/all`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+  getTrashed() {
+    return apiService.get(trashedEndpoint);
   },
-  async updateBook(endpoint, id, data) {
-    try {
-      const response = await axiosInstance.post(`${endpoint}/${id}?method=PUT`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      return response.data;
-    } catch (error) {
-      handleError(error);
-      throw error;
-    }
+
+  restore(id) {
+    return apiService.post(`${restoreEndpoint}/${id}`);
   },
 };
