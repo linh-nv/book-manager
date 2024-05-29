@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+<<<<<<< HEAD
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Author;
@@ -22,6 +23,9 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+=======
+use Illuminate\Database\Seeder;
+>>>>>>> 6f7c4ff89e48e434f263844cd7c14c97f90f0cfa
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -29,6 +33,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+<<<<<<< HEAD
         $this->call([
             UserSeeder::class,
             CitiesTableSeeder::class,
@@ -54,5 +59,9 @@ class DatabaseSeeder extends Seeder
             BookAuthorSeeder::class,
             NewsSeeder::class,
         ]);
+=======
+
+>>>>>>> 6f7c4ff89e48e434f263844cd7c14c97f90f0cfa
     }
+    
 }
