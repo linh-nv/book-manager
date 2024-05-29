@@ -17,12 +17,10 @@ export async function login(credentials) {
       "Authorization"
     ] = `Bearer ${access_token}`;
 
-    setTimeout(refreshToken, (expires_in - 60) * 1000); 
-
     return response;
   } catch (error) {
     handleError(error);
-    throw error; 
+    throw error;
   }
 }
 
@@ -39,20 +37,6 @@ export async function register(userData) {
 export async function refreshToken() {
   try {
     const response = await axiosInstance.post("/refresh");
-    const { access_token, expires_in } = response.data;
-    const userStore = useUserStore();
-
-    const expirationTime = new Date().getTime() + expires_in * 1000;
-
-    userStore.setAccessToken(access_token);
-    userStore.setTokenExpiration(expirationTime);
-
-    axiosInstance.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${access_token}`;
-
-    setTimeout(refreshToken, (expires_in - 60) * 1000);
-
     return response;
   } catch (error) {
     handleError(error);

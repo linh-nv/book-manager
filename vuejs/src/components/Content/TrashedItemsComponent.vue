@@ -1,5 +1,5 @@
 <template>
-  <div class="trashed-items flex flex-col gap-10">
+  <div class="trashed-items w-full flex flex-col gap-10">
     <h2 class="text-3xl font-semibold">Trashed {{ itemType }} List</h2>
     <ul v-if="trashedItems.length" class="flex flex-col gap-10">
       <li
