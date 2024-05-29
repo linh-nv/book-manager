@@ -4,6 +4,8 @@ import Home from "../pages/HomePage.vue";
 import LendTicket from "../pages/LendTicketPage.vue";
 import LendTicketForm from "../components/LendTicket/LendTicketForm.vue";
 import LendTicketList from "../components/LendTicket/LendTicketList.vue";
+import LendTicketRollBack from "../components/LendTicket/LendTicketRollBack.vue";
+
 import { useUserStore } from "../stores/userStore";
 import { useActiveRouteStore } from "../stores/activeRouteStore";
 import TicketDetail from "../pages/TicketDetailPage.vue";
@@ -48,6 +50,11 @@ const routes = [
         path: "form/:id",
         name: "lend-ticket-form-edit",
         component: LendTicketForm,
+      },
+      {
+        path: "rollback",
+        name: "rollback-lend-ticket",
+        component: LendTicketRollBack,
       },
     ],
   },

@@ -5,6 +5,7 @@
       searchEndpoint="/lend-ticket" 
       listPageName="lend-ticket-list" 
       formPageName="lend-ticket-form" 
+      rollbackPageName="rollback-lend-ticket"
     >
       <template #item="{ item }">
         <strong>{{ item.user.name }}</strong>

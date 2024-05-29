@@ -1,7 +1,8 @@
 import { apiService } from "./base";
-import axiosInstance from "./axiosInstance";
 
 const endpoint = "/lend-ticket";
+const trashedEndpoint = "/trashed/lend-ticket";
+const restoreEndpoint = "/restore/lend-ticket";
 
 export const lendTicketService = {
   getAll(page) {
@@ -22,5 +23,13 @@ export const lendTicketService = {
 
   delete(id) {
     return apiService.delete(endpoint, id);
+  },
+
+  getTrashed() {
+    return apiService.get(trashedEndpoint);
+  },
+
+  restore(id) {
+    return apiService.post(`${restoreEndpoint}/${id}`);
   },
 };
