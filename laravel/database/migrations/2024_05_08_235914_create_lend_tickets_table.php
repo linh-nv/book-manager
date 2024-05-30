@@ -21,6 +21,7 @@ return new class extends Migration
             $table->tinyInteger('status');
             $table->string('note')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

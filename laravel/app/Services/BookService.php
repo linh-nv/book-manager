@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Book;
 use App\Repositories\Book\BookRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 use function App\Helpers\deleteImage;
 use function App\Helpers\updateImage;
@@ -119,4 +120,15 @@ class BookService
         return $this->bookRepository->delete($id);
     }
 
+    public function restoreBook(int $id): bool
+    {
+
+        return $this->bookRepository->restore($id);
+    }
+    
+    public function trashed(): Collection
+    {
+
+        return $this->bookRepository->getTrashed();
+    }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 interface RepositoryInterface
 {
     /**
@@ -38,4 +41,11 @@ interface RepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
+    public function restore($id): bool;
+
+    public function getPaginate(): LengthAwarePaginator;
+
+    public function getTrashed(): ?Collection;
+
 }

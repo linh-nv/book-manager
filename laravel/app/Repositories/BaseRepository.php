@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Repositories;
 
-use App\Http\Controllers\ImageController;
 use App\Repositories\RepositoryInterface;
 use App\Util\Constains;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class BaseRepository implements RepositoryInterface
 {
@@ -44,7 +43,6 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function getAll()
     {
-
         return $this->_model->orderBy('id', 'DESC')->get();
     }
 
@@ -55,9 +53,7 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function find($id)
     {
-        $result = $this->_model->findOrFail($id);
-
-        return $result;
+        return $this->_model->findOrFail($id);
     }
 
     /**
@@ -67,7 +63,6 @@ abstract class BaseRepository implements RepositoryInterface
      */
     public function create(array $attributes)
     {
-
         return $this->_model->create($attributes);
     }
 
@@ -94,14 +89,37 @@ abstract class BaseRepository implements RepositoryInterface
     public function delete($id)
     {
         $result = $this->find($id);
-        $result->delete();
-
-        return true;
+        return $result->delete();
     }
 
-    public function getPaginate()
+    /**
+     * Restore soft-deleted record
+     *
+     * @param $id
+     * @return bool
+     */
+    public function restore($id): bool
+    {
+        $result = $this->_model->withTrashed()->findOrFail($id);
+        return $result->restore();
+    }
+
+    /**
+     * Get All with Pagination
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getPaginate(): LengthAwarePaginator
     {
         return $this->_model->orderBy('id', 'DESC')->paginate(Constains::PER_PAGE);
     }
-    
+
+    /**
+     * Get all soft-deleted records
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getTrashed(): ?Collection
+    {
+
+        return $this->_model->onlyTrashed()->get();
+    }
 }

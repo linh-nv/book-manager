@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\LendTicket;
 use App\Repositories\LendTicket\LendTicketRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class LendTicketService
 {
@@ -20,7 +21,7 @@ class LendTicketService
         return $keyword ? $this->lendTicketRepository->search($keyword) : $this->lendTicketRepository->getAllRelationship();
     }
 
-    public function createLendTicket(array $data, int $book_id = null, int $quantities = 1): LendTicket
+    public function createLendTicket(array $data, array $bookDetails): LendTicket
     {
         $lendTicketed = $this->lendTicketRepository->create([
             'user_id' => $data['user_id'],
@@ -30,10 +31,15 @@ class LendTicketService
             'note' => $data['note'],
             'created_at' => Carbon::now(),
         ]);
-        // $book_id !== null ? $this->lendTicketRepository->attach($lendTicketed, $book_id, $quantities) : '';
-
+    
+        if(!empty($bookDetails)){
+            $this->lendTicketRepository->attachDetails($lendTicketed, $bookDetails);
+        }
+    
         return $lendTicketed;
     }
+    
+
 
     public function getLendTicketById(int $id): LendTicket
     {
@@ -55,5 +61,17 @@ class LendTicketService
     {
 
         return $this->lendTicketRepository->delete($id);
+    }
+    
+    public function restoreLendTicket(int $id): bool
+    {
+
+        return $this->lendTicketRepository->restore($id);
+    }
+        
+    public function trashed(): Collection
+    {
+
+        return $this->lendTicketRepository->getTrashed();
     }
 }

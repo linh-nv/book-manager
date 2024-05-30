@@ -30,8 +30,6 @@ class MailNotify extends Mailable
     */
    public function build()
    {
-        return $this->from('nvlinh.rin@gmail.com')
-        ->view('mails.notify')
-        ->subject('Linh eCommerce - Confirm your email address');
+        //
    }
 }

@@ -104,8 +104,32 @@ class TicketDetailController extends Controller
 
             return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (\Exception $e) {
-            
+            throw $e;
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the TicketDetail.');
+        }
+    }
+            
+    public function restore(int $id): JsonResponse
+    {
+        try {
+            $this->ticketDetailService->restoreTicketDetail($id);
+
+            return $this->responseSuccess(Response::HTTP_OK, null);
+        } catch (\Exception $e) {
+            throw $e;
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
+        }
+    }
+            
+    public function trashed(): JsonResponse
+    {
+        try {
+            $ticketDetails = $this->ticketDetailService->trashed();
+
+            return $this->responseSuccess(Response::HTTP_OK, $ticketDetails);
+        } catch (\Exception $e) {
+            throw $e;
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
         }
     }
 }

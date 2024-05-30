@@ -33,10 +33,6 @@ class MailVerify extends Mailable
     */
    public function build()
    {
-            $token = $this->token;
-
-            return $this->from('nvlinh.rin@gmail.com')
-            ->view('mails.verify', compact('token'))
-            ->subject('Linh eCommerce - Confirm your email address');
+        //
    }
 }

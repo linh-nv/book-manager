@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Publisher;
 use App\Repositories\Publisher\PublisherRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class PublisherService
 {
@@ -49,5 +50,17 @@ class PublisherService
     {
 
         return $this->publisherRepository->delete($id);
+    }
+        
+    public function restorePublisher(int $id): bool
+    {
+
+        return $this->publisherRepository->restore($id);
+    }
+        
+    public function trashed(): Collection
+    {
+
+        return $this->publisherRepository->getTrashed();
     }
 }

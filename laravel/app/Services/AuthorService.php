@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Author;
 use App\Repositories\Author\AuthorRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class AuthorService
 {
@@ -49,5 +50,17 @@ class AuthorService
     {
 
         return $this->authorRepository->delete($id);
+    }
+
+    public function restoreAuthor(int $id): bool
+    {
+
+        return $this->authorRepository->restore($id);
+    }
+
+    public function trashed(): Collection
+    {
+
+        return $this->authorRepository->getTrashed();
     }
 }

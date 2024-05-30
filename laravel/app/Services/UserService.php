@@ -6,6 +6,7 @@ use App\Enum\RoleStatus;
 use App\Models\User;
 use App\Repositories\User\UserRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -47,7 +48,6 @@ class UserService
             'name' => $data['name'],
             'email' => $data['email'],
             'address' => $data['address'],
-            'password' => Hash::make($data['password']),
             'tel' => $data['tel'],
             'birthday' => $data['birthday'],
             'gender' => $data['gender'],
@@ -59,5 +59,17 @@ class UserService
     {
 
         return $this->userRepository->delete($id);
+    }
+            
+    public function restoreUser(int $id): bool
+    {
+
+        return $this->userRepository->restore($id);
+    }
+        
+    public function trashed(): Collection
+    {
+
+        return $this->userRepository->getTrashed();
     }
 }

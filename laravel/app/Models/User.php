@@ -12,7 +12,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens,
+        HasFactory,
+        Notifiable,
+        SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -46,7 +49,8 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier() {
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
 
@@ -55,10 +59,11 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims() {
+    public function getJWTCustomClaims()
+    {
         return [];
     }
-    
+
     /**
      * The attributes that should be cast.
      *
@@ -68,12 +73,9 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function lendTickets() {
+    public function lendTickets()
+    {
         return $this->hasMany(LendTicket::class);
-    }
-
-    public function role() {
-        return $this->belongsTo(Role::class);
     }
 
     /*
@@ -82,7 +84,7 @@ class User extends Authenticatable implements JWTSubject
             + XX: role code (admin: AD, manager: MN)
             + xxx: user id
     *
-    */ 
+    */
     protected static function boot()
     {
         parent::boot();

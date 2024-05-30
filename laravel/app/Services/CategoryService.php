@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryService
 {
@@ -51,5 +52,17 @@ class CategoryService
     {
 
         return $this->categoryRepository->delete($id);
+    }
+    
+    public function restoreCategory(int $id): bool
+    {
+
+        return $this->categoryRepository->restore($id);
+    }
+        
+    public function trashed(): Collection
+    {
+
+        return $this->categoryRepository->getTrashed();
     }
 }

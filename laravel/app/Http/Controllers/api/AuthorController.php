@@ -97,4 +97,28 @@ class AuthorController extends Controller
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
         }
     }
+
+    public function restore(int $id): JsonResponse
+    {
+        try {
+            $this->authorService->restoreAuthor($id);
+
+            return $this->responseSuccess(Response::HTTP_OK, null);
+        } catch (\Exception $e) {
+            throw $e;
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
+        }
+    }
+
+    public function trashed(): JsonResponse
+    {
+        try {
+            $authors = $this->authorService->trashed();
+
+            return $this->responseSuccess(Response::HTTP_OK, $authors);
+        } catch (\Exception $e) {
+            throw $e;
+            return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
+        }
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -13,17 +14,15 @@ class UserRequest extends FormRequest
 
     public function rules()
     {
-        $userId = $this->route('user') ? $this->route('user')->id : null;
-
         return [
-            'user_code' => 'unique:users,user_code,' . $userId,
+            'user_code' => ['required', 'string', 'max:255', Rule::unique('users', 'user_code')->ignore($this->user)],
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $userId,
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->user)],
             'password' => 'sometimes|required|string|min:6',
             'address' => 'nullable|string|max:255',
             'tel' => 'nullable|string|max:20',
             'birthday' => 'nullable|date',
-            'gender' => 'required|integer|in:0,1',
+            'gender' => 'required|integer|in:1,2,3',
             'role_id' => 'integer|in:1,2',
         ];
     }
@@ -57,11 +56,11 @@ class UserRequest extends FormRequest
             'role_id.exists' => 'Role không tồn tại.',
         ];
     }
-    
+
     public function prepereForValidation()
     {
         $this->merge([
-           'updated_at' => now(), 
+            'updated_at' => now(),
         ]);
     }
 }

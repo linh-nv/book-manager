@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Book;
-use App\Models\LendTicket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +17,8 @@ class TicketDetailFactory extends Factory
     public function definition(): array
     {
         return [
-            'book_id' => Book::factory(),
-            'lend_ticket_id' => LendTicket::factory(),
+            'book_id' => \App\Models\Book::factory(),
+            'lend_ticket_id' => \App\Models\LendTicket::factory(),
             'return_date' => $this->faker->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
             'status' => $this->faker->numberBetween(0, 4),
             'quantity' => $this->faker->numberBetween(1, 10),

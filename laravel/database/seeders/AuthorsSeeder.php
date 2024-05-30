@@ -2,18 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
+use App\Models\Author;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class RoleSeeder extends Seeder
+class AuthorsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Role::factory()->count(5)->create();
+        Author::factory()->count(10)->create();
     }
 }

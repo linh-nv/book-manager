@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\Publisher;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\TicketDetail;
 
-class TicketDetailSeeder extends Seeder
+class PublishersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        TicketDetail::factory()->count(5)->create();
+        Publisher::factory()->count(10)->create();
     }
 }

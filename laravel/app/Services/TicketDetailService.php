@@ -66,4 +66,16 @@ class TicketDetailService
 
         return $this->ticketDetailRepository->delete($id);
     }
+        
+    public function restoreTicketDetail(int $id): bool
+    {
+
+        return $this->ticketDetailRepository->restore($id);
+    }
+        
+    public function trashed(): Collection
+    {
+
+        return $this->ticketDetailRepository->getTrashed();
+    }
 }

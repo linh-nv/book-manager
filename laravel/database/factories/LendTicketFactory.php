@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +17,7 @@ class LendTicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'user_id' => \App\Models\User::factory(),
             'start_date' => $this->faker->dateTimeBetween('year', 'now')->format('Y-m-d'),
             'end_date' => $this->faker->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
             'status' => $this->faker->numberBetween(0, 3),
