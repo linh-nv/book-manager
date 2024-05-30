@@ -48,7 +48,7 @@ class LendTicketController extends Controller
 
             return $this->responseSuccess(Response::HTTP_CREATED, $lendTicket);
         } catch (\Exception $e) {
-            throw $e;
+            
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while creating the LendTicket.');
         }
     }
@@ -105,7 +105,7 @@ class LendTicketController extends Controller
 
             return $this->responseSuccess(Response::HTTP_OK, null);
         } catch (\Exception $e) {
-            throw $e;
+            
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
         }
     }
@@ -117,7 +117,7 @@ class LendTicketController extends Controller
 
             return $this->responseSuccess(Response::HTTP_OK, $lendTickets);
         } catch (\Exception $e) {
-            throw $e;
+            
             return $this->responseError(Response::HTTP_INTERNAL_SERVER_ERROR, 'INTERNAL_ERROR', 'An error occurred while deleting the author.');
         }
     }
