@@ -2,9 +2,30 @@
 
 namespace Database\Seeders;
 
+<<<<<<< HEAD
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
+use App\Models\Author;
+use App\Models\Book;
+use App\Models\CartItem;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Coupon;
+use App\Models\CouponUser;
+use App\Models\News;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Preview;
+use App\Models\PreviewComment;
+use App\Models\Publisher;
+use App\Models\User;
+use Database\Factories\UserFactory;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
+=======
+use Illuminate\Database\Seeder;
+>>>>>>> 6f7c4ff89e48e434f263844cd7c14c97f90f0cfa
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -12,11 +33,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+<<<<<<< HEAD
+        $this->call([
+            UserSeeder::class,
+            CitiesTableSeeder::class,
+            DistrictSeeder::class,
+            CommuneSeeder::class,
+            AddressSeeder::class,
+            AdminSeeder::class,
+            CategorySeeder::class,
+            AuthorSeeder::class,
+            PublisherSeeder::class,
+            BookSeeder::class,
+            CommentSeeder::class,
+            CouponSeeder::class,
+            CouponUserSeeder::class,
+            PreviewSeeder::class,
+            PreviewCommentSeeder::class,
+            OrderSeeder::class,
+            OrderDetailSeeder::class,
+            TransactionSeeder::class,
+            CartSeeder::class,
+            CartItemSeeder::class,
+            NewsImageSeeder::class,
+            BookAuthorSeeder::class,
+            NewsSeeder::class,
+        ]);
+=======
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+>>>>>>> 6f7c4ff89e48e434f263844cd7c14c97f90f0cfa
     }
+    
 }
