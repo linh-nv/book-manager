@@ -1,4 +1,4 @@
-import axiosInstance from "../services/axiosInstance";
+import axiosInstance from "./axiosInstance";
 
 export const apiService = {
   async getAll(endpoint, page = 1) {
